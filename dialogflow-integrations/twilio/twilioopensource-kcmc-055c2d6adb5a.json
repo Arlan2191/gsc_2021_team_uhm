@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "twilioopensource-kcmc",
+  "private_key_id": "055c2d6adb5a8f51fea445b5baad22f793b80140",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCo54IsIFjWBYjq\nLaZ4wHIRkd3gd0mp2eNnc3InjvWohf82uIrTzOuUVFPpm/MNihqEnU9E1KzAsubj\nOTXZdiYW1PxuYazEGS3DMdUixGHhVPqzLtrGarU+9+nYKkm+O/c15BnuKGZPC0gt\n4S2VkJSK1vtCxiFukRfsfcoaf8TOvMvirReIVVdcHQOG7yxdEPagOU8Qw3DPyhAm\n6HRQKHgkvOTM4aE+8YxYfUoyl2jpEuQzqFzTWLUvA5eXzByu/yjAFQ3knIch7RZD\n8ypzD1Csu3+uhcGrI0gh8FUc5AxsU31tjOZHvuPfOs25FTpqz7XC0+iVzgbcZihj\nVLGZ2eLrAgMBAAECggEAGkxtor7om25M2qAqqZDWp0YDJNY9+dHLYV9YI1upg/NV\nK6kr3dLWzVzHR0+OVl8t8NRo3r/keV6Bqlh35M5LcPD5sEV0t9XEdSjXAEJRNoYG\nQOGnPmSn/XrEBhx+KJNqqDvwuPnBBZwCluOBjFDw0qCq35iSOlvMvKL7VbPrf1V6\nVfgeERzdu7biE6Ze8BnVYiEgmYOFmiGO+DLIo3+iYG89iVEQhBsLYul/ufdaMmSQ\ndZopzhOZ5Q2HneX6cjkSgdXe++XG782cze1mGCfW7a3xwElzm6wqi1V/3v1C2Ipu\nQAb/uAhf6yE9KBX0glY0h7ezAjd0PvimRR24Ls0XMQKBgQDS7kTIOmvs9LO8k00E\nXeKMq39VdPeCTcxhdXBrlUEeuL3nRG1xl06WEXW5R3lSqVZAn8furjEV8v3TpszW\nXbB+Wt98Wzsb+n5m85k0G4grV/CJxs0tCGIp/q68xMhGuwjm+EQnEQFRrGsb0s5y\nVlVtn5OQaiyj760E3BD0xUEkewKBgQDM/m5jc9I0dpLqY7OvrBrJipeg1xrzfPCp\n2mwq4DgY9QGDLa30ehE4CJ0vqp54Nv7eyfzrdgPcLm9o9lruwZQwzjV6E7ZWJ05B\nkx8ktg1QL1PP4PnGHCW1zC8Lv5AjQhyvvlZ2ud4shH5C2T+6wVb3OA5QTaeSTguo\ntWfObdSIUQKBgAVtJ8vW5Ovlp7IUQAj6uVdRGieCqNNrWPSw5sF9x30Y15nZgs9H\nSzhFHrgzhIWB4bwr4CLdzFl6NNl7Ew34vw+hGtrCJhUkLphLcAeNJcWnr4J74M9l\nxdC6wpgMn/Jh4Wq/vFEc+OG3A9Jla/Y5Dl2Rm2Q9twRIqDTVzIHfiTt9AoGAfgug\nAqTPxpR2J4sgjE8NtYjzTOGW38qeDEKSqhZuR+I2iNtIj/+SoNqjFBEcGZzvQDwA\nuSM6omMm++om5ZG/tfbFaQe/4N+QPb/hsWgDbZ98MGEME+VwxoUDFH04eoWHMASg\nE6ab1tGs9RuyFPoWqDIekv/8nnhAsP7CEmrz+NECgYBMH77KqDagJL+Yt2Q5/1eS\nlJI5Kz+K04+ACkoViU2UPYLw1GA6iOTFFnjel4f9mozNnwrZLhF3WK2Ki9UtCGci\nGosCiKBXA1WYYtgRSQQ+T9oeM9kVgHxOYQsJIfPqtLus8aEeAKc1cj2msB5vrVz4\nwh9UwS9/saXxzucKyJTouA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "dialogflow@twilioopensource-kcmc.iam.gserviceaccount.com",
+  "client_id": "102390010436534357146",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dialogflow%40twilioopensource-kcmc.iam.gserviceaccount.com"
+}
+
