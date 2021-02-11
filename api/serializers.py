@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from API.models import Eligibility_Status, Tracking_Information, Vaccination_Site
+from api.models import Eligibility_Status, Tracking_Information, Vaccination_Site
 
 
 class EligibilityStatusSerializer(serializers.ModelSerializer):

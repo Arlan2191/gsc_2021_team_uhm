@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from FORMS.models import Auth_Mobile_Number, Personal_Information
+from forms.models import Auth_Mobile_Number, Personal_Information
 
 
 class PersonalInformationSerializer(serializers.ModelSerializer):

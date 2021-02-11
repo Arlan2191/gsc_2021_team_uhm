@@ -1,7 +1,7 @@
 import json
 from rest_framework import status
-from FORMS.serializers import AuthMobileNumberSerializer, PersonalInformationSerializer
-from FORMS.models import Personal_Information
+from forms.serializers import AuthMobileNumberSerializer, PersonalInformationSerializer
+from forms.models import Personal_Information
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST

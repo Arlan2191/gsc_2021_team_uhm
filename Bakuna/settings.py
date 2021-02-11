@@ -81,17 +81,8 @@ WSGI_APPLICATION = 'bakuna.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bakuna',
-        'USER': 'root',
-        'PASSWORD': 'HgkKqfmiDEeuorHO',
-        'HOST': '127.0.0.1',
-        'PORT': '3307',
-        'OPTIONS': {
-            'ssl': {
-                'ca': 'server-ca.pem'
-            }
-        }
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 

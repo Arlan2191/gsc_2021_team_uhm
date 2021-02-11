@@ -1,6 +1,6 @@
 from os import name
 from django.urls import path, re_path
-from API.views import ApiView
+from api.views import ApiView
 
 urlpatterns = [
     path('GET/<table_name>/', ApiView.getRequest, name="getRequest"),
