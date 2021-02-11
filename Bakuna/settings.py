@@ -49,7 +49,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'Bakuna.urls'
+ROOT_URLCONF = 'bakuna.urls'
 
 TEMPLATES = [
     {
@@ -67,7 +67,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'Bakuna.wsgi.application'
+WSGI_APPLICATION = 'bakuna.wsgi.application'
 
 
 # Database
