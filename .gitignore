@@ -1,7 +1,7 @@
-node_modules/
-package-lock.json
-API/__pycache__
-FORMS/__pycache__
+*/__pycache__
+*/migrations
+.vscode
+.dist
 # Files and directories created by pub
 .dart_tool/
 .packages

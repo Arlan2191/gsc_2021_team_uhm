@@ -20,7 +20,9 @@ class Personal_Information(models.Model):
 
 
 class Auth_Mobile_Number(models.Model):
+    mn_id = models.BigIntegerField(primary_key=True)
     mobile_number = models.CharField(max_length=15)
+    auth_token = models.CharField(max_length=50)
     amount_entry = models.SmallIntegerField()
 
     class Meta:

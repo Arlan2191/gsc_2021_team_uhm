@@ -5,7 +5,7 @@ import time
 
 class TOTPAuthentication:
     def __init__(self):
-        self.__key = random_hex()
+        self.__key = str.encode(random_hex())
         self.__last_verified_counter = -1
         self.__verified = False
         self.__digit_number = 6

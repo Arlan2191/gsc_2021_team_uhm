@@ -5,6 +5,7 @@ from django.db.models.base import Model
 class Eligibility_Status(models.Model):
     id = models.BigIntegerField(primary_key=True)
     status = models.CharField(max_length=15)
+    reason = models.CharField(max_length=4000)
 
     class Meta:
         db_table = "eligibility_status"

@@ -25,7 +25,7 @@ SECRET_KEY = 'b-&fyiv3$2=ppgnc-g+^fjf6u=91lot@+om*eshbv+$1@%quw8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -33,6 +33,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'API.apps.ApiConfig',
     'FORMS.apps.FormsConfig',
+    'SMS.apps.SmsConfig',
+    'MESSENGER.apps.MessengerConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

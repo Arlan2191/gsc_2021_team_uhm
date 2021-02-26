@@ -7,4 +7,5 @@ urlpatterns = [
     re_path(r'^GET/(?P<table_name>(PI|TI|ES|VS))/(?P<id>[\d]+)?$',
             ApiView.getRequest, name="getRequest"),
     path('POST/<table_name>', ApiView.postRequest, name="postRequest"),
+    path('PUT/<table_name>/<id>', ApiView.putRequest, name="putRequest"),
 ]
