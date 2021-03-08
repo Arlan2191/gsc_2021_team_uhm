@@ -1,0 +1,282 @@
+//toolbar
+.toolbar{
+    color: rgb(155, 155, 155);
+    background-color: white;
+    opacity: .9;
+}
+.companyName{
+    font-size: 50%;
+}
+
+.active {
+    color:black;
+}
+
+.mat-toolbar{
+  height: 14vh;
+}
+
+.mat-sidenav-container{
+  background-color: rgb(255, 255, 255);
+  min-height: 100vh !important;
+}
+
+.toolbar-buttons{
+    text-decoration: none;
+    margin-right: 20px;
+    font-size: 78%;
+    white-space: normal;
+}
+
+
+button{
+    font-size: 110%;
+    min-width: min-content;
+}
+
+.example-icon {
+    padding: 0 14px;
+  }
+  
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.mat-sidenav-content{
+      font-size: 100%;
+}
+
+.mat-sidenav {
+    color:rgb(83, 83, 83);
+    font-size: 28px;
+    width: 20%;
+}
+
+.logo {
+    width:80px;
+    margin-top: 20px;
+    margin-left: 80px;
+}
+
+//content
+
+h1 {
+    font-size: 40px;
+    font-weight: bolder;
+    margin-top: 250px;
+    margin-left: 120px;
+    line-height: 50px;
+    word-spacing: 10px;
+}
+
+#vaccine-photo {
+    position: absolute;
+    width: 700px;
+    left: 800px;
+    margin-right: 100px;
+    margin-top:100px;
+}
+
+body {
+    background-image: white;
+    height: 100vh; 
+
+}
+
+.row {
+    display: flex;
+    height: 88%;
+    align-items: center;
+}
+
+.col {
+    flex-basis: 50%;
+}
+
+p {
+    color: rgb(155, 155, 155);
+    padding: 20px;
+    margin-left: 100px;
+    font-size: 18px;
+    line-height: 30px;
+    text-align: justify;
+}
+
+ul {
+    list-style-type: none;
+    margin-left: 120px;
+    font-size: 20px;
+    line-height: 30px;
+}
+
+.start-button {
+    background-color: rgb(34, 97, 233);
+    color: white;
+    margin-top: 15px;
+    margin-left: 120px;
+    width: 190px;
+    font-size: 20px;
+    padding: 5px 0;
+    border-collapse: collapse;
+    border-radius: 1.5em;
+}
+
+.floating {   
+    animation-name: floating; 
+    animation-duration: 1.3s; 
+    animation-iteration-count: 1; 
+    animation-timing-function: ease-in-out; 
+} 
+
+@keyframes floating { 
+    0% { transform: translate(0,  60px); } 
+    50%  { transform: translate(0, 0px); } 
+    100%   { transform: translate(0, -0px); }     
+} 
+
+.med-dash-button {
+    padding: 10px;
+    margin-left: 30px;
+    color: rgb(34, 97, 233);
+}
+
+@media screen and (max-width: 959px){
+
+    //toolbar
+    .toolbar{
+        color: rgb(155, 155, 155);
+        background-color: white;
+        opacity: .9;
+    }
+    .companyName{
+        font-size: 50%;
+    }
+
+    .active {
+        color:black;
+    }
+
+    .mat-toolbar{
+    height: 7vh;
+    }
+
+    .col {
+        margin-left: 150px;
+        flex-basis: 50%;
+    }
+
+    #vaccine-photo {
+        position: relative;
+        width: 450px;
+        left: 0px;
+        margin-right: 100px;
+        margin-top:100px;
+    }
+
+    h1 {
+        font-size: 40px;
+        font-weight: bolder;
+        margin-top: 100px;
+        margin-left: -30px;
+        line-height: 40px;
+        word-spacing: 10px;
+    }
+
+    p {
+        padding: 20px;
+        margin-left: -50px;
+        font-size: 16px;
+        line-height: 30px;
+        text-align: justify;
+    }
+    
+    ul {
+        list-style-type: none;
+        margin-left: 60px;
+        font-size: 20px;
+        line-height: 30px;
+    }
+  
+    .start-button {
+        background-color: rgb(37,150,255);
+        color: white;
+        margin-top: 5px;
+        margin-left: -35px;
+        width: 190px;
+        font-size: 20px;
+        padding: 5px 0;
+        border-collapse: collapse;
+        border-radius: 1.5em;
+    }  
+
+    .med-dash-button {
+        margin-left: 95px;
+    }
+
+
+}
+
+@media screen and (max-width: 599px) {
+
+    .mat-sidenav {
+        color:rgb(83, 83, 83);
+        font-size: 28px;
+        width: 35%;
+    }
+
+    #vaccine-photo {
+        position: relative;
+        left: 0px;
+        width: 400px;
+        margin-left: -160px;
+        margin-top:100px;
+    }
+
+    .col {
+        width: 100px;
+        flex-basis: 50%;
+    }
+   
+    h1 {
+        font-size: 18px;
+        font-weight: bolder;
+        margin-top: 20px;
+        margin-left: -110px;
+        line-height: 40px;
+    }
+  
+    p {
+        padding: 2px;
+        margin-left: -110px;
+        font-size: 12px;
+        line-height: 30px;
+        text-align: justify;
+    }
+    
+    ul {
+        list-style-type: none;
+        margin-left: -10px;
+        font-size: 16px;
+        line-height: 18px;
+    }
+
+    .start-button {
+        background-color:rgb(37,150,255);
+        color: white;
+        margin-top: 10px;
+        margin-left: -110px;
+        width: 100px;
+        font-size: 15px;
+        padding: 5px 0;
+        border-collapse: collapse;
+        border-radius: 1.5em;
+    }   
+
+    .med-dash-button {
+        width: 50px;
+        margin-left: 15px;
+    }
+    
+
+}
+

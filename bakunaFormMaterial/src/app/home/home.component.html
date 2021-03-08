@@ -1,0 +1,57 @@
+
+<div> 
+    <mat-toolbar color="primary" class="toolbar">
+      <div fxShow="true" fxHide.gt-sm="true">
+        <button mat-icon-button (click)="sidenav.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+  
+      <a mat-flat-button class="companyName" routerLink="/" [disableRipple]="true">
+        <span><img src="assets/images/Rise_Logo.png" alt="logo" class="logo"></span>
+      </a>
+      <span class="example-spacer"></span>
+      <div fxShow="true" fxHide.lt-md="true">
+        <a mat-button routerLink="/home" class="active">Home</a>
+        <a mat-button routerLink="/dashboard-es" class="toolbar-buttons">Vaccine Dashboard</a>
+        <a mat-button routerLink="/about-us" class="toolbar-buttons">About Us</a>
+        <a mat-button routerLink="/log-in" class="toolbar-buttons" (click)="openDialog()">Log In</a>
+      </div>
+  
+    </mat-toolbar>
+    <mat-sidenav-container fxFlexFill class="example-container">
+  
+      <mat-sidenav color="primary" #sidenav fxLayout="column" mode="over"  opened="false" fxHide.gt-sm="true">
+        <div fxLayout="column">
+            <a mat-button routerLink="/home" class="toolbar-buttons active">Home</a>
+            <a mat-button routerLink="/dashboard-es" class="toolbar-buttons">Vaccine Dashboard</a>
+            <a mat-button routerLink="/about-us" class="toolbar-buttons">About Us</a>
+            <a mat-button routerLink="/log-in" class="toolbar-buttons" (click)="openDialog()">Log In</a>
+        </div>
+      </mat-sidenav>
+      
+      <mat-sidenav-content fxFlexFill>
+        <body  fxLayout="column">
+            <div class="container"  fxLayout="column" >
+              <div class="row">
+                  <div class="col">
+
+                    <div class="header-img">
+                      <img src="assets/images/vaccine.jpg" alt="vaccine" id="vaccine-photo" class="floating"> 
+                    </div>
+                    
+                    <h1 class="floating">We get you vaccinated against COVID-19</h1>
+                    <p class="floating">Organized dissemination and smart vaccine appointment systems. RiSE provides an easy way to vaccinate the entire country.</p>
+                      <button mat-raised-button class="floating" routerLink="/landing-page-form" class="start-button">Get Started</button>
+                      <a mat-button routerLink="/dashboard-login" class="med-dash-button">Medical Dashboard</a>
+                  </div>
+              </div>
+
+            </div>  
+        </body>
+        
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>
+
+

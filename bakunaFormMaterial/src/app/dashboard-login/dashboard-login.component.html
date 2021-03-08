@@ -1,0 +1,75 @@
+
+<div> 
+    <mat-toolbar color="primary" class="toolbar">
+  
+      <a mat-flat-button class="companyName" routerLink="/" [disableRipple]="true">
+        <span><img src="assets/images/Rise_Logo.png" alt="logo" class="logo"></span>
+      </a>
+      <span class="example-spacer"></span>
+      <div fxShow="true" fxHide.lt-md="true">
+        <a mat-button routerLink="/home" class="active">Home</a>
+        <a mat-button routerLink="/about-us" class="active">About Us</a>
+      </div>
+  
+    </mat-toolbar>
+    <mat-sidenav-container fxFlexFill class="example-container">
+  
+      <mat-sidenav color="primary" #sidenav fxLayout="column" mode="over"  opened="false" fxHide.gt-sm="true">
+        <div fxLayout="column">
+            <a mat-button routerLink="/home" class="toolbar-buttons">About Us</a>
+        </div>
+      </mat-sidenav>
+      
+      <mat-sidenav-content fxFlexFill>
+        <body>
+            <div fxLayoutAlign="space-between center" class="split-screen-parent">
+                <!-- LEFT SIDE -->
+                <section fxLayoutAlign="center center"
+                        [@leftScreen]="focus"
+                        (mouseenter)="handleBump('left')"
+                        (click)="focus = 'left'"
+                        class="left-screen-parent"
+                        [ngClass]="{'selected': focus === 'left'  || focus === 'bumpLeft'}">
+                <div fxLayout="column" fxLayoutAlign="center center">
+                        <form class="form-style-7">
+                            <h2>Login as admin user</h2>
+                            <ul>
+                                <li>
+                                    <label for="username">Username</label>
+                                    <input type="text" name="Username" maxlength="100">
+                                </li>
+                                <li>
+                                    <label for="password">Password</label>
+                                    <input type="password" name="Password" maxlength="100">
+                                </li>
+                            </ul>
+        
+                            <button mat-raised-button class="login-button">LOGIN</button>
+                            <br><br>
+                            <a class="forgot-pass-button">Forgot your password?</a>
+                        </form>
+                </div>
+                </section>
+            
+                <!-- RIGHT SIDE -->
+                <section fxLayoutAlign="center center"
+                        [@rightScreen]="focus"
+                        (mouseenter)="handleBump('right')"
+                        (click)="focus = 'right'"
+                        class="right-screen-parent"
+                        [ngClass]="{'selected': focus === 'right' || focus === 'bumpRight'}">
+                <div fxLayout="column" fxLayoutAlign="center center">
+                    <img src="assets/images/vaccine2.png" alt="vaccine" id="sign-up-img"> 
+                    <h1>Welcome Back to RiSE!</h1>
+        
+                    <p>Login and get started.</p>
+                    
+                </div>
+                </section>
+            </div>
+        </body>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>
+
+

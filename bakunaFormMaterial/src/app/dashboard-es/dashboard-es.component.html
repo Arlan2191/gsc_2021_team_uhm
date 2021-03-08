@@ -1,0 +1,239 @@
+<mat-sidenav-container class="sidenav-container" autosize>
+    <mat-sidenav #drawer class="sidenav" fixedInViewport="true"
+    [attr.role]="isHandset ? 'dialog' : 'navigation'"
+    [mode]="(isHandset | async)!.matches ? 'over' : 'side'"
+    [opened]="!(isHandset | async)!.matches">
+        <mat-nav-list>
+            <button mat-flat-button class="home-button" routerLink="/home" [disableRipple]="true">
+                <span>
+                    <img src="assets/images/Rise_Logo.png" alt="logo" id="sidenav-logo">
+                </span>
+            </button>
+            <p id="description">DASHBOARD</p>
+            <a mat-list-item routerLink="/" class="admin-toolbar">Home</a>
+            <a mat-list-item routerLink="/dashboard-es"  class="admin-toolbar active">ES</a>
+            <a mat-list-item routerLink="/dashboard-ti"  class="admin-toolbar">TI</a>
+            <a mat-list-item routerLink="/"  class="admin-toolbar">Log Out</a>
+        </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+            <div class="grid-container">
+              <h1 class="mat-h1">Eligbility Status</h1>
+              <mat-grid-list cols="{{ ( cardLayout | async )?.columns }}" rowHeight="150px">
+                <!--Patient Info Card-->
+                <mat-grid-tile [colspan]="( cardLayout | async )?.patient_info_card.cols"
+                  [rowspan]="( cardLayout | async )?.patient_info_card.rows">
+                  <app-card title="Personal Info">
+                    <div>
+                      <mat-grid-list cols="2" rowHeight="2:1">
+                        <mat-grid-tile>
+                            <ul class="personal-info-list">
+                              <li>Last Name: </li>
+                              <li>Middle Name: </li>
+                              <li>First Name: </li>
+                              <li>Birthdate:</li>
+                              <li>Sex:</li>
+                            </ul>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                          <ul class="personal-info-list">
+                            <li>Occupation: </li>
+                            <li>Email: </li>
+                            <li>Address Line: </li>
+                            <li>City:</li>
+                            <li>Barangay:</li>
+                          </ul>
+                        </mat-grid-tile>
+                      </mat-grid-list>
+                    </div></app-card>
+                </mat-grid-tile>
+
+                <!--Instruction/Reminders Card-->
+                <mat-grid-tile [colspan]="( cardLayout | async )?.instruction_card.cols"
+                  [rowspan]="( cardLayout | async )?.instruction_card.rows">
+                  <app-card title="">
+                    <div>
+                        <mat-form-field appearance="outline" class="instruction_input">
+                          <mat-label>Instructions/Reminders</mat-label>
+                          <textarea matInput></textarea>
+                        </mat-form-field>
+                        <br>
+                        <mat-grid-list cols="2" rowHeight="2:1">
+                          <mat-grid-tile>
+                            <form>
+                              <mat-form-field appearance="legacy" class="option-input">
+                                <mat-label>LABEL</mat-label>
+                                <mat-select [formControl]="labelControl" required>
+                                  <mat-option>--</mat-option>
+                                  <mat-option *ngFor="let label of labels" [value]="label">
+                                    {{label.title}}
+                                  </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="labelControl.hasError('required')">Please choose a label</mat-error>
+                              </mat-form-field>
+
+                              <br/>
+
+                              <mat-form-field appearance="legacy" class="option-input">
+                                <mat-label>PRIORITY</mat-label>
+                                <mat-select>
+                                  <mat-option *ngFor="let priority of priorities" [value]="priority">{{priority}}</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </form>
+                          </mat-grid-tile>
+
+                          <mat-grid-tile>
+                            <mat-form-field appearance="outline" class="reason_input">
+                              <mat-label>Reason</mat-label>
+                              <textarea matInput class="reason_textarea"></textarea>
+                            </mat-form-field>
+                          </mat-grid-tile>
+
+                        </mat-grid-list>
+
+                        <h2>Vaccination Schedule</h2>
+                        
+                        <mat-card fxLayout="row">
+                
+                          <mat-form-field appearance="legacy" class="vaccine_sched_input">
+                            <mat-label>Address</mat-label>
+                            <input matInput placeholder="Address" [formControl]="address" required>
+                            <mat-error *ngIf="address.invalid">{{getErrorMessage()}}</mat-error>
+                          </mat-form-field>
+                         
+                          <mat-form-field appearance="legacy" class="vaccine_sched_input">
+                            <mat-label>Choose a date</mat-label>
+                            <input matInput [matDatepicker]="picker" [formControl]="date" required>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                            <mat-error *ngIf="date.invalid">{{getErrorMessage()}}</mat-error>
+                          </mat-form-field>
+                          
+                          <div>
+                            <input aria-label="default time" [ngxTimepicker]="defaultValue" placeholder="Time*" class="time">
+                            <ngx-material-timepicker #defaultValue></ngx-material-timepicker>
+                          </div>
+
+                      </mat-card>
+
+                      <button mat-raised-button class="submit">Submit</button>
+
+                    </div>
+                  </app-card>
+                </mat-grid-tile>
+
+                <!--Medical History Response-->
+                <mat-grid-tile [colspan]="( cardLayout | async )?.med_history_card.cols"
+                  [rowspan]="( cardLayout | async )?.med_history_card.rows">
+                  <app-card title="Medical History Response">
+                    <div fxLayout="row">
+                      <ul class="response">
+                          <li>1: </li>
+                          <li>2: </li>
+                          <li>3: </li>
+                          <li>4:</li>
+                          <li>5:</li>
+                          <li>6:</li>
+                          <li>7:</li>
+                          <li>8:</li>
+                      </ul>
+
+                      <ul class="response">
+                          <li>9: </li>
+                          <li>10: </li>
+                          <li>11: </li>
+                          <li>12:</li>
+                          <li>13:</li>
+                          <li>14:</li>
+                          <li>15:</li>
+                          <li>16:</li>
+                      </ul>
+
+                      <ul class="response">
+                        <li>17: </li>
+                        <li>18: </li>
+                        <li>19: </li>
+                        <li>20:</li>
+                        <li>21:</li>
+                        <li>22:</li>
+                        <li>23:</li>
+                        <li>24:</li>
+                      </ul>
+
+                      <ul class="response">
+                        <li>25: </li>
+                        <li>26: </li>
+                        <li>27: </li>
+                        <li>28:</li>
+                        <li>29:</li>
+                        <li>30:</li>
+                        <li>31:</li>
+                        <li>32:</li>
+                  </ul>
+
+                    </div>
+                </app-card>
+                </mat-grid-tile>
+
+                <!--Table-->
+                <mat-grid-tile [colspan]="( cardLayout | async )?.table.cols" [rowspan]="( cardLayout | async )?.table.rows">
+                  <app-card title="Patients">
+                    <div>
+                        <table mat-table matSort [dataSource]="patientStatusDataSource" #TableOneSort="matSort">
+            
+                        <!--- Note that these columns can be defined in any order.
+                              The actual rendered columns are set as a property on the row definition" -->
+                      
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="id">
+                          <th mat-header-cell *matHeaderCellDef> ID </th>
+                          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                        </ng-container>
+                      
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="date">
+                          <th mat-header-cell *matHeaderCellDef> Date </th>
+                          <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+                        </ng-container>
+                      
+                        <!-- Symbol Column -->
+                        <ng-container matColumnDef="visitTime">
+                          <th mat-header-cell *matHeaderCellDef> Visit Time </th>
+                          <td mat-cell *matCellDef="let element"> {{element.visitTime}} </td>
+                        </ng-container>
+                        
+                        <ng-container matColumnDef="doctor">
+                            <th mat-header-cell *matHeaderCellDef> Doctor </th>
+                            <td mat-cell *matCellDef="let element"> {{element.doctor}} </td>
+                        </ng-container>
+            
+                        <ng-container matColumnDef="conditions">
+                            <th mat-header-cell *matHeaderCellDef> Reasons </th>
+                            <td mat-cell *matCellDef="let element"> {{element.conditions}} </td>
+                        </ng-container>
+            
+                        <ng-container matColumnDef="status">
+                            <th mat-header-cell *matHeaderCellDef> Status </th>
+                            <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                        </ng-container>
+                      
+                          
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsOne"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsOne;"></tr>
+            
+                      </table>
+            
+                      <mat-paginator [length]="length" [pageSize] = "pageSize" [pageSizeOptions] = "pageSizeOptions" (page)="pageEvent = $event"></mat-paginator>
+          
+                    </div></app-card>
+                </mat-grid-tile>
+              </mat-grid-list>
+            </div>
+
+
+    
+    </mat-sidenav-content>
+</mat-sidenav-container>
+

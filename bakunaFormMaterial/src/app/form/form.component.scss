@@ -1,0 +1,196 @@
+//toolbar
+.toolbar{
+    color: cornflowerblue;
+    background-color: white;
+    opacity: .9;
+}
+.companyName{
+    font-size: 150%;
+}
+
+.mat-toolbar{
+  height: 7vh;
+}
+
+div {
+    overflow: inherit;
+}
+
+.mat-sidenav-container{
+  background-color: rgb(255, 255, 255);
+  min-height: 90vh !important;
+}
+
+a{
+    text-decoration: none;
+    font-size: 78%;
+    white-space: normal;
+}
+
+a:hover {
+    background-color: rgb(224, 255, 252);
+}
+
+button{
+    font-size: 110%;
+    min-width: min-content;
+}
+
+.example-icon {
+    padding: 0 14px;
+  }
+  
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.mat-sidenav-content{
+      font-size: 100%;
+}
+
+.mat-sidenav {
+    color:rgb(83, 83, 83);
+    font-size: 28px;
+    width: 20%;
+}
+
+img {
+    width:50px;
+}
+
+
+//Form
+.registration-background {
+    background-image: linear-gradient(rgb(210, 226, 250),white);
+    padding: 100px;
+    height:150vh; 
+}
+
+.registration-card {
+    box-shadow:
+    0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+    0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+    0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12);
+    border-collapse: collapse;
+    border-radius: 0.7em;
+    padding:5px;
+}
+
+mat-form-field {
+    background-color: white;
+    margin-left: 10px;
+}
+
+.choice {
+    margin: 10px;
+    justify-content: left;
+}
+
+.gender {
+    margin-left: 18px;
+}
+
+mat-button-toggle-group {
+    margin-left: 10px;
+}
+
+.form-button {
+    background-color:rgb(37,150,255);
+    width: 80px;
+    margin:10px;
+}
+
+@media screen and (max-width: 1024px) {
+    .registration-background {
+        background-image: linear-gradient(rgb(210, 226, 250),white);
+        padding: 50px;
+        height:200vh;
+    }
+
+    .registration-card {
+        box-shadow:
+        0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+        0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+        0 12.5px 10px rgba(0, 0, 0, 0.06),
+        0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+        0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+        0 100px 80px rgba(0, 0, 0, 0.12);
+        border-collapse: collapse;
+        border-radius: 0.7em;
+        padding:8px;
+        margin-top:50px;
+    }
+
+    mat-form-field{
+        background-color: white;
+        width: 30%;
+        height: 40%;
+        margin-left:-10px;
+    }
+
+    .choice {
+        margin: 10px;
+        justify-content: left;
+    }
+
+    .gender {
+        margin-left: -5px;
+    }
+
+    .form-button{
+        background-color:rgb(37,150,255);
+        width: 80px;
+        margin-left:-8px;
+    }
+
+    
+}
+
+@media screen and (max-width: 599px) {
+    
+    .registration-background {
+        background-image: linear-gradient(rgb(210, 226, 250),white);
+        padding: 12px;
+        height: 230vh;
+    }
+
+    .registration-card {
+        box-shadow:
+        0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+        0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+        0 12.5px 10px rgba(0, 0, 0, 0.06),
+        0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+        0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+        0 100px 80px rgba(0, 0, 0, 0.12);
+        border-collapse: collapse;
+        border-radius: 0.7em;
+        padding:10px;
+    }
+
+    mat-form-field{
+        background-color: white;
+        width: 80%;
+        height: 80%;
+        margin-left:-10px;
+    }
+
+    .choice {
+        margin: 10px;
+        justify-content: left;
+    }
+
+    .gender {
+        margin-left: -5px;
+    }
+
+    .form-button {
+        background-color:rgb(37,150,255);
+        width: 80px;
+        margin-left:-8px;
+    }
+
+    
+}

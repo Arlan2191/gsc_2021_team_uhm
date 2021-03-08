@@ -1,0 +1,223 @@
+h1 {
+    margin-top:20px;
+    margin-left: 1.5%;
+    font-weight: bold;
+    color:white;
+
+}
+
+a{
+    text-decoration: none;
+    font-size: 78%;
+    white-space: normal;
+}
+
+a:hover {
+    background-color: rgb(224, 255, 252);
+}
+
+button{
+    font-size: 110%;
+    min-width: min-content;
+}
+
+.example-icon {
+    padding: 0 14px;
+  }
+  
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+mat-nav-list {
+    width: 60%;
+}
+
+img {
+    width:50px;
+}
+
+#sidenav-logo {
+    width: 100px;
+    margin-left: 30px;
+    margin-top: 20px;
+}
+
+.sidenav-container {
+    height: 100%;
+}
+
+.sidenav {
+    width: 250px;
+    box-shadow: 3px 0 6px rgba(0,0,0,.24);
+    white-space: nowrap;
+    display: flex;
+}
+
+.home-button {
+    justify-content: center;
+}
+
+
+mat-sidenav-content {
+    height: 200vh;
+    background-image: linear-gradient(0deg, rgba(182,251,255,1) 0%, rgb(162, 195, 247) 100%);
+}
+
+#description {
+    margin-top: 30px;
+    margin-left: 50px;
+    color:rgb(150, 150, 150);
+}
+
+.admin-toolbar {
+    margin-left: 30px;
+}
+
+.active {
+    color: rgb(37,150,255);
+}
+
+table {
+    margin-left: 3%;
+    width: 94%;
+}
+
+mat-form-field {
+    margin-top: 1%;
+    margin-left: 3%;
+}
+
+mat-paginator {
+    margin-left: 3%;
+    width: 94%;
+}
+
+/*city-postal code input*/
+.city-input-size {
+    width: 10%;
+}
+
+.postal-input {
+    margin-left: 10px;
+    width: 10%;
+}
+
+.divider {
+    color: white;
+    font-size: 25px;
+    margin-top: 15px;
+    margin-left: 8px;
+}
+
+/*Search Bar*/
+.search-btn {
+    margin-top: 15px;
+    margin-left: -15px;
+}
+
+/**Personal Info Grid and Medical History Response*/
+
+h3 {
+    font-size: 20px;
+    font-weight: 500;
+    margin-right: 290px;
+}
+
+.personal-info-list {
+    margin-top: 0px;
+    margin-left: -200px;
+}
+
+.reference-id-input {
+    margin-left: 20px;
+}
+
+.response {
+    margin-right: 80px;
+}
+  
+
+li {
+    list-style: none;
+    text-align: left;
+    margin-bottom: 3px;
+}
+
+/**Instructions Grid*/
+h2 {
+    margin-left: 30px;
+    margin-top: 20px;
+}
+
+.id-input {
+    width: 100px;
+}
+
+.batch-input {
+    width: 150px;
+}
+
+.label-input {
+    width: 100px;
+    margin-right: 50px;
+}
+
+.first-row {
+    margin-top: 30px;
+}
+.eligibility-status-info-card {
+    height: 100px;
+    width: 400px;
+    margin-left: 50px;
+    margin-top: -80px;
+    margin-bottom: 60px;
+}
+
+.license-input {
+    margin-left: 900px;
+    margin-top: 30px;
+}
+
+.submit-btn {
+    margin-top: 30px;
+    margin-left: 20px;
+    height: 40px;
+    width: 150px;
+}
+/** Changing overall-size of the inputs */
+::ng-deep .mat-form-field-flex > .mat-form-field-infix { padding: 0.4em 0px !important;}
+::ng-deep .mat-form-field-label-wrapper { top: -1.5em; }
+
+::ng-deep .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    transform: translateY(-1.1em) scale(.75);
+    width: 133.33333%;
+}
+
+/* White input */
+::ng-deep .city-input.mat-form-field-appearance-outline .mat-form-field-outline {
+    color: white!important;
+    opacity: 1!important;
+}
+
+::ng-deep .city-input.mat-input-element {
+    caret-color:white!important;
+}
+
+::ng-deep .postal-input.mat-form-field-appearance-outline .mat-form-field-outline {
+    color: white!important;
+    opacity: 1!important;
+}
+
+::ng-deep .postal-input.mat-input-element {
+    caret-color:white!important;
+}
+
+::ng-deep .reference-id-input.mat-form-field-appearance-outline .mat-form-field-outline {
+    color: white!important;
+    opacity: 1!important;
+}
+
+::ng-deep .reference-id-input.mat-input-element {
+    caret-color:white!important;
+}

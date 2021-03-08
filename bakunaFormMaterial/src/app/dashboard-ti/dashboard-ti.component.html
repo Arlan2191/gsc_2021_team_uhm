@@ -1,0 +1,263 @@
+<mat-sidenav-container class="sidenav-container" autosize>
+    <mat-sidenav #drawer class="sidenav" fixedInViewport="true"
+    [attr.role]="isHandset ? 'dialog' : 'navigation'"
+    [mode]="(isHandset | async)!.matches ? 'over' : 'side'"
+    [opened]="!(isHandset | async)!.matches">
+        <mat-nav-list>
+            <button mat-flat-button class="home-button" routerLink="/home" [disableRipple]="true">
+                <span>
+                    <img src="assets/images/Rise_Logo.png" alt="logo" id="sidenav-logo">
+                </span>
+            </button>
+            <p id="description">DASHBOARD</p>
+            <a mat-list-item routerLink="/" class="admin-toolbar">Home</a>
+            <a mat-list-item routerLink="/dashboard-es"  class="admin-toolbar">ES</a>
+            <a mat-list-item routerLink="/dashboard-ti"  class="admin-toolbar active">TI</a>
+            <a mat-list-item routerLink="/"  class="admin-toolbar">Log Out</a>
+        </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div class="grid-container">
+        <section fxLayout="row">
+          <h1 class="mat-h1">Tracking Information </h1>
+          <mat-form-field appearance="outline" class="city-input city-input-size">
+            <mat-label>City</mat-label>
+            <input matInput placeholder="City" class="city-input" >
+          </mat-form-field>
+
+          <h2 class="divider">:</h2>
+
+          <mat-form-field appearance="outline" class="postal-input">
+            <mat-label>Postal Code</mat-label>
+            <input matInput placeholder="Postal Code" class="postal-input">
+          </mat-form-field>
+
+        </section>
+
+        <section fxLayout="row">
+          <mat-form-field appearance="outline" class="reference-id-input">
+            <mat-label>Enter reference ID</mat-label>
+            <input matInput placeholder="Reference ID" class="reference-id-input">
+          </mat-form-field>
+
+          <div class="search-btn">
+            <button mat-raised-button>Search</button>
+          </div>
+
+        </section>
+
+            <mat-grid-list cols="{{ ( cardLayout | async )?.columns }}" rowHeight="150px">
+              <!--Patient Info Card-->
+              <mat-grid-tile [colspan]="( cardLayout | async )?.patient_info_card.cols"
+                [rowspan]="( cardLayout | async )?.patient_info_card.rows">
+                <app-card title="Personal Info">
+                  <div>
+                    <mat-grid-list cols="2" rowHeight="2:1">
+                      <mat-grid-tile>
+                          <ul class="personal-info-list">
+                            <li>Last Name: </li>
+                            <li>Middle Name: </li>
+                            <li>First Name: </li>
+                            <li>Birthdate:</li>
+                            <li>Sex:</li>
+                          </ul>
+                      </mat-grid-tile>
+                      <mat-grid-tile>
+                        <ul class="personal-info-list">
+                          <li>Occupation: </li>
+                          <li>Email: </li>
+                          <li>Address Line: </li>
+                          <li>City:</li>
+                          <li>Barangay:</li>
+                        </ul>
+                      </mat-grid-tile>
+                    </mat-grid-list>
+                  </div>
+                  <h3>Medical History Response:</h3>
+                  <div fxLayout="row">
+                    <ul class="response">
+                        <li>1: </li>
+                        <li>2: </li>
+                        <li>3: </li>
+                        <li>4:</li>
+                        <li>5:</li>
+                        <li>6:</li>
+                        <li>7:</li>
+                        <li>8:</li>
+                    </ul>
+
+                    <ul class="response">
+                        <li>9: </li>
+                        <li>10: </li>
+                        <li>11: </li>
+                        <li>12:</li>
+                        <li>13:</li>
+                        <li>14:</li>
+                        <li>15:</li>
+                        <li>16:</li>
+                    </ul>
+
+                    <ul class="response">
+                      <li>17: </li>
+                      <li>18: </li>
+                      <li>19: </li>
+                      <li>20:</li>
+                      <li>21:</li>
+                      <li>22:</li>
+                      <li>23:</li>
+                      <li>24:</li>
+                    </ul>
+
+                    <ul class="response">
+                      <li>25: </li>
+                      <li>26: </li>
+                      <li>27: </li>
+                      <li>28:</li>
+                      <li>29:</li>
+                      <li>30:</li>
+                      <li>31:</li>
+                      <li>32:</li>
+                    </ul>
+
+                  </div>
+               </app-card>
+             </mat-grid-tile>
+
+                <!--Vaccination Info Card-->
+            <mat-grid-tile [colspan]="( cardLayout | async )?.vaccination_info_card.cols"
+            [rowspan]="( cardLayout | async )?.vaccination_info_card.rows">
+              <app-card title="Vaccination Session Info">
+              </app-card>
+            </mat-grid-tile>
+
+          
+            <!--Instruction Card-->
+            <mat-grid-tile [colspan]="( cardLayout | async )?.instruction_card.cols"
+              [rowspan]="( cardLayout | async )?.instruction_card.rows">
+              <app-card title="Instruction Card">
+                <mat-tab-group mat-align-tabs="start">
+                  <mat-tab label="1st Dose">
+                    <div fxLayout="row" class="first-row">
+                      <mat-form-field appearance="legacy" class="id-input">
+                        <mat-label>ID</mat-label>
+                        <input matInput placeholder="ID">
+                      </mat-form-field>
+                      
+                      <h2>:</h2>
+
+                      <mat-form-field appearance="legacy">
+                        <mat-label>Batch No.</mat-label>
+                        <input matInput placeholder="Batch No.">
+                      </mat-form-field>
+
+                      <mat-form-field appearance="legacy">
+                        <mat-label>LABEL</mat-label>
+                        <mat-select [formControl]="labelControl" required>
+                          <mat-option>--</mat-option>
+                          <mat-option *ngFor="let label of labels" [value]="label">
+                            {{label.title}}
+                          </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="labelControl.hasError('required')">Please choose a label</mat-error>
+                      </mat-form-field>
+
+                    </div>
+                    <div fxLayout="row">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Manufacturer</mat-label>
+                        <input matInput placeholder="Manufacturer">
+                      </mat-form-field>
+
+                      <mat-form-field appearance="outline">
+                        <mat-label>Name of Vaccinator</mat-label>
+                        <input matInput placeholder="Vaccinator">
+                      </mat-form-field>
+
+                      <mat-form-field appearance="outline">
+                        <mat-label>Serial Number</mat-label>
+                        <input matInput placeholder="Serial Number">
+                      </mat-form-field>
+
+                      <mat-card class="eligibility-status-info-card">Eligibility Status Info</mat-card>
+                    </div>
+                    
+                    <mat-divider></mat-divider>
+
+                    <div fxLayout="row">
+                      <mat-form-field appearance="legacy" class="license-input">
+                        <mat-label>License No.</mat-label>
+                        <input matInput placeholder="License Number">
+                      </mat-form-field>
+
+                      <button mat-raised-button color="primary" class="submit-btn">Submit</button>
+                    </div>
+                  </mat-tab>
+                  <mat-tab label="2nd Dose">
+                    <div fxLayout="row" class="first-row">
+                      <mat-form-field appearance="legacy" class="id-input">
+                        <mat-label>ID</mat-label>
+                        <input matInput placeholder="ID">
+                      </mat-form-field>
+                      
+                      <h2>:</h2>
+
+                      <mat-form-field appearance="legacy">
+                        <mat-label>Batch No.</mat-label>
+                        <input matInput placeholder="Batch No.">
+                      </mat-form-field>
+
+                      <mat-form-field appearance="legacy">
+                        <mat-label>LABEL</mat-label>
+                        <mat-select [formControl]="labelControl" required>
+                          <mat-option>--</mat-option>
+                          <mat-option *ngFor="let label of labels" [value]="label">
+                            {{label.title}}
+                          </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="labelControl.hasError('required')">Please choose a label</mat-error>
+                      </mat-form-field>
+
+                    </div>
+                    <div fxLayout="row">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Manufacturer</mat-label>
+                        <input matInput placeholder="Manufacturer">
+                      </mat-form-field>
+
+                      <mat-form-field appearance="outline">
+                        <mat-label>Name of Vaccinator</mat-label>
+                        <input matInput placeholder="Vaccinator">
+                      </mat-form-field>
+
+                      <mat-form-field appearance="outline">
+                        <mat-label>Serial Number</mat-label>
+                        <input matInput placeholder="Serial Number">
+                      </mat-form-field>
+
+                      <mat-card class="eligibility-status-info-card">Eligibility Status Info</mat-card>
+                    </div>
+                    
+                    <mat-divider></mat-divider>
+
+                    <div fxLayout="row">
+                      <mat-form-field appearance="legacy" class="license-input">
+                        <mat-label>License No.</mat-label>
+                        <input matInput placeholder="License Number">
+                      </mat-form-field>
+
+                      <button mat-raised-button color="primary" class="submit-btn">Submit</button>
+                    </div>
+                  </mat-tab>
+                </mat-tab-group>
+
+              </app-card>
+            </mat-grid-tile>
+
+
+          </mat-grid-list>
+      </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+
+

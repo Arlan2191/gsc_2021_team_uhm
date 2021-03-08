@@ -1,0 +1,62 @@
+<div> 
+    <mat-toolbar color="primary" class="toolbar">
+  
+      <a mat-flat-button class="companyName" routerLink="/" [disableRipple]="true">
+        <span><img src="assets/images/Rise_Logo.png" alt="logo" class="logo"></span>
+      </a>
+      <span class="example-spacer"></span>
+      <div fxShow="true" fxHide.lt-md="true">
+        <a mat-button routerLink="/home" class="active">Home</a>
+        <a mat-button routerLink="/about-us" class="active">About Us</a>
+      </div>
+  
+    </mat-toolbar>
+    <mat-sidenav-container fxFlexFill class="example-container">
+  
+      <mat-sidenav color="primary" #sidenav fxLayout="column" mode="over"  opened="false" fxHide.gt-sm="true">
+        <div fxLayout="column">
+            <a mat-button routerLink="/home" class="toolbar-buttons">About Us</a>
+        </div>
+      </mat-sidenav>
+      
+      <mat-sidenav-content fxFlexFill>
+        <body>
+            <div fxLayoutAlign="space-between center" class="split-screen-parent">
+                <!-- LEFT SIDE -->
+                <section fxLayoutAlign="center center"
+                        [@leftScreen]="focus"
+                        (mouseenter)="handleBump('left')"
+                        (click)="focus = 'left'"
+                        class="left-screen-parent"
+                        [ngClass]="{'selected': focus === 'left'  || focus === 'bumpLeft'}">
+                <div fxLayout="column" fxLayoutAlign="center center">
+                    <img src="assets/images/community.png" alt="non-medical practitioner" id="non-medical-prac-img"> 
+                    <h1 class="non-medical-prac">Are you a non-medical practitioner?</h1>
+        
+                    <p>Fill up here your personal information and get started.</p>
+                    <button mat-stroked-button class="sign-up-button" routerLink="/form">Sign Up</button>
+                </div>
+                </section>
+            
+                <!-- RIGHT SIDE -->
+                <section fxLayoutAlign="center center"
+                        [@rightScreen]="focus"
+                        (mouseenter)="handleBump('right')"
+                        (click)="focus = 'right'"
+                        class="right-screen-parent"
+                        [ngClass]="{'selected': focus === 'right' || focus === 'bumpRight'}">
+                <div fxLayout="column" fxLayoutAlign="center center">
+                    <img src="assets/images/vaccine2.png" alt="medical practitioner" id="medical-prac-img"> 
+                    <h1 class="medical-prac">Are you a medical practitioner?</h1>
+        
+                    <p>Fill up here your personal information and get started.</p>
+                    <button mat-stroked-button class="sign-up-button" routerLink="/dashboard-signup">Sign Up</button>
+           
+                </div>
+                </section>
+            </div>
+        </body>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>
+

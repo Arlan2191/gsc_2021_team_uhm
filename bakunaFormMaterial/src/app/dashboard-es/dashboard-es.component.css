@@ -1,0 +1,176 @@
+h1 {
+    margin-left: 1.5%;
+    font-weight: bold;
+    color: white;
+}
+
+a{
+    text-decoration: none;
+    font-size: 78%;
+    white-space: normal;
+}
+
+a:hover {
+    background-color: rgb(224, 255, 252);
+}
+
+button{
+    font-size: 110%;
+    min-width: min-content;
+}
+
+.example-icon {
+    padding: 0 14px;
+  }
+  
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+mat-nav-list {
+    width: 60%;
+}
+
+img {
+    width:50px;
+}
+
+#sidenav-logo {
+    width: 100px;
+    margin-left: 30px;
+    margin-top: 20px;
+}
+
+.sidenav-container {
+    height: 100%;
+}
+
+.sidenav {
+    width: 250px;
+    box-shadow: 3px 0 6px rgba(0,0,0,.24);
+    white-space: nowrap;
+    display: flex;
+}
+
+.home-button {
+    justify-content: center;
+}
+
+
+mat-sidenav-content {
+    height: 200vh;
+    background-image: linear-gradient(0deg, rgba(182,251,255,1) 0%, rgba(131,164,212,1) 100%);
+}
+
+#description {
+    margin-top: 30px;
+    margin-left: 50px;
+    color:rgb(150, 150, 150);
+}
+
+.admin-toolbar {
+    margin-left: 30px;
+}
+
+.active {
+    color: rgb(37,150,255);
+}
+
+table {
+    margin-left: 3%;
+    width: 94%;
+}
+
+mat-paginator {
+    margin-left: -15px;
+    width: 1189px;
+}
+
+
+/*Grid*/
+
+.grid-container {
+    margin: 20px;
+  }
+  
+  .dashboard-card {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+  }
+  
+  .more-button {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+  }
+  
+  
+  /*Personal Info Grid*/
+
+  .personal-info-list {
+    margin-top: 0px;
+    margin-left: -200px;
+  }
+
+  .response {
+    margin-right: 80px;
+  }
+  
+
+  li {
+    list-style: none;
+    text-align: left;
+    margin-bottom: 3px;
+  }
+
+  /*Instruction Grid*/
+  .instruction_input {
+    margin-top: 20px;
+    width: 95%;
+  }
+
+  .reason_input {
+    margin-right: 20px;
+    width: 100%;
+    height: 140px;
+  }
+
+  .reason_textarea {
+    height: 80px;
+  }
+
+  .vaccine_sched_input {
+    width: 130px;
+    padding: 5px;
+  }
+
+  .time {
+    border: none;
+    border-bottom: 1px solid rgb(123, 124, 124); 
+    margin-top: 21px;
+    margin-left: 6px;
+    height:20px;
+    width: 130px;
+  }
+
+  mat-card {
+    justify-content: center;
+    padding: 55px;
+  }
+
+  .submit {
+    width: 150px;
+    margin-top: 10px;
+    margin-left: 390px;
+    border-radius: 1.5em;
+    background-color: rgb(37,150,255);
+    color: white;
+  }
+
+  .option-input {
+    padding: 3px;
+    margin-right: 60px;
+  }

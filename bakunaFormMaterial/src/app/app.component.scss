@@ -1,0 +1,58 @@
+.toolbar{
+    color: cornflowerblue;
+    background-color: white;
+    opacity: .9;
+}
+.companyName{
+    font-size: 150%;
+}
+
+.mat-toolbar{
+  height: 7vh;
+}
+
+div {
+    overflow: inherit;
+}
+
+.mat-sidenav-container{
+  background-color: rgb(255, 255, 255);
+  min-height: 93vh !important;
+}
+
+a{
+    text-decoration: none;
+    font-size: 78%;
+    white-space: normal;
+}
+
+a:hover {
+    background-color: rgb(224, 255, 252);
+}
+
+button{
+    font-size: 110%;
+    min-width: min-content;
+}
+
+.example-icon {
+    padding: 0 14px;
+  }
+  
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.mat-sidenav-content{
+      font-size: 100%;
+}
+
+.mat-sidenav {
+    color:rgb(83, 83, 83);
+    font-size: 28px;
+    width: 20%;
+}
+
+img {
+    width:50px;
+}
