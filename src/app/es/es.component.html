@@ -1,0 +1,208 @@
+<h1>Pending Applications</h1>
+<div class="applications-table">
+    <table mat-table [dataSource]="appsTable" #AppsTable="matSort" matSort class="mat-elevation-28">
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <td mat-cell *matCellDef="let element"><a (click)="getPI(element.id)">{{element.id}}</a></td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+            <td mat-cell *matCellDef="let element">{{element.status}}</td>
+        </ng-container>
+        <ng-container matColumnDef="reason">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Reason </th>
+            <td mat-cell *matCellDef="let element">{{element.reason}}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="appsColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: appsColumns;"></tr>
+    </table>
+</div>
+<h1>Vaccination Sites</h1>
+<div class="sites-table">
+    <button mat-button (click)="delete()">Delete</button>
+    <button mat-button (click)="edit()">Edit</button>
+    <button mat-button (click)="cancel()" *ngIf="allowEdit">Cancel</button>
+    <button mat-button (click)="save()">Save</button>
+    <table mat-table [dataSource]="sitesTable" #SitesTable="matSort" matSort class="mat-elevation-28">
+        <form [formGroup]="siteEditFormGroup">
+            <ng-container matColumnDef="select">
+                <th mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()" [disabled]="allowEdit">
+                    </mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+                        [checked]="selection.isSelected(row)" [disabled]="allowEdit">
+                    </mat-checkbox>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef> ID </th>
+                <td mat-cell *matCellDef="let element">{{element.id}}</td>
+            </ng-container>
+            <ng-container matColumnDef="site_address">
+                <th mat-header-cell *matHeaderCellDef> Address </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-form-field appearance="standard" *ngIf="match(element.id)">
+                        <input matInput placeholder="Address" formControlName="site_address" required>
+                    </mat-form-field>
+                    <span *ngIf="!match(element.id)">{{element.site_address}}</span>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef> Date </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-form-field appearance="standard" *ngIf="match(element.id)">
+                        <input matInput placeholder="Date" formControlName="date" required>
+                    </mat-form-field>
+                    <span *ngIf="!match(element.id)">{{element.date}}</span>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="time">
+                <th mat-header-cell *matHeaderCellDef> Time </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-form-field appearance="standard" *ngIf="match(element.id)">
+                        <input matInput placeholder="Time" formControlName="time" required>
+                    </mat-form-field>
+                    <span *ngIf="!match(element.id)">{{element.time}}</span>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="barangay">
+                <th mat-header-cell *matHeaderCellDef> Barangay </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-form-field appearance="standard" *ngIf="match(element.id)">
+                        <input matInput placeholder="Barangay" formControlName="barangay" required>
+                    </mat-form-field>
+                    <span *ngIf="!match(element.id)">{{element.barangay}}</span>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="city">
+                <th mat-header-cell *matHeaderCellDef> City </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-form-field appearance="standard" *ngIf="match(element.id)">
+                        <input matInput placeholder="City" formControlName="city" required>
+                    </mat-form-field>
+                    <span *ngIf="!match(element.id)">{{element.city}}</span>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="sitesColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: sitesColumns;"></tr>
+        </form>
+    </table>
+    <h2>Add site</h2>
+    <form [formGroup]="siteFormGroup">
+        <div class="row">
+            <div class="col-lg-12">
+                <mat-form-field appearance="outline">
+                    <mat-label>Address</mat-label>
+                    <input matInput placeholder="Address" formControlName="site_address" required>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <mat-form-field appearance="outline">
+                    <mat-label>Date</mat-label>
+                    <input matInput placeholder="Date" formControlName="date" required>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <mat-form-field appearance="outline">
+                    <mat-label>Time</mat-label>
+                    <input matInput placeholder="Time" formControlName="time" required>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <mat-form-field appearance="outline">
+                    <mat-label>Barangay</mat-label>
+                    <input matInput placeholder="Barangay" formControlName="barangay" required>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <mat-form-field appearance="outline">
+                    <mat-label>City</mat-label>
+                    <input matInput placeholder="City" formControlName="city" required>
+                </mat-form-field>
+            </div>
+        </div>
+        <button mat-button (click)="add()" class="form-button">Add</button>
+    </form>
+</div>
+<h1>User Information of {{currentID}}</h1>
+<div class="user-table" [ngClass]='(showResponse) ? "visible": "hidden"'>
+    <table mat-table [dataSource]="userTable" class="mat-elevation-28">
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> ID </th>
+            <td mat-cell *matCellDef="let element">{{element.id}}</td>
+        </ng-container>
+        <ng-container matColumnDef="birthdate">
+            <th mat-header-cell *matHeaderCellDef> Birthdate </th>
+            <td mat-cell *matCellDef="let element">{{element.birthdate}}</td>
+        </ng-container>
+        <ng-container matColumnDef="sex">
+            <th mat-header-cell *matHeaderCellDef> Sex </th>
+            <td mat-cell *matCellDef="let element">{{element.sex}}</td>
+        </ng-container>
+        <ng-container matColumnDef="occupation">
+            <th mat-header-cell *matHeaderCellDef> Occupation </th>
+            <td mat-cell *matCellDef="let element">{{element.occupation}}</td>
+        </ng-container>
+        <ng-container matColumnDef="city">
+            <th mat-header-cell *matHeaderCellDef> City </th>
+            <td mat-cell *matCellDef="let element">{{element.city}}</td>
+        </ng-container>
+        <ng-container matColumnDef="barangay">
+            <th mat-header-cell *matHeaderCellDef> Barangay </th>
+            <td mat-cell *matCellDef="let element">{{element.barangay}}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="userColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: userColumns;"></tr>
+    </table>
+</div>
+<h1>Questionnaire Response of {{currentID}}</h1>
+<div class="resps-table" [ngClass]='(showResponse) ? "visible": "hidden"'>
+    <table mat-table [dataSource]="respsTable" #RespsTable="matSort" matSort class="mat-elevation-28">
+        <ng-container matColumnDef="num">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+            <td mat-cell *matCellDef="let element">{{element.num}}</td>
+        </ng-container>
+        <ng-container matColumnDef="question">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Question </th>
+            <td mat-cell *matCellDef="let element">{{element.question}}</td>
+        </ng-container>
+        <ng-container matColumnDef="answer">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Answer </th>
+            <td mat-cell *matCellDef="let element">{{element.answer}}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="respsColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: respsColumns;"></tr>
+    </table>
+</div>
+<h1>Review Form</h1>
+<form [formGroup]="reviewFormGroup">
+    <div class="row">
+        <div class="col-lg-12">
+            <mat-form-field appearance="outline">
+                <mat-label>Status</mat-label>
+                <input matInput placeholder="Status" formControlName="status" required>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <mat-form-field appearance="outline">
+                <mat-label>Reason</mat-label>
+                <input matInput placeholder="Reason" formControlName="reason" required>
+            </mat-form-field>
+        </div>
+    </div>
+    <button mat-button (click)="submit()" class="form-button">Submit</button>
+</form>
