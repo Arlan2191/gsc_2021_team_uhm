@@ -1,5 +1,4 @@
 import { Form, FormGroup } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material/table';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -7,7 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiService {
-  private BASEURL = "https://ceab478046fa.ngrok.io";
+  private BASEURL = "https://cd2e0cc0d58a.ngrok.io";
   private urlKey = ["ES", "VS"];
   private nullValues = [
     { "id": 0, "status": 0, "reason": "N/A" },
@@ -37,51 +36,51 @@ export class ApiService {
   constructor(private _http: HttpClient) { }
 
   async getApplications() {
-    return await this._http.get<Array<any>>(`${this.BASEURL}/site-api/GET/ES`).toPromise();
+    return await this._http.get<Array<any>>(`${this.BASEURL}/site/table?name=ES`).toPromise();
   }
 
   async getSites() {
-    return await this._http.get<Array<any>>(`${this.BASEURL}/site-api/GET/VS`).toPromise();
+    return await this._http.get<Array<any>>(`${this.BASEURL}/site/table?name=VS`).toPromise();
   }
 
   async getProfile(id: number) {
-    return await this._http.get<Array<any>>(`${this.BASEURL}/site-api/GET/PI/${id}`).toPromise();
+    return await this._http.get<Array<any>>(`${this.BASEURL}/site/table?name=PI&id=${id}`).toPromise();
   }
 
   async getUserProfile(id: number) {
-    return await this._http.get<JSON>(`${this.BASEURL}/site-api/GET/Profile/${id}`).toPromise();
+    return await this._http.get<JSON>(`${this.BASEURL}/site/GET/Profile/${id}`).toPromise();
   }
 
   async getResponse(id: number) {
-    return await this._http.get<Array<any>>(`${this.BASEURL}/site-api/GET/RSP/${id}`).toPromise();
+    return await this._http.get<Array<any>>(`${this.BASEURL}/site/GET/RSP/${id}`).toPromise();
   }
 
   async getTracking(id: number) {
-    return await this._http.get<Array<any>>(`${this.BASEURL}/site-api/GET/TI/${id}`).toPromise();
+    return await this._http.get<Array<any>>(`${this.BASEURL}/site/table?name=TI&id=${id}`).toPromise();
   }
 
   handle(data: any, table_code: number) {
     if (table_code == 3) {
-      if (data["Data_Query"]["Response"].length) {
-        return [data["Data_Query"]["Response"]];
+      if (data["query_result"]["Response"].length) {
+        return [data["query_result"]["Response"]];
       } else {
         return [[this.nullValues[3]]];
       }
     } else if (table_code == 5) {
-      if (data["Data_Query"].length == 2) {
-        return [data["Data_Query"][0], data["Data_Query"][1]]
+      if (data["query_result"].length == 2) {
+        return [data["query_result"][0], data["query_result"][1]]
       } else {
         return [[this.nullValues[4]]];
       }
     } else if (table_code == 6) {
-      if (data["Data_Query"].length == 3) {
-        return [data["Data_Query"][0], data["Data_Query"][1], data["Data_Query"][2]]
+      if (data["query_result"].length == 3) {
+        return [data["query_result"][0], data["query_result"][1], data["query_result"][2]]
       } else {
         return [[this.nullValues[5]], this.nullValues[3], this.nullValues[0]];
       }
     } else {
-      if (data["Data_Query"].length) {
-        return [data["Data_Query"]];
+      if (data["query_result"].length) {
+        return [data["query_result"]];
       } else {
         return [[this.nullValues[table_code]]];
       }
