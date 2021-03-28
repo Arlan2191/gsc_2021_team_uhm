@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiService {
-  private BASEURL = "https://cd2e0cc0d58a.ngrok.io";
+  private BASEURL = "https://ae9e75edc6b9.ngrok.io";
   private urlKey = ["ES", "VS"];
   private nullValues = [
     { "id": 0, "status": 0, "reason": "N/A" },
@@ -52,7 +52,7 @@ export class ApiService {
   }
 
   async getResponse(id: number) {
-    return await this._http.get<Array<any>>(`${this.BASEURL}/site/GET/RSP/${id}`).toPromise();
+    return await this._http.get<Array<any>>(`${this.BASEURL}/site/datastore?id=${id}`).toPromise();
   }
 
   async getTracking(id: number) {
