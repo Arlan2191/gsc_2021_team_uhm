@@ -3,6 +3,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ApiService } from './../api.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators'; 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
@@ -26,7 +29,33 @@ export class TiComponent implements OnInit {
   respsColumns: string[] = this._api.formKeys[3];
   @ViewChild('RespsTable') rtSort: MatSort;
 
-  constructor(private _formBuilder: FormBuilder, private _api: ApiService) { }
+
+  /**Grid Tiles**/
+   cardLayout = this.BreakpointObserver.observe(Breakpoints.Handset).pipe(
+    map(({ matches }) => {
+      if (matches) {
+        return {
+          columns: 2,
+          patient_info_card: { cols: 2, rows: 12 },
+          vaccination_info_card: { cols: 2, rows: 5 },
+          vaccination_sched_card: { cols: 2, rows: 4},
+          instruction_card: { cols: 2, rows: 4 },
+
+        };
+      }
+ 
+     return {
+        columns: 14,
+        patient_info_card: { cols: 6, rows: 12 },
+        vaccination_info_card: { cols: 8, rows: 5 },
+        vaccination_sched_card: { cols: 8, rows: 3},
+        instruction_card: { cols: 8, rows: 4 },
+      };
+    })
+  );
+
+  constructor(private _formBuilder: FormBuilder, private _api: ApiService, private BreakpointObserver: BreakpointObserver) { }
+  isHandset: Observable<BreakpointState> = this.BreakpointObserver.observe(Breakpoints.Handset)
 
   ngOnInit(): void {
     this.referenceID = this._formBuilder.group({

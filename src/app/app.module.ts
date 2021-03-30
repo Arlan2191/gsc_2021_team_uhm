@@ -39,6 +39,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CardComponent } from './card/card.component';
+import { BadgeModule } from 'angular-bootstrap-md';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HomeComponent,
     RegisterComponent,
     EsComponent,
-    TiComponent
+    TiComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule,
@@ -82,6 +85,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MatDividerModule,
     MatListModule,
     NgbModule,
+    BadgeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

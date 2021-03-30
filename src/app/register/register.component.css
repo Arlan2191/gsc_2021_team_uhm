@@ -1,0 +1,151 @@
+h2 {
+    color: white;
+    font-family: 'mulish';
+    font-weight: bold;
+    font-size: 18px;
+    padding:25px;
+    margin-left: 20px;
+}
+
+p {
+    font-family: 'mulish';
+    font-weight: bold;
+}
+
+mat-grid-tile {
+    padding: 0px !important;
+    height: 100vh;
+    justify-content: left !important;
+}
+
+.left {
+    left: 0;
+    background-color: rgba(37,150,255,1);
+}
+
+.right {
+    right: 0;
+    background-color: rgb(250, 250, 250);
+}
+  
+/*Left side image*/
+#sign-up-img {
+    position: relative;
+    display: flex;
+    width: 700px;
+}
+  
+#welcome-header {
+    position: absolute;
+    top: 520px;
+    color: white;
+}
+  
+h1 {
+    font-size: 40px;
+    font-weight: bolder;
+}
+  
+  
+  
+/*Right side image*/
+.logo {
+    position: absolute;
+    top: 29px;
+    left: 610px;
+    width: 40px;
+}
+  
+h3 {
+    color: rgb(71, 70, 70);
+    font-size: 20px;
+    font-weight: bold;
+}
+  
+.header-form {
+    margin-top: -20px;
+    height: 80px;
+    width: 100%;
+    background-color: rgba(37,150,255,1);
+    border-collapse: collapse;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+}
+
+form {
+    padding: 40px;
+}
+.form-row {
+    display: flex;
+}
+
+mat-card {
+    width: 90%;
+    padding: 0 !important;
+    margin-top: 40px;
+    border-collapse: collapse;
+    border-radius: 1em;
+}
+
+mat-form-field {
+    font-size: 12px;
+    margin-left: 15px;
+    width: 191px;
+    font-family: 'mulish';
+}
+
+/*button*/
+.form-button {
+    font-family: 'mulish';
+    font-weight: bold;
+    background-color: rgba(37,150,255,1);
+    color: white;
+    width: 100px;
+    margin-left: 84%;
+}
+
+/*input sizing*/
+
+.birthdate-input {
+    width: 90px;
+}
+
+.sex-input {
+    width: 50px;
+}
+
+.occupation-input {
+    width: 100px;
+}
+
+.license-number-input {
+    width: 100px;
+}
+
+.email-input {
+    width: 200px;
+}
+
+.mobile-number-input {
+    width: 120px;
+}
+
+.city-input {
+    width: 100px;
+}
+
+.barangay-input {
+    width: 145px;
+}
+
+/*input labels*/
+
+li {
+    display: flex;
+}
+
+ul {
+    font-size: 10px;
+    margin-right: 70px;
+    padding: 0;
+}

@@ -1,3 +1,272 @@
+
+h1 {
+    font-family: 'mulish';
+    margin-top:20px;
+    margin-left: 1.5%;
+    font-weight: bold;
+}
+
+h2 {
+    font-family: 'mulish';
+    font-weight: bold;
+    color: rgb(121, 121, 121);
+}
+
+h3 {
+    margin-top: -10px;
+    color: rgb(121, 121, 121);
+}
+a{
+    text-decoration: none;
+    font-size: 78%;
+    white-space: normal;
+    font-family: 'mulish';
+    font-weight: bold;
+}
+
+a:hover {
+    background-color: rgb(224, 255, 252);
+}
+
+button{
+    font-size: 110%;
+    min-width: min-content;
+}
+
+.example-icon {
+    padding: 0 14px;
+  }
+  
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+mat-nav-list {
+    width: 60%;
+}
+
+img {
+    width: 50px;
+}
+
+#sidenav-logo {
+    width: 100px;
+    margin-left: 30px;
+    margin-top: 20px;
+}
+
+.sidenav-container {
+    height: 200vh;
+}
+
+.sidenav {
+    width: 240px;
+    box-shadow: 3px 0 6px rgba(138, 138, 138, 0.24);
+    white-space: nowrap;
+    display: flex;
+}
+
+.home-button {
+    justify-content: center;
+}
+
+mat-sidenav-content {
+    height: 200vh;
+    background-image: #FAFAFA;
+    padding-top: 30px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+#description {
+    margin-top: 30px;
+    margin-left: 50px;
+    color:rgb(150, 150, 150);
+}
+
+.admin-toolbar {
+    margin-left: 30px;
+}
+
+/*navigation tab*/
+.divider {
+    width: 125%;
+    margin-top: 270%;
+    margin-left: 30px;
+}
+/*Side-nav Content*/
+
+#title {
+    font-size: 35px;
+    font-family: 'mulish';
+}
+
+/*inputs*/
+
+.space {
+    margin-left: 20px;
+}
+.search-bar {
+    position: absolute;
+    font-size: 10px;
+    margin-top: -60px;
+    margin-left: 75%;
+}
+
+.id {
+    position: absolute;
+    top: 32px;
+    left: 75%;
+}
+
+form {
+    margin-top: 20px;
+    margin-left: -13px;
+}
+
+.container {
+    display: flex;
+    margin-top: 10px;
+}
+
+mat-form-field {
+    font-family: 'mulish';
+    font-size: 12px;
+    width: 135px;
+    margin-right: 10px;
+}
+
+.reference-id-input {
+    margin-left: 20px;
+}
+
+.manufacturer-input {
+    width: 180px;
+}
+
+.time-input {
+    width: 70px;
+}
+
+.site-input {
+    width: 160px;
+}
+
+/*button*/
+#button-area {
+    position: absolute;
+    right: 25px;
+}
+.submit-btn {
+    font-family: 'mulish';
+    width: 100px;
+    height: 40px;
+}
 table {
     width: 100%;
+}
+
+/*info*/
+
+.first-row-info {
+    padding-top: 30px;
+    padding-left: 10px;
+}
+.name {
+    margin-right: 20px;
+    font-size: 25px;
+    font-family: 'mulish';
+    font-weight: bold;
+}
+  
+.vaccination-status {
+    color: rgb(37,150,255);
+    font-family: 'mulish';
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.personal-info{
+    list-style:none; 
+    float:left;
+    margin-top: 20px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+.heading {
+    text-transform: uppercase;
+    font-family: 'mulish';
+    color: rgb(192, 192, 192);
+}
+
+.info {
+    font-family: 'mulish';
+}
+
+ul li:nth-child(5){clear:both;}
+ul li h1 a{text-decoration:none;}
+
+h1 {
+    font-family: 'mulish';
+    font-stretch: expanded;
+    font-size: 50px;
+    padding: 10px;
+}
+h3 {
+    font-family: 'mulish';
+    font-weight: bold;
+}
+h4 {
+    font-family: 'mulish';
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 12px;
+    color: rgb(192, 192, 192);
+    margin-top: -18px;
+    margin-bottom: 1px;
+    margin-right: 10px;
+}
+
+.instructions {
+    margin-top: 5px;
+    margin-left: 10px;
+}
+
+.vaccination-address {
+    margin-bottom: 20px;
+    color:  rgb(37,150,255);
+}
+
+.date-time {
+    margin-top: -16px;
+    margin-right: 50px;
+    color:  rgb(37,150,255);
+}
+
+.date-time-container {
+    display: flex;
+}
+
+.tags {
+    font-family: 'mulish';
+    padding: 5px;
+    margin-bottom: 10px;
+    width: 80px;
+    height: 20px;
+}
+
+.reason {
+    text-transform: uppercase;
+    font-family: 'mulish';
+    padding: 10px;
+    position: absolute;
+    top: 50%;
+    left: 53%;
+    width: 280px;
+    height: 60px;
+}
+
+table {
+    width: 95%;
 }

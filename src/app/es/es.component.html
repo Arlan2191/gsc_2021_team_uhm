@@ -1,3 +1,250 @@
+<mat-sidenav-container class="sidenav-container" autosize>
+    <mat-sidenav #drawer class="sidenav" fixedInViewport="true"
+    [attr.role]="isHandset ? 'dialog' : 'navigation'"
+    [mode]="(isHandset | async)!.matches ? 'over' : 'side'"
+    [opened]="!(isHandset | async)!.matches">
+        <mat-nav-list>
+            <button mat-flat-button class="home-button" routerLink="/home" [disableRipple]="true">
+                <span>
+                    <img src="assets/images/Rise_Logo.png" alt="logo" id="sidenav-logo">
+                </span>
+            </button>
+            <p id="description">DASHBOARD</p>
+
+            <a mat-list-item routerLink="/" class="admin-toolbar">
+            <mat-icon class = "non-active-icon">home</mat-icon>Home</a>
+
+            <a mat-list-item routerLink="/review"  class="admin-toolbar">
+            <mat-icon class = "active-icon">assignment_ind</mat-icon>ES</a>
+	
+            <a mat-list-item routerLink="/track"  class="admin-toolbar active">
+            <mat-icon class = "non-active-icon"> person_pin_circle</mat-icon>TI</a>
+
+            <hr class="divider">
+            
+            <a mat-list-item routerLink="/"  class="admin-toolbar">
+            <span class="material-icons  non-active-icon" >help</span>Help</a>
+        </mat-nav-list>
+    </mat-sidenav>
+
+<mat-sidenav-content>
+
+    <h1 id="title">Eligibility Status</h1>
+
+
+    <mat-grid-list cols="{{ ( cardLayout | async )?.columns }}" rowHeight="80px">
+        <!--Pending Application Card-->
+        <mat-grid-tile [colspan]="( cardLayout | async )?.pending_application__card.cols"
+          [rowspan]="( cardLayout | async )?.pending_application__card.rows">
+          <app-card title="Pending Application">
+            <h1 class="title">Pending Applications</h1>
+            <div class="applications-table">
+                <table mat-table [dataSource]="appsTable" #AppsTable="matSort" matSort class="mat-elevation-28">
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                        <td mat-cell *matCellDef="let element"><a (click)="getPI(element.id)">{{element.id}}</a></td>
+                    </ng-container>
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+                        <td mat-cell *matCellDef="let element">{{element.status}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="reason">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Reason </th>
+                        <td mat-cell *matCellDef="let element">{{element.reason}}</td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="appsColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: appsColumns;"></tr>
+                </table>
+            </div>
+          </app-card>
+        </mat-grid-tile>
+
+        <!--User Information Card-->
+        <mat-grid-tile [colspan]="( cardLayout | async )?.user_information_card.cols"
+          [rowspan]="( cardLayout | async )?.user_information_card.rows">
+          <app-card title="Personal Info">
+            <!-- <h1 class="title">User Information of {{currentID}}</h1> -->
+            <div class="first-row-info">
+               <span class="name">Veronica</span>
+               <span class="name">S.</span>
+               <span class="name">Santos</span>
+               <span class="vaccination-status">Unvaccinated</span>
+            </div>
+            
+            <div class="second-row-info p-2 mt-2 mr-3 d-flex justify-content-between">
+                <div class="d-flex flex-column">
+                    <span class="heading">Birthdate</span>
+                    <span class="info">01-01-01</span>
+                </div>
+                <div class="d-flex flex-column">
+                    <span class="heading">Sex</span>
+                    <span class="info">F</span>
+                </div>
+                <div class="d-flex flex-column">
+                    <span class="heading">Occupation</span>
+                    <span class="info">Student</span>
+                </div>
+                <div class="d-flex flex-column">
+                    <span class="heading">Email</span>
+                    <span class="info">vpark@up.edu.ph</span>
+                </div>
+                <div class="d-flex flex-column">
+                    <span class="heading">Mobile Number</span>
+                    <span class="info">09123456789</span>
+                </div>
+                <div class="d-flex flex-column">
+                    <span class="heading">City</span>
+                    <span class="info">Lapu-lapu</span>
+                </div>
+                <div class="d-flex flex-column">
+                    <span class="heading">Barangay</span>
+                    <span class="info">Idunno</span>
+                </div>
+            </div>
+
+            <div class="mt-5">
+                <h2 class="ml-2">Medical History</h2>
+                <span class="header">Questionnaire Response of {{currentID}}</span>
+                <div class="r-table">
+                    <table mat-table [dataSource]="respsTable" #RespsTable="matSort" matSort class="mat-elevation-28">
+                        <ng-container matColumnDef="num">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+                            <td mat-cell *matCellDef="let element">{{element.num}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="question">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Question </th>
+                            <td mat-cell *matCellDef="let element">{{element.question}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="answer">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Answer </th>
+                            <td mat-cell *matCellDef="let element">{{element.answer}}</td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="respsColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: respsColumns;"></tr>
+                    </table>
+                </div>
+            </div>
+
+
+
+          </app-card>
+        </mat-grid-tile>
+
+        <!--Vaccination Sites Card-->
+        <mat-grid-tile [colspan]="( cardLayout | async )?.review_card.cols"
+          [rowspan]="( cardLayout | async )?.review_card.rows">
+          <app-card title="Vaccination Sites">
+            <h1 class="review">Is Veronica eligible in receiving the vaccine?</h1>
+            <form [formGroup]="reviewFormGroup">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Status</mat-label>
+                            <input matInput placeholder="Status" formControlName="status" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Reason</mat-label>
+                            <input matInput placeholder="Reason" formControlName="reason" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <button mat-flat-button (click)="submit()" class="form-button">Submit</button>
+            </form>
+          </app-card>
+        </mat-grid-tile>
+
+        <!--Questionnaire Response Card-->
+        <mat-grid-tile [colspan]="( cardLayout | async )?.questionnaire_response_card.cols"
+          [rowspan]="( cardLayout | async )?.questionnaire_response_card.rows">
+          <app-card title="Questionnaire Response">
+            <h1 class="title">Vaccination Sites</h1>
+            <div class="sites-table">
+                <button mat-button (click)="delete()">Delete</button>
+                <button mat-button (click)="edit()">Edit</button>
+                <button mat-button (click)="cancel()" *ngIf="allowEdit">Cancel</button>
+                <button mat-button (click)="save()">Save</button>
+                <table mat-table [dataSource]="sitesTable" #SitesTable="matSort" matSort class="mat-elevation-28 vaccination-sites-table">
+                    <form [formGroup]="siteEditFormGroup">
+                        <ng-container matColumnDef="select">
+                            <th mat-header-cell *matHeaderCellDef>
+                                <mat-checkbox (change)="$event ? masterToggle() : null"
+                                    [checked]="selection.hasValue() && isAllSelected()"
+                                    [indeterminate]="selection.hasValue() && !isAllSelected()" [disabled]="allowEdit">
+                                </mat-checkbox>
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                                <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+                                    [checked]="selection.isSelected(row)" [disabled]="allowEdit">
+                                </mat-checkbox>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="id">
+                            <th mat-header-cell *matHeaderCellDef> ID </th>
+                            <td mat-cell *matCellDef="let element">{{element.id}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="site_address">
+                            <th mat-header-cell *matHeaderCellDef> Address </th>
+                            <td mat-cell *matCellDef="let element">
+                                <mat-form-field appearance="standard" *ngIf="match(element.id)">
+                                    <input matInput placeholder="Address" formControlName="site_address" required>
+                                </mat-form-field>
+                                <span *ngIf="!match(element.id)">{{element.site_address}}</span>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="date">
+                            <th mat-header-cell *matHeaderCellDef> Date </th>
+                            <td mat-cell *matCellDef="let element">
+                                <mat-form-field appearance="standard" *ngIf="match(element.id)">
+                                    <input matInput placeholder="Date" formControlName="date" required>
+                                </mat-form-field>
+                                <span *ngIf="!match(element.id)">{{element.date}}</span>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="time">
+                            <th mat-header-cell *matHeaderCellDef> Time </th>
+                            <td mat-cell *matCellDef="let element">
+                                <mat-form-field appearance="standard" *ngIf="match(element.id)">
+                                    <input matInput placeholder="Time" formControlName="time" required>
+                                </mat-form-field>
+                                <span *ngIf="!match(element.id)">{{element.time}}</span>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="barangay">
+                            <th mat-header-cell *matHeaderCellDef> Barangay </th>
+                            <td mat-cell *matCellDef="let element">
+                                <mat-form-field appearance="standard" *ngIf="match(element.id)">
+                                    <input matInput placeholder="Barangay" formControlName="barangay" required>
+                                </mat-form-field>
+                                <span *ngIf="!match(element.id)">{{element.barangay}}</span>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="city">
+                            <th mat-header-cell *matHeaderCellDef> City </th>
+                            <td mat-cell *matCellDef="let element">
+                                <mat-form-field appearance="standard" *ngIf="match(element.id)">
+                                    <input matInput placeholder="City" formControlName="city" required>
+                                </mat-form-field>
+                                <span *ngIf="!match(element.id)">{{element.city}}</span>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="sitesColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: sitesColumns;"></tr>
+                    </form>
+                </table>
+            </div>
+          </app-card>
+        </mat-grid-tile>
+        
+    </mat-grid-list>
+
+
+</mat-sidenav-content>
+
+
 <h1>Pending Applications</h1>
 <div class="applications-table">
     <table mat-table [dataSource]="appsTable" #AppsTable="matSort" matSort class="mat-elevation-28">

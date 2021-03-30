@@ -6,6 +6,9 @@ import { HttpClient } from '@angular/common/http';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators'; 
 
 @Component({
   selector: 'app-es',
@@ -36,7 +39,34 @@ export class EsComponent implements OnInit {
   userTable: MatTableDataSource<any>;
   userColumns: string[] = this._api.formKeys[2];
 
-  constructor(private _formBuilder: FormBuilder, private _api: ApiService) { }
+
+  /*Grid Tiles*/
+  /** Based on the screen size, switch from standard to one column per row */
+  cardLayout = this.BreakpointObserver.observe(Breakpoints.Handset).pipe(
+    map(({ matches }) => {
+      if (matches) {
+        return {
+          columns: 3,
+          pending_application__card: { cols: 3, rows: 4 },
+          user_information_card: { cols: 3, rows: 4 },
+          review_card: { cols: 3, rows: 4 },
+          questionnaire_response_card: { cols: 3, rows: 8},
+        };
+      }
+ 
+     return {
+        columns: 12,
+        pending_application__card: { cols: 3, rows: 4 },
+        user_information_card: { cols: 9, rows: 8 },
+        review_card: { cols: 3, rows: 4 },
+        questionnaire_response_card: { cols: 12, rows: 3},
+      };
+    })
+  );
+
+
+  constructor(private _formBuilder: FormBuilder, private _api: ApiService, private BreakpointObserver: BreakpointObserver) { }
+  isHandset: Observable<BreakpointState> = this.BreakpointObserver.observe(Breakpoints.Handset)
 
   ngOnInit() {
     this._api.getApplications().then((data) => {
@@ -49,7 +79,7 @@ export class EsComponent implements OnInit {
     });
     this.reviewFormGroup = this._formBuilder.group({
       status: ['G', Validators.required],
-      reason: ['some Reason', Validators.required]
+      reason: ['Some Reason', Validators.required]
     });
     this.siteFormGroup = this._formBuilder.group({
       site_address: ['Some Address', Validators.required],

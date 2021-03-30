@@ -1,0 +1,13 @@
+<mat-card class="dashboard-card">
+    <mat-card-header>
+        <mat-card-title>
+            <mat-menu #menu="matMenu" xPosition="before">
+                <button mat-menu-item>Expand</button>
+                <button mat-menu-item>Remove</button>
+            </mat-menu>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="dashboard-card-content">
+        <ng-content></ng-content>
+    </mat-card-content>
+ </mat-card>

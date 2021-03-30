@@ -1,4 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+@font-face {
+    font-family: mulish;
+    src: url(assets/fonts/Mulish/Mulish-VariableFont_wght.ttf) format("opentype");
+}
+
+body { margin: 0; }
+
+/*Navigation tab*/
+.non-active-icon {
+    font-size: 20px; /*icon size*/
+    color: rgb(202, 202, 202);
+    margin-right: 10px;
+}
+
+.active-icon {
+    font-size: 20px;
+    color: rgb(37,150,255);
+    margin-right: 10px;
+}
+
+/*input forms*/
+#rounded {
+    border-radius:10px;
+    border-width:2px;
+}
+

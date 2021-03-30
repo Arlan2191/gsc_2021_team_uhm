@@ -1,0 +1,145 @@
+body {
+  height: 100vh;
+}
+.split-screen-parent {
+  height: 100%;
+  background: white;
+  overflow: hidden;  
+}
+
+span {
+  font-size: 400%;
+}
+
+.selected {
+  opacity: 1 !important;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.active {
+  font-size: 78%;
+  font-weight: bold;
+  color:black;
+  margin-right: 20px;
+}
+
+.toolbar{
+  color: rgb(155, 155, 155);
+  background-color: white;
+  opacity: .9;
+}
+
+.companyName{
+font-size: 50%;
+}
+
+.dashboard {
+  text-decoration: none;
+  margin-top: 15px;
+  font-family: 'mulish';
+  color:rgb(172, 172, 172);
+}
+
+.mat-toolbar{
+  height: 12vh;
+}
+
+.mat-sidenav-container{
+  min-height: 100vh !important;
+}
+
+.toolbar-buttons{
+  font-family: 'mulish';
+  text-decoration: none;
+  margin-right: 20px;
+  font-size: 78%;
+  white-space: normal;
+}
+
+.mat-sidenav-content{
+  font-size: 100%;
+}
+
+.mat-sidenav {
+  color:rgb(83, 83, 83);
+  font-size: 28px;
+  width: 20%;
+}
+
+.logo {
+  width:80px;
+  margin-top: -5px;
+  margin-left: 160px;
+}
+
+#sign-up-img {
+  display: flex;
+  width: 400px;
+  margin-left: 15px;
+  margin-right: 20px;
+  margin-top: -90px;
+}
+
+h1 {
+  font-family: 'mulish';
+  margin-top: 10px;
+  color: rgb(43, 43, 43);
+  font-size: 40px;
+  font-weight: bolder;
+
+}
+h2 {
+  font-family: 'mulish';
+  font-weight: bold;
+  font-size: 40px;
+  margin-bottom: 40px;
+}
+
+p {
+  margin-top: 5px;
+  margin-bottom: 20px;
+  color: rgb(43, 43, 43);
+  font-size: 18px;
+  font-weight: lighter;
+}
+
+mat-card {
+  height: 500px;
+  width: 100%;
+  margin-top: -80px;
+  padding: 100px;
+  background: linear-gradient(180deg, rgba(37,150,255) 0%, rgba(255,255,255,0) 20%);
+  border-collapse: collapse;
+  border-radius: 1em;
+}
+
+mat-form-field {
+  font-size: 12px;
+  font-family: 'mulish';
+}
+
+.pin {
+  width: 50%;
+}
+
+.login-button {
+  background-color: rgb(37,150,255);
+  color: white;
+  margin-top: 15px;
+  width: 90px;
+  height: 40px;
+  font-size: 15px;
+}
+
+.new {
+  margin-top: 5px;
+  margin-left: 20px;
+  font-size: 16px;
+}
+
+.create-account-btn {
+  color: rgb(37,150,255);
+}
