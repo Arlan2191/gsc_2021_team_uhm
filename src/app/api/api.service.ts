@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiService {
-  private BASEURL = "https://ae9e75edc6b9.ngrok.io";
+  private BASEURL = "";
   private urlKey = ["ES", "VS"];
   private nullValues = [
     { "id": 0, "status": 0, "reason": "N/A" },

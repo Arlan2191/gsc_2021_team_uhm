@@ -59,15 +59,9 @@ img {
   margin-top: 20px;
 }
 
-.sidenav-container {
-  height: 200vh;
-}
 
-.sidenav {
-  width: 240px;
-  box-shadow: 3px 0 6px rgba(138, 138, 138, 0.24);
-  white-space: nowrap;
-  display: flex;
+mat-sidenav-container {
+  height: 300vh;
 }
 
 .home-button {
@@ -81,7 +75,7 @@ img {
 }
 
 mat-sidenav-content {
-  height: 200vh;
+  height: 300vh;
   background-image: #FAFAFA;
   padding-top: 30px;
   padding-left: 50px;
@@ -121,6 +115,10 @@ table {
     font-family: 'mulish';
  }
 
+ .vs-table, th, td {
+  font-size: 12px;
+}
+
 a {
     cursor: pointer;
 }
@@ -131,6 +129,37 @@ a {
 
 .hidden {
   visibility: hidden;
+}
+
+
+/*responsive-table */
+.table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  .mat-table {
+      width: 100%;
+      max-width: 100%;
+      margin-bottom: 1rem;
+      display: table;
+      border-collapse: collapse;
+      margin: 0px;
+  }
+  .mat-row,
+  .mat-header-row {
+      display: table-row;
+  }
+  .mat-cell,
+  .mat-header-cell {
+      word-wrap: initial;
+      display: table-cell;
+      padding: 5px 5px;
+      line-break: unset;
+      width: auto;
+      white-space: nowrap;
+      overflow: hidden;
+      vertical-align: middle;
+  }
 }
 
 /*responses*/
@@ -228,3 +257,17 @@ mat-form-field {
   50%  { transform: translate(0, 0px); } 
   100%   { transform: translate(0, -0px); }     
 } 
+
+/*buttons*/
+.add-btn {
+  background-color: rgb(37,150,255);
+  color: #FAFAFA;
+  margin-top: 5px;
+  border-collapse: collapse;
+  border-top-left-radius: 1em;
+  border-top-right-radius: 1em;
+}
+
+.add-icon {
+  font-size: 22px;
+}

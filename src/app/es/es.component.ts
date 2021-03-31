@@ -1,24 +1,61 @@
 import { ApiService } from '../api/api.service';
 import { FormService } from './../form.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'; 
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import { MomentDateOnlyAdapter } from './moment-utc-adapter';
+import { MomentConstructor, Moment } from './moment-date-only';
+
 
 export interface Label {
   value: string;
   title: string;
 }
 
+export interface UsersData {
+  time: string;
+  max_cap: number;
+  target_barangay: string;
+  birth_range1: string;
+  birth_range2: string;
+  priority: string;
+  date: string;
+  vs_id: number;
+  site_id: number;
+}
+
+const ELEMENT_DATA: UsersData[] = [
+  {vs_id: 1560608769332, date: '2021-08-04', time: '9:00 AM', max_cap: 100, target_barangay: 'Ermita', birth_range1: '1952-01-01', birth_range2: '1962-01-01', priority: '1', site_id: 1234},
+  {vs_id: 1560608769333, date: '2021-08-04', time: '9:00 AM', max_cap: 100, target_barangay: 'Ermita', birth_range1: '1952-01-01', birth_range2: '1962-01-01', priority: '2', site_id: 1234},
+  {vs_id: 1560608769314, date: '2021-08-04', time: '9:00 AM', max_cap: 100, target_barangay: 'Ermita', birth_range1: '1952-01-01', birth_range2: '1962-01-01', priority: '3', site_id: 1234},
+  {vs_id: 1560608769315, date: '2021-08-04', time: '9:00 AM', max_cap: 100, target_barangay: 'Ermita', birth_range1: '1952-01-01', birth_range2: '1962-01-01', priority: '3', site_id: 1234},
+  {vs_id: 1560608769316, date: '2021-08-04', time: '9:00 AM', max_cap: 100, target_barangay: 'Ermita', birth_range1: '1952-01-01', birth_range2: '1962-01-01', priority: '3', site_id: 1234},
+  {vs_id: 1560608769317, date: '2021-08-04', time: '9:00 AM', max_cap: 100, target_barangay: 'Ermita', birth_range1: '1952-01-01', birth_range2: '1962-01-01', priority: '3', site_id: 1234},
+  {vs_id: 1560608769318, date: '2021-08-04', time: '9:00 AM', max_cap: 100, target_barangay: 'Ermita', birth_range1: '1952-01-01', birth_range2: '1962-01-01', priority: '3', site_id: 1234},
+  {vs_id: 1560608769319, date: '2021-08-04', time: '9:00 AM', max_cap: 100, target_barangay: 'Ermita', birth_range1: '1952-01-01', birth_range2: '1962-01-01', priority: '3', site_id: 1234},
+  {vs_id: 1560608769310, date: '2021-08-04', time: '9:00 AM', max_cap: 100, target_barangay: 'Ermita', birth_range1: '1952-01-01', birth_range2: '1962-01-01', priority: '3', site_id: 1234},
+];
+
 @Component({
   selector: 'app-es',
   templateUrl: './es.component.html',
-  styleUrls: ['./es.component.css']
+  styleUrls: ['./es.component.scss'],
+  providers: [
+    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
+    // application's root module. We provide it at the component level here, due to limitations of
+    // our example generation script.
+    {provide: DateAdapter, useClass: MomentDateOnlyAdapter, deps: [MAT_DATE_LOCALE]},
+
+  ],
 })
 export class EsComponent implements OnInit {
   durationInSeconds = 5;
@@ -29,6 +66,8 @@ export class EsComponent implements OnInit {
   showResponse: boolean = false;
   allowEdit: boolean = false;
   selection: any = new SelectionModel<any>(true, []);
+  displayedColumns: string[] = ['vs_id', 'date', 'time', 'max_cap', 'target_barangay', 'birth_range', 'priority', 'site_id', 'action'];
+  dataSource = ELEMENT_DATA;
 
   appsTable: MatTableDataSource<any>;
   appsColumns: string[] = this._api.formKeys[0];
@@ -65,6 +104,7 @@ export class EsComponent implements OnInit {
           user_information_card: { cols: 3, rows: 4 },
           review_card: { cols: 3, rows: 4 },
           questionnaire_response_card: { cols: 3, rows: 8},
+          vaccination_session_card: { cols: 12, rows: 3}, 
         };
       }
  
@@ -73,13 +113,14 @@ export class EsComponent implements OnInit {
         pending_application__card: { cols: 3, rows: 4 },
         user_information_card: { cols: 9, rows: 8 },
         review_card: { cols: 3, rows: 4 },
-        questionnaire_response_card: { cols: 12, rows: 3},
+        questionnaire_response_card: { cols: 12, rows: 4},
+        vaccination_session_card: { cols: 12, rows: 9}, 
       };
     })
   );
 
-
-  constructor(private _formBuilder: FormBuilder, private _api: ApiService, private BreakpointObserver: BreakpointObserver) { }
+  @ViewChild(MatTable,{static:true}) table: MatTable<any>;
+  constructor(private _formBuilder: FormBuilder, private _api: ApiService, private BreakpointObserver: BreakpointObserver, public dialog: MatDialog, private changeDetectorRefs: ChangeDetectorRef) { }
   isHandset: Observable<BreakpointState> = this.BreakpointObserver.observe(Breakpoints.Handset)
   
   
@@ -195,6 +236,51 @@ export class EsComponent implements OnInit {
       console.log("Success");
     });
   }
+
+  openDialog(action, obj) {
+    obj.action = action;
+    const dialogRef = this.dialog.open(DialogBoxComponent, {
+      width: '250px',
+      data:obj
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result.event == 'Add'){
+        this.addRowData(result.data);
+      }else if(result.event == 'Delete'){
+        this.deleteRowData(result.data);
+      }
+    });
+  }
+
+  addRowData(row_obj){
+    var d = new Date();
+    this.dataSource.push({
+      vs_id:d.getTime(),
+      date:JSON.stringify(row_obj.date).slice(1, 11),
+      time:row_obj.time,
+      max_cap:row_obj.max_cap,
+      target_barangay:row_obj.target_barangay,
+      birth_range1:JSON.stringify(row_obj.birth_range1).slice(1, 11),
+      birth_range2:JSON.stringify(row_obj.birth_range2).slice(1, 11),
+      priority:row_obj.priority,
+      site_id:row_obj.site_id
+    });
+    this.table.renderRows();
+    
+  }
+
+  deleteRowData(row_obj){
+    this.dataSource = this.dataSource.filter((value,key)=>{
+      return value.vs_id != row_obj.vs_id;
+    });
+  }
+
+  /*refreshing data changes*/
+  // refresh() {
+  
+  //   });
+  // }
 
 }
 
