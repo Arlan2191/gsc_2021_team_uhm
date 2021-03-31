@@ -1,11 +1,16 @@
+<body>
+
+    <!-- <div *ngFor="loaderService.isLoading | async" class="loader-container">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div> -->
 
     <mat-grid-list cols="2" rowHeight="2:1">
         <mat-grid-tile class="left">
             <img src="assets/images/Rise_cover.png" alt="medical practictioner" id="sign-up-img">
         </mat-grid-tile>
+
         <mat-grid-tile class="right">
-            
-            <mat-card>
+            <mat-card class="floating">
                 <div class="header-form">
                     <h2>Registration Form</h2>
                         <a routerLink="/">
@@ -18,25 +23,25 @@
                     <hr>
                     <div class="form-row">
                         <div class="row">
+                            <label class="input-label">First Name</label>
                             <div class="col-lg-12">
                                 <mat-form-field appearance="outline" class="first-name-input">
-                                    <mat-label>First Name</mat-label>
                                     <input matInput placeholder="First Name" formControlName="first_name" required>
                                 </mat-form-field>
                             </div>
                         </div>
                         <div class="row">
+                            <label class="input-label">Middle Name</label>
                             <div class="col-lg-12">
                                 <mat-form-field appearance="outline" class="middle-name-input">
-                                    <mat-label>Middle Name</mat-label>
                                     <input matInput placeholder="Middle Name" formControlName="middle_name" required>
                                 </mat-form-field>
                             </div>
                         </div>
                         <div class="row">
+                            <label class="input-label">Last name</label>
                             <div class="col-lg-12">
                                 <mat-form-field appearance="outline" class="last-name-input">
-                                    <mat-label>Last Name</mat-label>
                                     <input matInput placeholder="Last Name" formControlName="last_name" required>
                                 </mat-form-field>
                             </div>
@@ -45,42 +50,38 @@
 
                     <div class="form-row">
                         <div class="row">
+                            <label class="input-label">Birthdate</label>
                             <div class="col-lg-12">
                                 <mat-form-field appearance="outline" class="birthdate-input">
-                                    <mat-label>Birthdate</mat-label>
                                     <input matInput placeholder="Birthdate" formControlName="birthdate" required>
                                 </mat-form-field>
                             </div>
                         </div>
                         <div class="row">
+                            <label class="input-label">Sex</label>
                             <div class="col-lg-12">
                                 <mat-form-field appearance="outline" class="sex-input">
-                                    <mat-label>Sex</mat-label>
-                                    <input matInput placeholder="Sex" formControlName="sex" required>
+                                    <mat-select formControlName="sex" required>
+                                        <mat-option *ngFor="let sex of sex" [value]="sex.value">
+                                          {{sex.title}}
+                                        </mat-option>
+                                    </mat-select>
                                 </mat-form-field>
                             </div>
                         </div>
                         <div class="row">
+                            <label class="input-label">Occupation</label>
                             <div class="col-lg-12">
                                 <mat-form-field appearance="outline" class="occupation-input">
-                                    <mat-label>Occupation</mat-label>
                                     <input matInput placeholder="Occupation" formControlName="occupation" required>
                                 </mat-form-field>
                             </div>
                         </div>
                         <div class="row">
+                            <label class="input-label">License Number</label>
                             <div class="col-lg-12">
                                 <mat-form-field appearance="outline" class="license-number-input">
-                                    <mat-label>License Number</mat-label>
                                     <input matInput placeholder="License Number" formControlName="license_number" required>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <mat-form-field appearance="outline" class="email-input">
-                                    <mat-label>Email</mat-label>
-                                    <input matInput placeholder="Email" formControlName="email" required>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -88,34 +89,18 @@
 
                     <div class="form-row">
                         <div class="row">
+                            <label class="input-label">Email</label>
+                            <div class="col-lg-12">
+                                <mat-form-field appearance="outline" class="email-input">
+                                    <input matInput placeholder="Email" formControlName="email" required>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="input-label">Mobile Number</label>
                             <div class="col-lg-12">
                                 <mat-form-field appearance="outline" class="mobile-number-input">
-                                    <mat-label>Mobile Number</mat-label>
                                     <input matInput placeholder="Mobile Number" formControlName="mobile_number" required>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <mat-form-field appearance="outline" class="home-address-input">
-                                    <mat-label>Home Address</mat-label>
-                                    <input matInput placeholder="Home Address" formControlName="home_address" required>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <mat-form-field appearance="outline" class="city-input">
-                                    <mat-label>City</mat-label>
-                                    <input matInput placeholder="City" formControlName="city" required>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <mat-form-field appearance="outline" class="barangay-input">
-                                    <mat-label>Barangay</mat-label>
-                                    <input matInput placeholder="Barangay" formControlName="barangay" required>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -126,34 +111,74 @@
 
                     <div class="form-row">
                         <div class="row">
+                            <label class="input-label">Organization Name</label>
                             <div class="col-lg-12">
                                 <mat-form-field appearance="outline" class="organization-name-input">
-                                    <mat-label>Organization Name</mat-label>
                                     <input matInput placeholder="Organization Name" formControlName="org" required>
                                 </mat-form-field>
                             </div>
                         </div>
                         <div class="row">
+                            <label class="input-label">Organization Email</label>
                             <div class="col-lg-12">
                                 <mat-form-field appearance="outline" class="organization-email-input">
-                                    <mat-label>Organization Email</mat-label>
                                     <input matInput placeholder="Organization Email" formControlName="org_email" required>
                                 </mat-form-field>
                             </div>
                         </div>
                         <div class="row">
+                            <label class="input-label">Organization Telecom</label>
                             <div class="col-lg-12">
                                 <mat-form-field appearance="outline" class="organization-telecom-input">
-                                    <mat-label>Organization Telecom</mat-label>
                                     <input matInput placeholder="Organization Telecom" formControlName="org_telecom" required>
                                 </mat-form-field>
                             </div>
                         </div>
                         <div class="row">
+                            <label class="input-label">Organization Address</label>
                             <div class="col-lg-12">
                                 <mat-form-field appearance="outline" class="organization-address-input">
-                                    <mat-label>Organization Address</mat-label>
                                     <input matInput placeholder="Organization Address" formControlName="org_address" required>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="input-label">Region</label>
+                            <div class="col-lg-12">
+                                <mat-form-field appearance="outline">
+                                    <mat-select formControlName="region" required>
+                                        <mat-option *ngFor="let region of regions" [value]="region.value">
+                                          {{region.title}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="input-label">Province</label>
+                            <div class="col-lg-12">
+                                <mat-form-field appearance="outline" class="province-input">
+                                    <mat-select formControlName="province" required>
+                                        <mat-option *ngFor="let province of provinces" [value]="province.value">
+                                          {{province.title}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="input-label">Municipality</label>
+                            <div class="col-lg-12">
+                                <mat-form-field appearance="outline" class="municipality-input">
+                                    <input matInput placeholder="City" formControlName="municipality" required>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="input-label">Barangay</label>
+                            <div class="col-lg-12">
+                                <mat-form-field appearance="outline" class="barangay-input">
+                                    <input matInput placeholder="Barangay" formControlName="barangay" required>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -164,6 +189,6 @@
             </mat-card>
         </mat-grid-tile>
     </mat-grid-list>
-
+</body>
 
 

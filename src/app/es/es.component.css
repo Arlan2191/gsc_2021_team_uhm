@@ -71,6 +71,7 @@ img {
 }
 
 .home-button {
+  text-decoration: none;
   justify-content: center;
 }
 
@@ -107,7 +108,7 @@ mat-sidenav-content {
 /*navigation tab*/
 .divider {
   width: 125%;
-  margin-top: 270%;
+  margin-top: 250%;
   margin-left: 30px;
 }
 
@@ -140,8 +141,15 @@ a {
 }
 
 .review {
+  width: 230px;
+}
+
+.review li {
   font-size: 18px;
   font-family: 'mulish';
+  margin-right: 15px;
+  list-style: none;
+  display: inline;
 }
 
 .applications-table {
@@ -206,3 +214,17 @@ ul li h1 a{text-decoration:none;}
 mat-form-field {
   font-size: 12px;
 }
+
+/* animations */
+.floating {   
+  animation-name: floating; 
+  animation-duration: 1.3s; 
+  animation-iteration-count: 1; 
+  animation-timing-function: ease-in-out; 
+} 
+
+@keyframes floating { 
+  0% { transform: translate(0,  60px); } 
+  50%  { transform: translate(0, 0px); } 
+  100%   { transform: translate(0, -0px); }     
+} 

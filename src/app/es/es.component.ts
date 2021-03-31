@@ -10,12 +10,18 @@ import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/l
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'; 
 
+export interface Label {
+  value: string;
+  title: string;
+}
+
 @Component({
   selector: 'app-es',
   templateUrl: './es.component.html',
   styleUrls: ['./es.component.css']
 })
 export class EsComponent implements OnInit {
+  durationInSeconds = 5;
   currentID: number;
   reviewFormGroup: FormGroup;
   siteFormGroup: FormGroup;
@@ -38,6 +44,14 @@ export class EsComponent implements OnInit {
 
   userTable: MatTableDataSource<any>;
   userColumns: string[] = this._api.formKeys[2];
+  
+  labels: Label[] = [
+    {value: 'G', title: 'Granted'},
+    {value: 'G@R', title: 'Granted@Risk'},
+    {value: 'D', title: 'Denied'},
+    {value: 'W', title: 'Waitlisted'},
+    {value: 'P', title: 'Pending'},
+  ];
 
 
   /*Grid Tiles*/
@@ -67,6 +81,8 @@ export class EsComponent implements OnInit {
 
   constructor(private _formBuilder: FormBuilder, private _api: ApiService, private BreakpointObserver: BreakpointObserver) { }
   isHandset: Observable<BreakpointState> = this.BreakpointObserver.observe(Breakpoints.Handset)
+  
+  
 
   ngOnInit() {
     this._api.getApplications().then((data) => {
@@ -181,3 +197,5 @@ export class EsComponent implements OnInit {
   }
 
 }
+
+

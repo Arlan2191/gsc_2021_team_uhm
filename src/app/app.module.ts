@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -37,10 +37,15 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CardComponent } from './card/card.component';
 import { BadgeModule } from 'angular-bootstrap-md';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { InterceptorService } from 'src/app/loader/interceptor.service';
+import { AnimateOnScrollModule } from 'ng2-animate-on-scroll';
+import { SnackBarComponent } from './snack-bar/snack-bar.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +55,8 @@ import { BadgeModule } from 'angular-bootstrap-md';
     RegisterComponent,
     EsComponent,
     TiComponent,
-    CardComponent
+    CardComponent,
+    SnackBarComponent
   ],
   imports: [
     BrowserModule,
@@ -86,8 +92,15 @@ import { BadgeModule } from 'angular-bootstrap-md';
     MatListModule,
     NgbModule,
     BadgeModule,
+    NgxMaterialTimepickerModule,
+    MatProgressBarModule,
+    
+    AnimateOnScrollModule.forRoot()
+
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi:true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -6,9 +6,17 @@ import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+
 const routes: Routes = [
+  // { path: '**',
+  //   redirectTo: '/home'
+  // },
   {
     path: '',
+    component: HomeComponent
+  },
+  {
+    path: 'home',
     component: HomeComponent
   },
   {

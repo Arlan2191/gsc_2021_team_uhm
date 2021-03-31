@@ -7,6 +7,8 @@ import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/l
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'; 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Icons } from 'ng-bootstrap-icons/bootstrap-icons/icons.provider';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-ti',
@@ -14,6 +16,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   styleUrls: ['./ti.component.css']
 })
 export class TiComponent implements OnInit {
+  durationInSeconds = 5;
   isLinear: boolean = true;
   referenceID: FormGroup;
   firstDose: FormGroup;
@@ -107,5 +110,6 @@ export class TiComponent implements OnInit {
   update() {
 
   }
+
 
 }

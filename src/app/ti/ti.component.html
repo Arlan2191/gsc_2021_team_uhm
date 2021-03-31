@@ -11,7 +11,7 @@
             </button>
             <p id="description">DASHBOARD</p>
 
-            <a mat-list-item routerLink="/" class="admin-toolbar">
+            <a mat-list-item routerLink="/home" class="admin-toolbar">
             <mat-icon class = "non-active-icon">home</mat-icon>Home</a>
 
             <a mat-list-item routerLink="/review"  class="admin-toolbar">
@@ -20,16 +20,23 @@
             <a mat-list-item routerLink="/track"  class="admin-toolbar active">
             <mat-icon class = "active-icon"> person_pin_circle</mat-icon>TI</a>
 
+            <a mat-list-item routerLink="/" class="admin-toolbar">
+            <mat-icon class = "non-active-icon">exit_to_app</mat-icon>Log Out</a>    
+
             <hr class="divider">
-            
+
             <a mat-list-item routerLink="/"  class="admin-toolbar">
             <span class="material-icons  non-active-icon" >help</span>Help</a>
         </mat-nav-list>
     </mat-sidenav>
 
-    <mat-sidenav-content>
+    <mat-sidenav-content class="floating">
 
-                <h1 id="title">Tracking Information</h1>
+        <!-- <div *ngFor="loaderService.isLoading | async" class="loader-container">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div> -->
+
+        <h1 id="title">Tracking Information</h1>
 
         <form [formGroup]="referenceID" class="search-bar">
             <mat-form-field appearance="standard">
@@ -44,7 +51,51 @@
             <mat-grid-tile [colspan]="( cardLayout | async )?.patient_info_card.cols"
                 [rowspan]="( cardLayout | async )?.patient_info_card.rows">
                 <app-card>
+                    <div *ngFor="let info of userTable">
+                        <div class="first-row-info">
+                            <span class="name">{{info.first_name}}</span>
+                            <span class="name">{{info.middle_name}}</span>
+                            <span class="name">{{info.last_name}}</span>
+                            <span class="vaccination-status">Unvaccinated</span>
+                        </div>
+                        
+                        <div class="second-row-info p-2 mt-2 mr-3 d-flex justify-content-between">
+                            <div class="d-flex flex-column">
+                                <span class="heading">Birthdate</span>
+                                <span class="info">{{info.birthdate}}</span>
+                            </div>
+                            <div class="d-flex flex-column">
+                                <span class="heading">Sex</span>
+                                <span class="info">{{info.sex}}</span>
+                            </div>
+                            <div class="d-flex flex-column">
+                                <span class="heading">Occupation</span>
+                                <span class="info">{{info.occupation}}</span>
+                            </div>
+                            <div class="d-flex flex-column">
+                                <span class="heading">Email</span>
+                                <span class="info">{{info.email}}</span>
+                            </div>
+                        </div>
 
+                    <div class="second-row-info p-2 mt-2 mr-3 d-flex justify-content-between">
+                        <div class="d-flex flex-column">
+                            <span class="heading">Mobile Number</span>
+                            <span class="info">{{info.mobile_number}}</span>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <span class="heading">City</span>
+                            <span class="info">{{info.city}}</span>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <span class="heading">Barangay</span>
+                            <span class="info">{{info.barangay}}</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!--Testing-->
                     <div class="first-row-info">
                         <span class="name">Veronica</span>
                         <span class="name">S.</span>
@@ -112,20 +163,24 @@
             </mat-grid-tile>
 
             <!--Instruction Card-->
-            <mat-grid-tile [colspan]="( cardLayout | async )?.instruction_card.cols"
+                <mat-grid-tile [colspan]="( cardLayout | async )?.instruction_card.cols"
                 [rowspan]="( cardLayout | async )?.instruction_card.rows">
-                <app-card>
-                    <div style="display: flex">
-                        <h3>Instructions:</h3>
-                        <p class="instructions">Make him drink water before vaccination.</p>
-                    </div>
+                    <app-card>
+                        
+                        <div style="display: flex">
+                            <h3>Instructions:</h3>
+                            <p class="instructions">Make him drink water before vaccination.</p>
+                        </div>
 
-                    <mdb-badge success="true" class="tags">Granted</mdb-badge>
-                    <mdb-badge primary="true" class="tags">Priority #1</mdb-badge>
-                    <mdb-badge primary="true" class="reason">Priority #1 because she is a frontliner</mdb-badge>
-                    
-                </app-card>
-            </mat-grid-tile>
+                        <mdb-badge success="true" class="tags">Granted</mdb-badge>
+                        <mdb-badge primary="true" class="tags">Priority #</mdb-badge>
+
+                        <div *ngFor="let info of esTable">
+                            <mdb-badge primary="true" class="reason">{{info.reason}}</mdb-badge>
+                        </div>
+
+                    </app-card>
+                </mat-grid-tile>
 
             <!--Vaccination Schedule Card-->
             <mat-grid-tile [colspan]="( cardLayout | async )?.vaccination_sched_card.cols"
@@ -158,8 +213,8 @@
                 <app-card>
                     <div class="ti-table">
                         <div class="row" class="id">
-                            <div class="col-lg-12">
-                                <p>ID:</p>
+                            <div *ngFor="let info of esTable" class="col-lg-12">
+                                <p>{{info.id}}</p>
                             </div>
                         </div>
                         <mat-tab-group mat-align-tabs="start"  dynamicHeight>
@@ -198,7 +253,8 @@
                                             <div class="col-lg-12">
                                                 <mat-form-field appearance="outline" class="time-input">
                                                     <mat-label>Time</mat-label>
-                                                    <input matInput placeholder="Time" formControlName="time" required>
+                                                    <input matInput placeholder="Time" [ngxTimepicker]="picker">
+                                                    <ngx-material-timepicker #picker></ngx-material-timepicker>
                                                 </mat-form-field>
                                             </div>
                                         </div>
@@ -292,75 +348,5 @@
                 </app-card>
             </mat-grid-tile>
         </mat-grid-list>
-        
-        <div class="profile">
-            <h2>Personal Information</h2>
-            <div class="pi-table">
-                <table mat-table [dataSource]="userTable" class="mat-elevation-28">
-                    <ng-container matColumnDef="first_name">
-                        <th mat-header-cell *matHeaderCellDef> First Name </th>
-                        <td mat-cell *matCellDef="let element">{{element.first_name}}</td>
-                    </ng-container>
-                    <ng-container matColumnDef="middle_name">
-                        <th mat-header-cell *matHeaderCellDef> Middle Name </th>
-                        <td mat-cell *matCellDef="let element">{{element.middle_name}}</td>
-                    </ng-container>
-                    <ng-container matColumnDef="last_name">
-                        <th mat-header-cell *matHeaderCellDef> Last Name </th>
-                        <td mat-cell *matCellDef="let element">{{element.last_name}}</td>
-                    </ng-container>
-                    <ng-container matColumnDef="birthdate">
-                        <th mat-header-cell *matHeaderCellDef> Birthdate </th>
-                        <td mat-cell *matCellDef="let element">{{element.birthdate}}</td>
-                    </ng-container>
-                    <ng-container matColumnDef="sex">
-                        <th mat-header-cell *matHeaderCellDef> Sex </th>
-                        <td mat-cell *matCellDef="let element">{{element.sex}}</td>
-                    </ng-container>
-                    <ng-container matColumnDef="occupation">
-                        <th mat-header-cell *matHeaderCellDef> Occupation </th>
-                        <td mat-cell *matCellDef="let element">{{element.occupation}}</td>
-                    </ng-container>
-                    <ng-container matColumnDef="email">
-                        <th mat-header-cell *matHeaderCellDef> Email </th>
-                        <td mat-cell *matCellDef="let element">{{element.email}}</td>
-                    </ng-container>
-                    <ng-container matColumnDef="mobile_number">
-                        <th mat-header-cell *matHeaderCellDef> Mobile Number </th>
-                        <td mat-cell *matCellDef="let element">{{element.mobile_number}}</td>
-                    </ng-container>
-                    <ng-container matColumnDef="city">
-                        <th mat-header-cell *matHeaderCellDef> City </th>
-                        <td mat-cell *matCellDef="let element">{{element.city}}</td>
-                    </ng-container>
-                    <ng-container matColumnDef="barangay">
-                        <th mat-header-cell *matHeaderCellDef> Barangay </th>
-                        <td mat-cell *matCellDef="let element">{{element.barangay}}</td>
-                    </ng-container>
-                    <tr mat-header-row *matHeaderRowDef="userColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: userColumns;"></tr>
-                </table>
-            </div>
-            <h2>Eligibility Status</h2>
-            <div class="es-table">
-                <table mat-table [dataSource]="esTable" class="mat-elevation-28">
-                    <ng-container matColumnDef="id">
-                        <th mat-header-cell *matHeaderCellDef> ID </th>
-                        <td mat-cell *matCellDef="let element">{{element.id}}</td>
-                    </ng-container>
-                    <ng-container matColumnDef="status">
-                        <th mat-header-cell *matHeaderCellDef> Status </th>
-                        <td mat-cell *matCellDef="let element">{{element.status}}</td>
-                    </ng-container>
-                    <ng-container matColumnDef="reason">
-                        <th mat-header-cell *matHeaderCellDef> Reason </th>
-                        <td mat-cell *matCellDef="let element">{{element.reason}}</td>
-                    </ng-container>
-                    <tr mat-header-row *matHeaderRowDef="esColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: esColumns;"></tr>
-                </table>
-            </div>
-        </div>
-
     </mat-sidenav-content>
 
