@@ -265,7 +265,7 @@
           <app-card title="Questionnaire Response">
             <h1 class="title">Vaccination Session</h1>
             <button mat-button (click)="openDialog('Add',{})" mat-flat-button class="add-btn">Add Session<mat-icon class="add-icon">add</mat-icon></button>
-                <div class="container table-responsive">
+                <div class="container table-responsive" animateOnScroll animationName="floating" offset="120">
                 
                     <table mat-table [dataSource]="dataSource" #mytable class="vs-table">
                 
