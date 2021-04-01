@@ -1,0 +1,206 @@
+<!-- <div *ngFor="loaderService.isLoading | async" class="loader-container">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div> -->
+
+<!-- <mat-grid-list cols="3" rowHeight="1:1">
+        <mat-grid-tile colspan="1" rowspan="2" class="left">
+            <img src="assets/images/Rise_cover.png" alt="medical practictioner" id="sign-up-img">
+        </mat-grid-tile>
+        <mat-grid-tile colspan="2" rowspan="1" class="right"> -->
+
+<body>
+    <mat-card class="form-content container">
+        <div class="form-header row">
+            <div class="form-header-item col-lg-11">
+                <h1 class="form-title">Registration Form</h1>
+            </div>
+            <div class="form-header-item col-lg-1 d-flex justify-content-end">
+                <a class="form-logo"><img src="assets/images/Rise_Logo_W_All.png"></a>
+            </div>
+        </div>
+        <div class="form-body row d-flex justify-content-center">
+            <mat-horizontal-stepper [linear]="false" #stepper fxLayout="column">
+                <ng-template matStepperIcon="edit">
+                    <mat-icon>done</mat-icon>
+                </ng-template>
+                <mat-step [stepControl]="registerFormGroup" label="Registration Form">
+                    <form [formGroup]="registerFormGroup">
+                        <h2>Personal Info</h2>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-4 d-flex justify-content-center">
+                                    <mat-form-field appearance="outline" class="first-name-input">
+                                        <mat-label>First Name</mat-label>
+                                        <input matInput placeholder="First Name" formControlName="first_name" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-4 d-flex justify-content-center">
+                                    <mat-form-field appearance="outline" class="middle-name-input">
+                                        <mat-label>Middle Name</mat-label>
+                                        <input matInput placeholder="Middle Name" formControlName="middle_name"
+                                            required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-4 d-flex justify-content-center">
+                                    <mat-form-field appearance="outline" class="last-name-input">
+                                        <mat-label>Last Name</mat-label>
+                                        <input matInput placeholder="Last Name" formControlName="last_name" required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3 d-flex justify-content-center">
+                                    <mat-form-field class="birthdate" appearance="outline">
+                                        <mat-label>Birthdate</mat-label>
+                                        <input matInput [matDatepicker]="picker" formControlName="birthdate">
+                                        <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-3 d-flex justify-content-center">
+                                    <mat-form-field appearance="outline" class="sex-input">
+                                        <mat-label>Sex</mat-label>
+                                        <mat-select formControlName="sex" required>
+                                            <mat-option *ngFor="let sex of sex" [value]="sex.value">
+                                                {{sex.title}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-3 d-flex justify-content-center">
+                                    <mat-form-field appearance="outline" class="occupation-input">
+                                        <mat-label>Occupation</mat-label>
+                                        <input matInput placeholder="Occupation" formControlName="occupation" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-3 d-flex justify-content-center">
+                                    <mat-form-field appearance="outline" class="license-number-input">
+                                        <mat-label>License Number</mat-label>
+                                        <input matInput placeholder="License Number" formControlName="license_number"
+                                            required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4 d-flex justify-content-center">
+                                    <mat-form-field appearance="outline" class="email-input">
+                                        <mat-label>Email</mat-label>
+                                        <input matInput placeholder="Email" formControlName="email" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-4 d-flex justify-content-center">
+                                    <mat-form-field appearance="outline" class="mobile-number-input">
+                                        <mat-label>Mobile Number</mat-label>
+                                        <input matInput placeholder="Mobile Number" formControlName="mobile_number"
+                                            required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <h2>Organization Info</h2>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-3 d-flex justify-content-center">
+                                    <mat-form-field appearance="outline" class="organization-name-input">
+                                        <mat-label>Organization Name</mat-label>
+                                        <input matInput placeholder="Organization Name" formControlName="organization"
+                                            required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-3 d-flex justify-content-center">
+                                    <mat-form-field appearance="outline" class="organization-email-input">
+                                        <mat-label>Organization Email</mat-label>
+                                        <input matInput placeholder="Organization Email"
+                                            formControlName="organization_email" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-3 d-flex justify-content-center">
+                                    <mat-form-field appearance="outline" class="organization-telecom-input">
+                                        <mat-label>Organization Telecom</mat-label>
+                                        <input matInput placeholder="Organization Telecom"
+                                            formControlName="organization_telecom" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-3 d-flex justify-content-center">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Organization Region</mat-label>
+                                        <mat-select formControlName="organization_region" required>
+                                            <mat-option *ngFor="let region of regions" [value]="region.value">
+                                                {{region.title}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-5 d-flex justify-content-center">
+                                    <mat-form-field appearance="outline" class="organization-address-input">
+                                        <mat-label>Organization Address</mat-label>
+                                        <input matInput placeholder="Organization Address"
+                                            formControlName="organization_address" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-2 d-flex justify-content-center">
+                                    <mat-form-field appearance="outline" class="province-input">
+                                        <mat-label>Organization Province</mat-label>
+                                        <mat-select formControlName="organization_province" required>
+                                            <mat-option *ngFor="let province of provinces" [value]="province.value">
+                                                {{province.title}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-2 d-flex justify-content-center">
+                                    <mat-form-field appearance="outline" class="municipality-input">
+                                        <mat-label>Organization Municipality</mat-label>
+                                        <input matInput placeholder="Municipality"
+                                            formControlName="organization_municipality" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-3 d-flex justify-content-center">
+                                    <mat-form-field appearance="outline" class="barangay-input">
+                                        <mat-label>Barangay</mat-label>
+                                        <input matInput placeholder="Barangay" formControlName="organization_barangay"
+                                            required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <button mat-flat-button (click)="submit(stepper)" class="form-button">Submit</button>
+                    </form>
+                </mat-step>
+                <mat-step label="Done">
+                    <div class="success-body" *ngIf="username!=undefined&&password!=undefined">
+                        <div class="row d-flex justify-content-center">
+                            <h2>Account Information</h2>
+                        </div>
+                        <div class="container">
+                            <div class="row d-flex justify-content-center">
+                                <h3>Username:</h3>
+                            </div>
+                            <div class="row d-flex justify-content-center">
+                                <p class="subtitle">{{ username }}</p>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row d-flex justify-content-center">
+                                <h3>Password:</h3>
+                            </div>
+                            <div class="row d-flex justify-content-center">
+                                <p class="subtitle">{{ password }}</p>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row d-flex justify-content-center">
+                                <button mat-flat-button (click)="proceed()" class="form-button">Proceed</button>
+                            </div>
+                        </div>
+                    </div>
+                </mat-step>
+            </mat-horizontal-stepper>
+        </div>
+    </mat-card>
+</body>
+
+<!-- </mat-grid-tile>
+    </mat-grid-list> -->

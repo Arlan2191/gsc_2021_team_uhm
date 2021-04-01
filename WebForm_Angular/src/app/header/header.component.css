@@ -1,0 +1,30 @@
+.header .header-menu {
+    height: 70px;
+    background-color: white;
+}
+
+.header-menu .header-logo img{
+    width: 80%;
+    height: 80%;
+}
+
+.header-menu .header-item {
+    font-size: 14px;
+    margin-left: 5%;
+}
+
+.header-menu .header-item a:hover, a.active{
+    cursor: pointer;
+}
+
+.header-menu .btn-register{
+    margin-left: 5%;
+    font-size: 14px;
+    background-color: #6294ff;
+    color: white;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+  

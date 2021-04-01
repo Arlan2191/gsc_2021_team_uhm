@@ -1,0 +1,35 @@
+.footer-home {
+    margin: 30px;
+    height: 50%;
+    font-weight: lighter;
+    color: white;
+    font-size: 12px;
+}
+
+.footer-home .row {
+    position: relative;
+}
+
+.footer-home .footer-main {
+    padding-right: 100px;
+}
+
+.footer-home .footer-main .logo {
+    cursor: pointer;
+}
+
+.footer-home .footer-main .subtext {
+    margin-top: 10px;
+}
+
+.footer-home .footer-main .subtext p{
+    margin-top: 5px;
+}
+
+.footer h3{
+    flex: content;
+    position: absolute;
+    bottom: 0;
+    font-weight:400;
+    font-size: 12px;
+}

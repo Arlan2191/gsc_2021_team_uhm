@@ -1,0 +1,15 @@
+.content {
+    margin: 30px 180px 0 180px;
+    height: 100%;
+}
+
+.footer {
+    background-color: #6294ff;
+    padding: 30px 180px 30px 180px;
+}
+
+.form {
+    padding: 10vh 20vw 10vh 20vw;
+    height: 100%;
+    background-image: linear-gradient(rgb(210, 226, 250),white);
+}
