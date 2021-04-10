@@ -1,15 +1,21 @@
+from SMS.library import defaultResponse
+from API.models import Eligibility_Status, Tracking_Information
+from requests import post
 from collections import OrderedDict
-from API.serializers import LoginSerializer, RegistrationSerializer
+from functools import partial
+from API.serializers import LGUAdminSerializer, LoginSerializer, RegistrationSerializer
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.utils.crypto import get_random_string
-from projectBakuna.environment import datastoreConfig, TABLES, SERIALIZERS
+from projectBakuna.environment import datastoreConfig, TABLES, SERIALIZERS, ENGINE, globeConfig
 from typing import Any
-from projectBakuna.exceptions import IncorrectPINException, SubscriptionException
+from projectBakuna.exceptions import ConfirmationException, IncorrectPINException, SubscriptionException
 from google.oauth2 import service_account
 from google.cloud import datastore
 from google.cloud.datastore.key import Key
 from datetime import datetime
 from threading import Thread
+from aldjemy import core
+from sqlalchemy.sql import text
 import time
 import re
 
@@ -51,7 +57,7 @@ class CreateService:
         _ = EligibilityService.initialize(id, data)
 
     def __registerUser(id: int, validated_data):
-        data = {"id": id, "first_name": validated_data.get("first_name"), "last_name": validated_data.get(
+        data = {"id": id, "lgu_id": validated_data.get("lgu_id").lgu_id, "first_name": validated_data.get("first_name"), "last_name": validated_data.get(
             "last_name"), "mobile_number": validated_data.get("mobile_number"), "email": validated_data.get("email"), "password": get_random_string(length=8)}  # TODO
         u = AuthUserService.register(100, data)
         return u.username, data["password"]
@@ -63,22 +69,34 @@ class CreatePersonnelService:
         if serializer.is_valid(raise_exception=True):
             u = serializer.create(serializer.validated_data)
             username, PIN = CreatePersonnelService.__registerUser(
-                u.pk, serializer.validated_data)
+                u.pk, 10, serializer.validated_data)
             Thread(target=CreatePersonnelService.__initializeDropbox,
                    args=[u.pk, serializer.validated_data]).start()
             return username, PIN
 
-    def __registerUser(id, validated_data):
-        data = {"id": id, "username": validated_data.get("license_number"), "first_name": validated_data.get("first_name"), "last_name": validated_data.get(
-            "last_name"), "mobile_number": validated_data.get("mobile_number"), "email": validated_data.get("email"), "password": get_random_string(length=8)}
-        u = AuthUserService.register(10, data)
-        return u.username, data["password"]
+    def __registerUser(id, type, validated_data):
+        if type == 10:
+            data = {"id": id, "lgu_id": validated_data.get("lgu_id").lgu_id, "username": validated_data.get("license_number"), "first_name": validated_data.get("first_name"), "last_name": validated_data.get(
+                "last_name"), "mobile_number": validated_data.get("mobile_number"), "email": validated_data.get("email"), "password": get_random_string(length=8)}
+        elif type == 1:
+            data = {"id": id, "lgu_id": validated_data.get("lgu_id").lgu_id, "username": validated_data.get("organization"), "first_name": validated_data.get("organization"), "last_name": validated_data.get(
+                "organization"), "mobile_number": validated_data.get("organization_telecom"), "email": validated_data.get("organization_email"), "password": get_random_string(length=8)}
+        u = AuthUserService.register(type, data)
+        return u.pk, data["password"]
 
     def __initializeDropbox(id, validated_data):
         time.sleep(0.01)
-        data = {"id": id, "region": validated_data.get("organization_region"), "province": validated_data.get("organization_province"), "municipality": validated_data.get("organization_municipality"), "pending_applications": 0,
-                "reviewing_applications": 0, "reviewed_applications": 0}
+        data = {"id": id, "lgu_id": validated_data.get(
+            "lgu_id").lgu_id, "pending_applications": 0, "reviewed_applications": 0}
         _ = DropboxService.initialize(data)
+
+    def register(data: dict):
+        serializer = SERIALIZERS["LGUA"](data=data)
+        if serializer.is_valid(raise_exception=True):
+            u = serializer.create(serializer.validated_data)
+            username, PIN = CreatePersonnelService.__registerUser(
+                u.pk, 1, serializer.validated_data)
+            return username, PIN
 
 
 class AuthUserService:
@@ -87,11 +105,16 @@ class AuthUserService:
             instance = TABLES["PI"].objects.get(pk=user.get('id'))
         elif type == 10:
             instance = TABLES["PRI"].objects.get(pk=user.get('id'))
+        elif type == 1:
+            instance = TABLES["LGUA"].objects.get(pk=user.get('id'))
         if instance is not None:
-            serializer = RegistrationSerializer(
-                data=user, partial=True) if type == 100 else RegistrationSerializer(data=user)
-            if serializer.is_valid(raise_exception=True):
-                return serializer.create(type, serializer.validated_data)
+            if type == 100:
+                serializer = RegistrationSerializer(data=user, partial=True)
+            elif type == 10 or type == 1:
+                serializer = RegistrationSerializer(data=user)
+            if serializer is not None:
+                if serializer.is_valid(raise_exception=True):
+                    return serializer.create(type, serializer.validated_data)
 
     def login(user: dict):
         serializer = LoginSerializer(data=user, partial=True)
@@ -132,6 +155,24 @@ class DatastoreService:
     def getCities(self):
         query = list(self.datastoreClient.query(kind='Cities').fetch())
         return {"query_result": query}
+
+    def getSessionConfirmations(self, lgu_id, id):
+        task = self.datastoreClient.get(
+            Key('Sessions', lgu_id, project='project-bakuna'))
+        return dict(task)
+
+    def initSessionConfirmations(self, lgu_id, id):
+        time.sleep(0.01)
+        eKey = self.datastoreClient.key('Sessions', int(lgu_id))
+        task = datastore.Entity(key=eKey)
+        task[str(id)] = []
+        self.datastoreClient.put(task)
+
+    def updateSessionConfirmations(self, lgu_id, id, uID):
+        task = self.datastoreClient.get(
+            Key('Sessions', lgu_id, project='project-bakuna'))
+        task[str(id)] = task[str(id)] + [uID]
+        self.datastoreClient.put(task)
 
 
 class SMSService:
@@ -190,7 +231,7 @@ class SMSService:
 
 class DropboxService:
     def initialize(data: dict):
-        serializer = SERIALIZERS["EA"](data=data)
+        serializer = SERIALIZERS["EA"](data=data, partial=True)
         if serializer.is_valid(raise_exception=True):
             _ = serializer.create(serializer.validated_data)
 
@@ -209,47 +250,84 @@ class DropboxService:
 class EligibilityService:
 
     def initialize(id: int, validated_data: dict):
-        try:
-            personnel = TABLES["EA"].objects.raw(
-                "SELECT id_id FROM eligibility_applications WHERE pending_applications=(SELECT MIN(pending_applications) FROM eligibility_applications) AND region='{}' AND province='{}' AND municipality='{}' LIMIT 1".format(validated_data.get("region"), validated_data.get("province"), validated_data.get("municipality")))[0]
-            data = {"id": id, "status": "P", "assigned_to": personnel.id_id,
-                    "reason": "Assigned medical personnel has yet to review your application"}
-            serializer = SERIALIZERS["ES"](data=data)
-            if serializer.is_valid(raise_exception=True):
-                instance = serializer.create(serializer.validated_data)
-                Thread(target=DropboxService.update, args=[personnel.id_id, {
-                    "pending_applications": personnel.pending_applications + 1}]).start()
-        except IndexError:
-            pass  # TODO
+        personnel = TABLES["EA"].objects.raw(
+            "SELECT id_id FROM eligibility_applications WHERE pending_applications=(SELECT MIN(pending_applications) FROM eligibility_applications) AND lgu_id_id='{}' LIMIT 1".format(validated_data.get("lgu_id").lgu_id))[0]
+        data = {"id": id, "lgu_id": validated_data.get("lgu_id").lgu_id, "status": "P", "assigned_to": personnel.id_id,
+                "reason": "Assigned medical personnel has yet to review your application"}
+        serializer = SERIALIZERS["ES"](data=data)
+        if serializer.is_valid(raise_exception=True):
+            instance = serializer.create(serializer.validated_data)
+            Thread(target=DropboxService.update, args=[personnel.id_id, {
+                "pending_applications": personnel.pending_applications + 1}]).start()
 
     def view(id: int):
         instance = TABLES["ES"].objects.get(pk=id)
         return instance
 
     def update(id: int, data: dict):
-        print(data)
         instance = TABLES["ES"].objects.get(pk=id)
         serializer = SERIALIZERS["ES"](data=data, partial=True)
         if serializer.is_valid(raise_exception=True):
             instance = serializer.update(instance, serializer.validated_data)
+            data = DropboxService.view(id)
+            data["reviewed_applications"] += 1
             if data.get("status") == "G" or data.get("status") == "G@R":
                 Thread(target=TrackingService.create, args=[id]).start()
+            Thread(target=EligibilityService.notify,
+                   args=[id, instance]).start()
+            Thread(target=DropboxService.update, args=[id, data]).start()
             return instance.pk
 
+    def notify(id: int, instance):
+        time.sleep(0.01)
+        query = text("SELECT m.mobile_number, auth_token, email, first_name FROM (personal_information AS p INNER JOIN auth_mobile_number AS m ON p.mobile_number=m.mobile_number AND (m.auth_token!='Unsubscribed' OR p.email!='N/A')) INNER JOIN eligibility_status AS e ON p.id=e.id_id WHERE (e.status='G' OR e.status='G@R') AND p.id={} LIMIT 1".format(id))
+        connection = ENGINE.connect()
+        recipient = connection.execute(query).fetchall()
+        message = defaultResponse["defaultEligibilityNotification"].format(
+            recipient[0][3], str(instance.get_status_display()).upper())
+        senderAddress = globeConfig.get("shortCodeCrossTelco")[-4:]
+        data = {"outboundSMSMessageRequest": {"clientCorrelator": "0000", "senderAddress": str(senderAddress),
+                                              "outboundSMSTextMessage": {"message": "{}".format(message)}, "address": "tel: {}".format(str(recipient[0][0]))}}
+        senderAddress = globeConfig.get("shortCode")[-4:]
+        _ = post(url="https://devapi.globelabs.com.ph/smsmessaging/v1/outbound/{}/requests?access_token={}".format(
+            senderAddress, str(recipient[0][1])), json=data)
+        TrackingService.update(id, instance.dose, {"notified": True})
+
+class ConfirmationService:
+
+    def handle(uID, lgu_id):
+        try:
+            instance1 = TABLES["TI"].objects.get(pk=uID, dose='1st')
+            instance2 = TABLES["TI"].objects.get(pk=uID, dose='2nd')
+            if (instance1.status == 'P' and instance1.notified == True) and (instance2.status == 'P' and instance2.notified == False):
+                session_id = instance1.session
+                TrackingService.update(uID, '1st', {"confirmed": True})
+            elif instance2.status == 'P' and instance2.notified == True:
+                session_id = instance2.session
+                TrackingService.update(uID, '2nd', {"confirmed": True})
+            instance = TABLES["VSS"].objects.get(pk=session_id)
+            serializer = SERIALIZERS["VSS"](instance, data={"amount_confirm": instance.amount_confirm + 1}, partial=True)
+            if serializer.is_valid(raise_exception=True):
+                serializer.update(instance, validated_data=serializer.validated_data)
+            ds = DatastoreService()
+            ds.updateSessionConfirmations(lgu_id, session_id, uID)
+            return instance
+        except ObjectDoesNotExist:
+            raise ConfirmationException
 
 class TrackingService:
     def create(uID: str):
         time.sleep(0.01)
         s1 = SERIALIZERS["TI"](
-            data={'user': uID, 'dose': '1st'})
+            data={'user': uID, 'dose': '1st', 'notified': False, 'confirmed': False})
         if s1.is_valid():
             s1.create(validated_data=s1.validated_data)
         s2 = SERIALIZERS["TI"](
-            data={'user': uID, 'dose': '2nd'})
+            data={'user': uID, 'dose': '2nd', 'notified': False, 'confirmed': False})
         if s2.is_valid():
             s2.create(validated_data=s2.validated_data)
 
-    def update(uID: str, dose: str, data: dict):
+    def update(uID, dose: str, data: dict):
         u = TABLES["TI"].objects.get(user=uID, dose=dose)
         s = SERIALIZERS["TI"](u, data=data, partial=True)
         if s.is_valid(raise_exception=True):
@@ -257,72 +335,80 @@ class TrackingService:
 
 
 class NotificationService:  # TODO
-    def get(ordered: bool, filters):
-        recipients = []
-        if not ordered:
-            priority = filters.get("priority", None)
-            birth_range = filters.get("birth_range", None)
-            max_cap = filters.get("max_cap", None)
-            barangay = filters.get("barangay", None)
-            if max_cap is not None:
-                if priority is not None:
-                    if barangay is not None:
-                        if birth_range is not None:
-                            if isinstance(priority, (list, tuple)):
-                                for p in priority:
-                                    if isinstance(barangay, (list, tuple)):
-                                        for b in barangay:
-                                            recipients += [SERIALIZERS["PI"](x).data.get("mobile_number") for x in TABLES["PI"].objects.filter(
-                                                priority=p, barangay=b, birthdate_range=birth_range)]
-                                    else:
-                                        recipients += [SERIALIZERS["PI"](x).data.get("mobile_number") for x in TABLES["PI"].objects.filter(
-                                            priority=p, barangay=barangay, birthdate_range=birth_range)]
-                            else:
-                                recipients += [SERIALIZERS["PI"](x).data.get("mobile_number") for x in TABLES["PI"].objects.filter(
-                                    priority=priority, barangay=barangay, birthdate_range=birth_range)]
-                        else:
-                            if isinstance(priority, (list, tuple)):
-                                for p in priority:
-                                    if isinstance(barangay, (list, tuple)):
-                                        for b in barangay:
-                                            recipients += [SERIALIZERS["PI"](x).data.get(
-                                                "mobile_number") for x in TABLES["PI"].objects.filter(priority=p, barangay=b)]
-                                    else:
-                                        recipients += [SERIALIZERS["PI"](x).data.get(
-                                            "mobile_number") for x in TABLES["PI"].objects.filter(priority=p, barangay=barangay)]
-                            else:
-                                recipients += [SERIALIZERS["PI"](x).data.get(
-                                    "mobile_number") for x in TABLES["PI"].objects.filter(priority=priority, barangay=barangay)]
-                    elif birth_range is not None:
-                        if isinstance(priority, (list, tuple)):
-                            for p in priority:
-                                recipients += [SERIALIZERS["PI"](x).data.get(
-                                    "mobile_number") for x in TABLES["PI"].objects.filter(priority=p, birthdate_range=birth_range)]
-                        else:
-                            recipients += [SERIALIZERS["PI"](x).data.get("mobile_number") for x in TABLES["PI"].objects.filter(
-                                priority=priority, birthdate_range=birth_range)]
-                    else:
-                        if isinstance(priority, (list, tuple)):
-                            for p in priority:
-                                recipients += [SERIALIZERS["PI"](x).data.get(
-                                    "mobile_number") for x in TABLES["PI"].objects.filter(priority=p)]
-                        else:
-                            recipients += [SERIALIZERS["PI"](x).data.get(
-                                "mobile_number") for x in TABLES["PI"].objects.filter(priority=priority)]
-                elif barangay is not None:
-                    if birth_range is not None:
-                        pass
-                    else:
-                        pass
-                elif birth_range is not None:
-                    pass
-                else:
-                    pass
-            else:
-                raise ValueError(
-                    "Maximum number of recipients must be defined")
-        else:
-            pass
+    def get(lgu_id: int, filters: OrderedDict):
+        members = TABLES["PI"].objects.filter(lgu_id=lgu_id)
+        # recipients = []
+        # for f in filters.keys():
+        #     f = filters.get(f, None)
+        #     if f is not None:
+        #         recipients += [SERIALIZERS["PI"](x).data.get("mobile_number") for x in TABLES["PI"].objects.filter(
+        #                                         priority=p, barangay=b, birthdate_range=birth_range)]
+
+        # if not ordered:
+        #     priority = filters.get("priority", None)
+        #     birth_range = filters.get("birth_range", None)
+        #     max_cap = filters.get("max_cap", None)
+        #     barangay = filters.get("barangay", None)
+        #     if max_cap is not None:
+        #         if priority is not None:
+        #             if barangay is not None:
+        #                 if birth_range is not None:
+        #                     if isinstance(priority, (list, tuple)):
+        #                         for p in priority:
+        #                             if isinstance(barangay, (list, tuple)):
+        #                                 for b in barangay:
+        #                                     recipients += [SERIALIZERS["PI"](x).data.get("mobile_number") for x in TABLES["PI"].objects.filter(
+        #                                         priority=p, barangay=b, birthdate_range=birth_range)]
+        #                             else:
+        #                                 recipients += [SERIALIZERS["PI"](x).data.get("mobile_number") for x in TABLES["PI"].objects.filter(
+        #                                     priority=p, barangay=barangay, birthdate_range=birth_range)]
+        #                     else:
+        #                         recipients += [SERIALIZERS["PI"](x).data.get("mobile_number") for x in TABLES["PI"].objects.filter(
+        #                             priority=priority, barangay=barangay, birthdate_range=birth_range)]
+        #                 else:
+        #                     if isinstance(priority, (list, tuple)):
+        #                         for p in priority:
+        #                             if isinstance(barangay, (list, tuple)):
+        #                                 for b in barangay:
+        #                                     recipients += [SERIALIZERS["PI"](x).data.get(
+        #                                         "mobile_number") for x in TABLES["PI"].objects.filter(priority=p, barangay=b)]
+        #                             else:
+        #                                 recipients += [SERIALIZERS["PI"](x).data.get(
+        #                                     "mobile_number") for x in TABLES["PI"].objects.filter(priority=p, barangay=barangay)]
+        #                     else:
+        #                         recipients += [SERIALIZERS["PI"](x).data.get(
+        #                             "mobile_number") for x in TABLES["PI"].objects.filter(priority=priority, barangay=barangay)]
+        #             elif birth_range is not None:
+        #                 if isinstance(priority, (list, tuple)):
+        #                     for p in priority:
+        #                         recipients += [SERIALIZERS["PI"](x).data.get(
+        #                             "mobile_number") for x in TABLES["PI"].objects.filter(priority=p, birthdate_range=birth_range)]
+        #                 else:
+        #                     recipients += [SERIALIZERS["PI"](x).data.get("mobile_number") for x in TABLES["PI"].objects.filter(
+        #                         priority=priority, birthdate_range=birth_range)]
+        #             else:
+        #                 if isinstance(priority, (list, tuple)):
+        #                     for p in priority:
+        #                         recipients += [SERIALIZERS["PI"](x).data.get(
+        #                             "mobile_number") for x in TABLES["PI"].objects.filter(priority=p)]
+        #                 else:
+        #                     recipients += [SERIALIZERS["PI"](x).data.get(
+        #                         "mobile_number") for x in TABLES["PI"].objects.filter(priority=priority)]
+        #         elif barangay is not None:
+        #             if birth_range is not None:
+        #                 pass
+        #             else:
+        #                 pass
+        #         elif birth_range is not None:
+        #             pass
+        #         else:
+        #             pass
+        #     else:
+        #         raise ValueError(
+        #             "Maximum number of recipients must be defined")
+        # else:
+        #     pass
+        pass
 
     def send():
         pass

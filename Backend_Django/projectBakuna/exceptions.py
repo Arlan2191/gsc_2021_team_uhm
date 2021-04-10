@@ -22,6 +22,10 @@ def _handle_generic_error(exc, context, response):
     return response
 
 
+class ConfirmationException(Exception):
+    def __str__(self) -> str:
+        return "You are not yet scheduled an appointment for you to confirm."
+
 class SubscriptionException(Exception):
     def __str__(self) -> str:
         return "Your mobile number is neither verified nor subscribed."

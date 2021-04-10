@@ -2,7 +2,7 @@ from collections import OrderedDict
 import random
 from rest_framework import serializers
 from projectBakuna.exceptions import MaxEntryException, InvalidNumber, InvalidUserType
-from API.models import Auth_Mobile_Number, Eligibility_Applications, Personnel_Information, Personal_Information, Eligibility_Status, Tracking_Information, Vaccination_Priority, Vaccination_Site, AuthUser, Vaccination_Session
+from API.models import Auth_Mobile_Number, Eligibility_Applications, Local_Government_Unit_Admin, Personnel_Information, Personal_Information, Eligibility_Status, Tracking_Information, Vaccination_Priority, Vaccination_Site, AuthUser, Vaccination_Session
 from django.contrib.auth import authenticate
 
 
@@ -16,7 +16,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AuthUser
-        fields = ('id', 'username', 'password', 'token',
+        fields = ('id', 'username', 'lgu_id', 'password', 'token',
                   'first_name', 'last_name', 'mobile_number')
 
     def create(self, type, validated_data):
@@ -26,8 +26,10 @@ class RegistrationSerializer(serializers.ModelSerializer):
             validated_data['username'] = "{}-{}-{}".format(
                 '00', '0000', validated_data.get('id'))
             return AuthUser.objects.create_user(**validated_data)
-        if type == 10:
+        elif type == 10:
             return AuthUser.objects.create_staffuser(**validated_data)
+        elif type == 1:
+            return AuthUser.objects.create_adminuser(**validated_data)
 
 
 class LoginSerializer(serializers.ModelSerializer):
@@ -37,7 +39,7 @@ class LoginSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AuthUser
-        fields = ['username', 'password', 'token', 'id']
+        fields = ['username', 'password', 'token', 'id', 'lgu_id']
 
     def validate(self, data):
         username = data.get('username', None)
@@ -63,6 +65,7 @@ class LoginSerializer(serializers.ModelSerializer):
             'username': user.username,
             'id': user.id,
             'token': user.token,
+            'lgu_id': user.lgu_id
         }
 
 
@@ -91,11 +94,33 @@ class UserSerializer(serializers.ModelSerializer):
         return instance
 
 
+class LGUAdminSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Local_Government_Unit_Admin
+        fields = (
+            "lgu_id",
+            "organization",
+            "organization_email",
+            "organization_telecom",
+            "organization_region",
+            "organization_province",
+            "organization_municipality",
+        )
+
+    def update(self, instance, validated_data):
+        for (key, value) in validated_data.items():
+            if value != None:
+                setattr(instance, key, value)
+
+        instance.save()
+        return instance
+
+
 class PersonalInformationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Personal_Information
         fields = [
-            "priority",
+            "lgu_id",
             "first_name",
             "middle_name",
             "last_name",
@@ -123,6 +148,7 @@ class PersonnelInformationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Personnel_Information
         fields = [
+            "lgu_id",
             "license_number",
             "first_name",
             "middle_name",
@@ -190,6 +216,7 @@ class EligibilityStatusSerializer(serializers.ModelSerializer):
         model = Eligibility_Status
         fields = [
             "id",
+            "lgu_id",
             "assigned_to",
             "priority",
             "status",
@@ -209,11 +236,9 @@ class EligibilityApplicationsSerializer(serializers.ModelSerializer):
         model = Eligibility_Applications
         fields = [
             "id",
-            "region",
-            "province",
-            "municipality",
+            "lgu_id",
             "pending_applications",
-            "reviewing_applications",
+            "reviewing_application",
             "reviewed_applications"
         ]
 
@@ -230,9 +255,7 @@ class VaccinationSiteSerializer(serializers.ModelSerializer):
         model = Vaccination_Site
         fields = [
             "site_id",
-            "region",
-            "province",
-            "municipality",
+            "lgu_id",
             "barangay",
             "site_address",
         ]
@@ -249,8 +272,10 @@ class VaccinationSessionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vaccination_Session
         fields = [
+            "lgu_id",
             "vs_id",
             "site",
+            "dose",
             "date",
             "time",
             "max_cap",
@@ -281,6 +306,8 @@ class TrackingInformationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tracking_Information
         fields = [
+            "notified",
+            "confirmed",
             "user",
             "dose",
             "status",

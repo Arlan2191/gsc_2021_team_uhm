@@ -1,3 +1,4 @@
+from functools import partial
 from django.http.request import QueryDict
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
@@ -5,14 +6,14 @@ from django.http import HttpResponse
 from django.views import View
 from rest_framework import status
 from projectBakuna.environment import globeConfig, dialogflowConfig, EMAIL, HOTLINE, TABLES, SERIALIZERS
-from projectBakuna.exceptions import IncorrectPINException, InvalidNumber, MaxEntryException
+from projectBakuna.exceptions import ConfirmationException, IncorrectPINException, InvalidNumber, MaxEntryException
 from google.cloud.dialogflow_v2.types import TextInput, QueryInput
 from google.cloud.dialogflow_v2 import SessionsClient
 from google.oauth2 import service_account
 from django.http import HttpResponse
 from SMS.library import defaultResponse
 from requests import post
-from API.services import CreateService, SMSService
+from API.services import ConfirmationService, CreateService, DatastoreService, SMSService, TrackingService
 from threading import Thread
 from django.core.exceptions import ObjectDoesNotExist
 import random
@@ -34,6 +35,7 @@ class SMSView(View):
         senderAddress = globeConfig.get("shortCode")[-4:]
         _ = post(url="https://devapi.globelabs.com.ph/smsmessaging/v1/outbound/{}/requests?access_token={}".format(
             senderAddress, access_token), json=data)
+        print("Message Sent")
 
     def asyncSendSMS(access_token, mobile_number: str, message=None):
         time.sleep(0.01)
@@ -110,6 +112,26 @@ class SMSView(View):
                     return HttpResponse(status=status.HTTP_200_OK)
                 except Exception as e:
                     print(str(e))
+                    SMSView.sendSMSMessage(
+                        dataQuery.mobile_number, dataQuery.auth_token, defaultResponse["defaultError"])
+                    return HttpResponse(status=status.HTTP_200_OK)
+            elif "CONFIRM" in text:
+                try:
+                    message = re.fullmatch(
+                        "^\s*CONFIRM\s+<?(([0-9]{2})\-([0-9]{4})\-([0-9]+))>?\s*$", text)
+                    lgu_id = message.group(3)
+                    uID = message.group(4)
+                    instance = ConfirmationService.handle(uID, lgu_id)
+                    site = TABLES["VS"].objects.get(pk=instance.get("site"))
+                    address = "{}, {}".format(site.site_address, site.barangay)
+                    SMSView.sendSMSMessage(dataQuery.mobile_number, dataQuery.auth_token, defaultResponse["defaultSessionConfirmation"].format(
+                        instance.date, instance.time, address))
+                    return HttpResponse(status=status.HTTP_200_OK)
+                except ConfirmationException as e:
+                    SMSView.sendSMSMessage(
+                        dataQuery.mobile_number, dataQuery.auth_token, str(e))
+                    return HttpResponse(status=status.HTTP_200_OK)
+                except Exception:
                     SMSView.sendSMSMessage(
                         dataQuery.mobile_number, dataQuery.auth_token, defaultResponse["defaultError"])
                     return HttpResponse(status=status.HTTP_200_OK)

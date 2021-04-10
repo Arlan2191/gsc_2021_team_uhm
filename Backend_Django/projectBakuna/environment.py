@@ -1,6 +1,8 @@
-from API.serializers import AuthMobileNumberSerializer, EligibilityApplicationsSerializer, EligibilityStatusSerializer, PersonalInformationSerializer, PersonnelInformationSerializer, TrackingInformationSerializer, UserSerializer, VaccinationSessionSerializer, VaccinationSiteSerializer
-from API.models import AuthUser, Auth_Mobile_Number, Eligibility_Applications, Eligibility_Status, Personal_Information, Personnel_Information, Tracking_Information, Vaccination_Session, Vaccination_Site
+from API.serializers import AuthMobileNumberSerializer, EligibilityApplicationsSerializer, EligibilityStatusSerializer, LGUAdminSerializer, PersonalInformationSerializer, PersonnelInformationSerializer, TrackingInformationSerializer, UserSerializer, VaccinationSessionSerializer, VaccinationSiteSerializer
+from API.models import AuthUser, Auth_Mobile_Number, Eligibility_Applications, Eligibility_Status, Local_Government_Unit_Admin, Local_Government_Units, Personal_Information, Personnel_Information, Tracking_Information, Vaccination_Session, Vaccination_Site
+from aldjemy.core import get_engine
 from collections import OrderedDict
+from . import settings
 
 EMAIL = "arlan.german.ag@gmail.com"
 HOTLINE = "+639995529611"
@@ -99,6 +101,7 @@ SERIALIZERS = {
     "PRI": PersonnelInformationSerializer,
     "ES": EligibilityStatusSerializer,
     "EA": EligibilityApplicationsSerializer,
+    "LGUA": LGUAdminSerializer,
     "TI": TrackingInformationSerializer,
     "US": UserSerializer,
     "VS": VaccinationSiteSerializer,
@@ -111,8 +114,12 @@ TABLES = {
     "PRI": Personnel_Information,
     "ES": Eligibility_Status,
     "EA": Eligibility_Applications,
+    "LGU": Local_Government_Units,
+    "LGUA": Local_Government_Unit_Admin,
     "TI": Tracking_Information,
     "US": AuthUser,
     "VS": Vaccination_Site,
     "VSS": Vaccination_Session,
 }
+
+ENGINE = get_engine()

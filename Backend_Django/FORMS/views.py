@@ -23,7 +23,7 @@ class FormsAPIView(APIView):
                     return JsonResponse({"user": {"rID": rID, "PIN": PIN}}, status=status.HTTP_200_OK)
             return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
         except ObjectDoesNotExist:
-            return HttpResponse({"errors": {"error": "Mobile Number must be verified."}}, status=status.HTTP_404_NOT_FOUND)
+            return JsonResponse({"errors": {"error": "Mobile Number must be verified."}}, status=status.HTTP_404_NOT_FOUND)
         except InvalidNumber as e:
             return JsonResponse({"errors": {"error": str(e)}}, status=status.HTTP_400_BAD_REQUEST)
         except MaxEntryException as e:
