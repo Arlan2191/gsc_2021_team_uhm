@@ -1,0 +1,400 @@
+<body>
+    <section class="form">
+        <mat-card class="form-content container">
+            <div class="form-header row">
+                <div class="form-header-item col-lg-6">
+                    <h1 class="form-title">Eligibility Form</h1>
+                    <h4 class="form-subtext">For residents of Lapu-Lapu City</h4>
+                </div>
+                <div class="form-header-item col-lg-6 d-flex justify-content-end">
+                    <a class="form-logo"><img src="assets/logo-white.png"></a>
+                </div>
+            </div>
+            <div class="form-body container row d-flex justify-content-center">
+                <mat-horizontal-stepper [linear]="isLinear" #stepper fxLayout="column">
+                    <ng-template matStepperIcon="edit">
+                        <mat-icon>done</mat-icon>
+                    </ng-template>
+                    <mat-step [stepControl]="firstFormGroup" label="Personal Information" color="primary">
+                        <form [formGroup]="firstFormGroup">
+                            <div class="row">
+                                <div class="col-sm-3 d-flex justify-content-center">
+                                    <mat-form-field class="firstName" appearance="outline">
+                                        <mat-label>First Name</mat-label>
+                                        <input matInput placeholder="First Name" formControlName="first_name" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-3 d-flex justify-content-center">
+                                    <mat-form-field class="middleName" appearance="outline">
+                                        <mat-label>Middle Name</mat-label>
+                                        <input matInput placeholder="Middle Name" formControlName="middle_name"
+                                            required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-3 d-flex justify-content-center">
+                                    <mat-form-field class="lastName" appearance="outline">
+                                        <mat-label>Last Name</mat-label>
+                                        <input matInput placeholder="Last Name" formControlName="last_name" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-3 d-flex justify-content-center">
+                                    <mat-form-field class="mobile_number" appearance="outline">
+                                        <mat-label>Mobile Number</mat-label>
+                                        <input matInput placeholder="Mobile Number" formControlName="mobile_number"
+                                            required>
+                                        <mat-error *ngIf="f.mobile_number.touched && f.mobile_number.invalid">Mobile
+                                            number
+                                            should be 12 digits
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2 d-flex justify-content-center">
+                                    <mat-form-field class="birthdate" appearance="outline">
+                                        <mat-label>Birthdate</mat-label>
+                                        <input matInput [matDatepicker]="picker" formControlName="birthdate">
+                                        <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-2 d-flex justify-content-center">
+                                    <mat-form-field class="sex" appearance="outline">
+                                        <mat-label>Sex</mat-label>
+                                        <mat-select formControlName="sex" required>
+                                            <mat-option value="M">Male</mat-option>
+                                            <mat-option value="F">Female</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-3 d-flex justify-content-center">
+                                    <mat-form-field class="occupation" appearance="outline">
+                                        <mat-label>Occupation</mat-label>
+                                        <input matInput placeholder="Occupation" formControlName="occupation" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-4 d-flex justify-content-center">
+                                    <mat-form-field class="email" appearance="outline">
+                                        <mat-label>Email</mat-label>
+                                        <input matInput placeholder="Email" formControlName="email">
+                                        <mat-hint>Enter a valid email</mat-hint>
+                                        <mat-error *ngIf="f.email.touched && f.email.invalid">Email must be valid
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-1 d-flex justify-content-center">
+                                    <mat-form-field class="email" appearance="outline">
+                                        <mat-label>Region</mat-label>
+                                        <input matInput placeholder="Region" formControlName="region">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-5 d-flex justify-content-center">
+                                    <mat-form-field class="address" appearance="outline">
+                                        <mat-label>Home Address</mat-label>
+                                        <input matInput placeholder="Home Address" formControlName="home_address"
+                                            required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-2 d-flex justify-content-center">
+                                    <mat-form-field class="province" appearance="outline">
+                                        <mat-label>Province</mat-label>
+                                        <input matInput placeholder="Province" formControlName="province" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-2 d-flex justify-content-center">
+                                    <mat-form-field class="municipality" appearance="outline">
+                                        <mat-label>Municipality</mat-label>
+                                        <input matInput placeholder="Municipality" formControlName="municipality"
+                                            required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-3 d-flex justify-content-center">
+                                    <mat-form-field class="barangay" appearance="outline">
+                                        <mat-label>Barangay</mat-label>
+                                        <input matInput placeholder="Barangay" formControlName="barangay" required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button mat-button matStepperNext class="form-button">Next</button>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step label="SMS Verification">
+                        <div class="form-verifying container" *ngIf="!isVerified">
+                            <div class="row d-flex justify-content-center" *ngIf="!isVerified">
+                                <button mat-button class="verify-button" (click)="verifyTab()">Start
+                                    Verification</button>
+                            </div>
+                            <div class="row d-flex justify-content-center" *ngIf="!isVerifying">
+                                <h3>Waiting to verify your mobile number</h3>
+                            </div>
+                            <div class="row d-flex justify-content-center" *ngIf="!isVerifying">
+                                <mat-progress-spinner mode="indeterminate" diameter="60"></mat-progress-spinner>
+                            </div>
+                        </div>
+                        <div class="form-verifying container" *ngIf="isVerified">
+                            <div class="success row d-flex justify-content-center">
+                                <mat-icon color="primary">check_circle</mat-icon>
+                            </div>
+                            <div class="success row d-flex justify-content-center">
+                                <h3>Done</h3>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button mat-button matStepperPrevious class="form-button">Back</button>
+                            <button mat-button matStepperNext class="form-button" [disabled]="!isVerified">Next</button>
+                        </div>
+                    </mat-step>
+                    <mat-step [stepControl]="secondFormGroup" label="Medical History">
+                        <form [formGroup]="secondFormGroup">
+                            <mat-label>1. Nagpositibo ka na ba sa COVID-19? </mat-label>
+                            <mat-radio-group aria-label="Select an option:" formControlName="1" required><br />
+                                <mat-radio-button value="Y" class="choice"> Oo </mat-radio-button>
+                                <mat-radio-button value="N" class="choice"> Hindi </mat-radio-button>
+                            </mat-radio-group>
+                            <br />
+                            <mat-label>2. Sa nakaraang 14 na araw, may nakasama ka na ba na positibo sa COVID-19?
+                            </mat-label>
+                            <mat-radio-group aria-label="Select an option:" formControlName="2" required><br />
+                                <mat-radio-button value="Y" class="choice"> Oo </mat-radio-button>
+                                <mat-radio-button value="N" class="choice"> Hindi </mat-radio-button>
+                            </mat-radio-group>
+                            <br />
+                            <mat-label>3. Sa nakaraang 14 na araw, nanggaling ka ba sa ibang bansa? </mat-label>
+                            <mat-radio-group aria-label="Select an option:" formControlName="3" required><br />
+                                <mat-radio-button value="Y" class="choice"> Oo </mat-radio-button>
+                                <mat-radio-button value="N" class="choice"> Hindi </mat-radio-button>
+                            </mat-radio-group>
+                            <br />
+                            <mat-label>4. Nakisalamuha ka ba sa maraming tao sa pagtitipon sa nakaraang 2 linggo?
+                            </mat-label>
+                            <mat-radio-group aria-label="Select an option:" formControlName="4" required><br />
+                                <mat-radio-button value="Y" class="choice"> Oo </mat-radio-button>
+                                <mat-radio-button value="N" class="choice"> Hindi </mat-radio-button>
+                            </mat-radio-group>
+                            <br />
+                            <mat-label class="symptoms">Nagkaroon ka ba ng alin man sa mga sumusunod sa nakaraang 2
+                                linggo (14 na
+                                araw)? </mat-label>
+                            <section>
+                                <mat-label>5. Lagnat </mat-label>
+                                <mat-radio-group aria-label="Select an option:" formControlName="5" required><br />
+                                    <mat-radio-button value="Y" class="choice">Oo</mat-radio-button>
+                                    <mat-radio-button value="N" class="choice">Hindi</mat-radio-button>
+                                </mat-radio-group>
+                                <br />
+                                <mat-label>6. Ubo </mat-label>
+                                <mat-radio-group aria-label="Select an option:" formControlName="6" required><br />
+                                    <mat-radio-button value="Y" class="choice">Oo</mat-radio-button>
+                                    <mat-radio-button value="N" class="choice">Hindi</mat-radio-button>
+                                </mat-radio-group>
+                                <br />
+                                <mat-label>7. Sipon </mat-label>
+                                <mat-radio-group aria-label="Select an option:" formControlName="7" required><br />
+                                    <mat-radio-button value="Y" class="choice">Oo</mat-radio-button>
+                                    <mat-radio-button value="N" class="choice">Hindi</mat-radio-button>
+                                </mat-radio-group>
+                                <br />
+                                <mat-label>8. Sorethroat </mat-label>
+                                <mat-radio-group aria-label="Select an option:" formControlName="8" required><br />
+                                    <mat-radio-button value="Y" class="choice">Oo</mat-radio-button>
+                                    <mat-radio-button value="N" class="choice">Hindi</mat-radio-button>
+                                </mat-radio-group>
+                                <br />
+                                <mat-label>9. Panankit ng Katawan </mat-label>
+                                <mat-radio-group aria-label="Select an option:" formControlName="9" required><br />
+                                    <mat-radio-button value="Y" class="choice">Oo</mat-radio-button>
+                                    <mat-radio-button value="N" class="choice">Hindi</mat-radio-button>
+                                </mat-radio-group>
+                                <br />
+                                <mat-label>10. Kawalan ng pang amoy at panlasa </mat-label>
+                                <mat-radio-group aria-label="Select an option:" formControlName="10" required><br />
+                                    <mat-radio-button value="Y" class="choice">Oo</mat-radio-button>
+                                    <mat-radio-button value="N" class="choice">Hindi</mat-radio-button>
+                                </mat-radio-group>
+                                <br />
+                                <mat-label>11. Hingal/hirap sa paghinga </mat-label>
+                                <mat-radio-group aria-label="Select an option:" formControlName="11" required><br />
+                                    <mat-radio-button value="Y" class="choice">Oo</mat-radio-button>
+                                    <mat-radio-button value="N" class="choice">Hindi</mat-radio-button>
+                                </mat-radio-group>
+                                <br />
+                                <mat-label>12. Pagtatae </mat-label>
+                                <mat-radio-group aria-label="Select an option:" formControlName="12" required><br />
+                                    <mat-radio-button value="Y" class="choice">Oo</mat-radio-button>
+                                    <mat-radio-button value="N" class="choice">Hindi</mat-radio-button>
+                                </mat-radio-group>
+                                <br />
+                            </section>
+                            <mat-label>13. Nakagat ka ba ng aso sa nakaraang 4 na linggo at nabakunahan? </mat-label>
+                            <br />
+                            <mat-radio-group aria-label="Select an option:" formControlName="13" required>
+                                <mat-radio-button value="Y" class="choice">Oo</mat-radio-button>
+                                <mat-radio-button value="N" class="choice">Hindi</mat-radio-button>
+                            </mat-radio-group>
+                            <br />
+                            <mat-label>14. Nabakunahan ka ba ng Covid-19 Vaccine sa nakaraang 4 na linggo? </mat-label>
+                            <br />
+                            <mat-radio-group aria-label="Select an option:" formControlName="14" required>
+                                <mat-radio-button value="Y" class="choice">Oo</mat-radio-button>
+                                <mat-radio-button value="N" class="choice">Hindi</mat-radio-button>
+                            </mat-radio-group>
+                            <br />
+                            <mat-label>15. Sinasalinan ka ba ng dugo? </mat-label>
+                            <mat-radio-group aria-label="Select an option:" formControlName="15" required><br />
+                                <mat-radio-button value="Y" class="choice">Oo</mat-radio-button>
+                                <mat-radio-button value="N" class="choice">Hindi</mat-radio-button>
+                            </mat-radio-group>
+                            <br />
+                            <mat-label>16. Umiinom ka ba ng Prednisone / Steroids o antiviral drugs? </mat-label><br />
+                            <mat-radio-group aria-label="Select an option:" formControlName="16" required>
+                                <mat-radio-button value="Y" class="choice">Oo</mat-radio-button>
+                                <mat-radio-button value="N" class="choice">Hindi</mat-radio-button>
+                            </mat-radio-group>
+                            <br />
+                            <mat-label>17. May allergy sa latex, pagkain, gamot o sa bakuna? </mat-label>
+                            <mat-radio-group aria-label="Select an option:" formControlName="17" required><br />
+                                <mat-radio-button value="Y" class="choice">Oo</mat-radio-button>
+                                <mat-radio-button value="N" class="choice"> Hindi </mat-radio-button>
+                            </mat-radio-group>
+                            <br />
+                            <mat-label>18. Nagkaroon ng malalang reaksyon pagkatapos mabakunahan? </mat-label>
+                            <mat-radio-group aria-label="Select an option:" formControlName="18" required><br />
+                                <mat-radio-button value="Y" class="choice">Oo</mat-radio-button>
+                                <mat-radio-button value="N" class="choice">Hindi</mat-radio-button>
+                            </mat-radio-group>
+                            <mat-label>Nagkaroon ka ba ng alin man sa mga sumusunod sa nakaraang 2 linggo (14 na araw)?
+                            </mat-label>
+                            <section class="Symptoms">
+                                <mat-label>19. Sakit sa baga</mat-label>
+                                <mat-radio-group aria-label="Select an option:" formControlName="19" required><br />
+                                    <mat-radio-button value="Y" class="choice">Oo</mat-radio-button>
+                                    <mat-radio-button value="N" class="choice">Hindi</mat-radio-button>
+                                </mat-radio-group>
+                                <br />
+                                <mat-label>20. Sakit sa puso</mat-label>
+                                <mat-radio-group aria-label="Select an option:" formControlName="20" required><br />
+                                    <mat-radio-button value="Y" class="choice">Oo</mat-radio-button>
+                                    <mat-radio-button value="N" class="choice">Hindi</mat-radio-button>
+                                </mat-radio-group>
+                                <br />
+                                <mat-label>21. Hika</mat-label>
+                                <mat-radio-group aria-label="Select an option:" formControlName="21" required><br />
+                                    <mat-radio-button value="Y" class="choice">Oo</mat-radio-button>
+                                    <mat-radio-button value="N" class="choice">Hindi</mat-radio-button>
+                                </mat-radio-group>
+                                <br />
+                                <mat-label>22. Sakit sa Bato</mat-label>
+                                <mat-radio-group aria-label="Select an option:" formControlName="22" required><br />
+                                    <mat-radio-button value="Y" class="choice">Oo</mat-radio-button>
+                                    <mat-radio-button value="N" class="choice">Hindi</mat-radio-button>
+                                </mat-radio-group>
+                                <br />
+                                <mat-label>23. Diabetes</mat-label>
+                                <mat-radio-group aria-label="Select an option:" formControlName="23" required><br />
+                                    <mat-radio-button value="Y" class="choice">Oo</mat-radio-button>
+                                    <mat-radio-button value="N" class="choice">Hindi</mat-radio-button>
+                                </mat-radio-group>
+                                <br />
+                                <mat-label>24. Altapresyon</mat-label>
+                                <mat-radio-group aria-label="Select an option:" formControlName="24" required><br />
+                                    <mat-radio-button value="Y" class="choice">Oo</mat-radio-button>
+                                    <mat-radio-button value="N" class="choice">Hindi</mat-radio-button>
+                                </mat-radio-group>
+                                <br />
+                                <mat-label>25. Sakit sa Dugo</mat-label>
+                                <mat-radio-group aria-label="Select an option:" formControlName="25" required><br />
+                                    <mat-radio-button value="Y" class="choice">Oo</mat-radio-button>
+                                    <mat-radio-button value="N" class="choice">Hindi</mat-radio-button>
+                                </mat-radio-group>
+                                <br />
+                                <mat-label>26. Cancer</mat-label>
+                                <mat-radio-group aria-label="Select an option:" formControlName="26" required><br />
+                                    <mat-radio-button value="Y" class="choice">Oo</mat-radio-button>
+                                    <mat-radio-button value="N" class="choice">Hindi</mat-radio-button>
+                                </mat-radio-group>
+                                <br />
+                                <mat-label>27. Leukemia</mat-label>
+                                <mat-radio-group aria-label="Select an option:" formControlName="27" required><br />
+                                    <mat-radio-button value="Y" class="choice">Oo</mat-radio-button>
+                                    <mat-radio-button value="N" class="choice">Hindi</mat-radio-button>
+                                </mat-radio-group>
+                                <br />
+                                <mat-label>28. Hika</mat-label>
+                                <mat-radio-group aria-label="Select an option:" formControlName="28" required><br />
+                                    <mat-radio-button value="Y" class="choice">Oo</mat-radio-button>
+                                    <mat-radio-button value="N" class="choice">Hindi</mat-radio-button>
+                                </mat-radio-group>
+                                <br />
+                                <mat-label>29. Sakit sa pag-iisip / Seizure disorder</mat-label>
+                                <mat-radio-group aria-label="Select an option:" formControlName="29" required><br />
+                                    <mat-radio-button value="Y" class="choice">Oo</mat-radio-button>
+                                    <mat-radio-button value="N" class="choice">Hindi</mat-radio-button>
+                                </mat-radio-group>
+                                <br />
+                            </section>
+                            <mat-label>30. Ikaw ba ay buntis o may planong magbuntis sa darating na buwan?</mat-label>
+                            <mat-radio-group aria-label="Select an option:" formControlName="30" required><br />
+                                <mat-radio-button value="Y" class="choice">Oo</mat-radio-button>
+                                <mat-radio-button value="N" class="choice">Hindi</mat-radio-button>
+                            </mat-radio-group>
+                            <br />
+                            <mat-label>31. Nagpapasuso ka ba?</mat-label>
+                            <mat-radio-group aria-label="Select an option:" formControlName="31" required><br />
+                                <mat-radio-button value="Y" class="choice">Oo</mat-radio-button>
+                                <mat-radio-button value="N" class="choice">Hindi</mat-radio-button>
+                            </mat-radio-group>
+                            <br />
+                            <mat-label>32. Kasama ka ba sa COVID-19 Clinical Study?</mat-label>
+                            <mat-radio-group aria-label="Select an option:" formControlName="32" required><br />
+                                <mat-radio-button value="Y" class="choice">Oo</mat-radio-button>
+                                <mat-radio-button value="N" class="choice">Hindi</mat-radio-button>
+                            </mat-radio-group>
+                            <br />
+                            <div class="d-flex justify-content-end">
+                                <button mat-button matStepperPrevious class="form-button">Back</button>
+                                <button mat-button matStepperNext class="form-button">Next</button>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step label="Done">
+                        <p>You are now done.</p>
+                        <mat-list>
+                            <mat-list-item> <strong>First Name: </strong> {{ this.firstFormGroup.value.first_name }}
+                            </mat-list-item>
+                            <mat-list-item> <strong>Middle Name: </strong> {{ this.firstFormGroup.value.middle_name }}
+                            </mat-list-item>
+                            <mat-list-item> <strong>Last Name: </strong> {{ this.firstFormGroup.value.last_name }}
+                            </mat-list-item>
+                            <mat-list-item> <strong>Birthdate: </strong> {{ this.firstFormGroup.value.birthdate |
+                                date:'dd/MM/yyyy' }}
+                            </mat-list-item>
+                            <mat-list-item> <strong>Sex: </strong> {{ this.firstFormGroup.value.sex}} </mat-list-item>
+                            <mat-list-item> <strong>Occupation: </strong> {{ this.firstFormGroup.value.occupation}}
+                            </mat-list-item>
+                            <mat-list-item> <strong>Mobile Number: </strong> {{
+                                this.firstFormGroup.value.mobile_number}}
+                            </mat-list-item>
+                            <mat-list-item> <strong>Email:</strong> {{ this.firstFormGroup.value.email}}
+                            </mat-list-item>
+                            <mat-list-item> <strong>Address: </strong> {{ this.firstFormGroup.value.home_address}}, {{
+                                this.firstFormGroup.value.barangay}}, {{ this.firstFormGroup.value.municipality}}, {{
+                                this.firstFormGroup.value.province }}, Region-{{ this.firstFormGroup.value.region }}
+                            </mat-list-item>
+                        </mat-list>
+                        <br />
+                        <p>Please make sure all your answers are correct before hitting the submit button.</p>
+                        <div class="d-flex justify-content-end">
+                            <button mat-button matStepperPrevious class="form-button">Back</button>
+                            <button mat-button (click)="stepper.reset()" class="form-button">Reset</button>
+                            <button mat-button (click)="submit()" class="form-button">Submit</button>
+                        </div>
+                    </mat-step>
+                </mat-horizontal-stepper>
+            </div>
+        </mat-card>
+    </section>
+</body>

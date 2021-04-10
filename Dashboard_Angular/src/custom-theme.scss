@@ -1,0 +1,73 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@300;600;900&display=swap');
+
+html, body { height: 100%; }
+
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$md-mcgpalette0: (
+    0: #ffffff,
+    50 : #e2eaf2,
+    100 : #b6cbdf,
+    200 : #85a9ca,
+    300 : #5487b4,
+    400 : #306da4,
+    500 : #0b5394,
+    600 : #0a4c8c,
+    700 : #084281,
+    800 : #063977,
+    900 : #032965,
+    A100 : #95b6ff,
+    A200 : #6294ff,
+    A400 : #2f71ff,
+    A700 : #155fff,
+    contrast: (
+        50 : #ffffff,
+        100 : #ffffff,
+        200 : #ffffff,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #ffffff,
+        A200 : #ffffff,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+$Template-primary: mat-palette($md-mcgpalette0, A200, 200);
+$Template-accent: mat-palette($mat-gray);
+
+// The warn palette is optional (defaults to red).
+$Template-warn: mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$Template-theme: mat-light-theme((
+  color: (
+    primary: $Template-primary,
+    accent: $Template-accent,
+    warn: $Template-warn,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($Template-theme);
+

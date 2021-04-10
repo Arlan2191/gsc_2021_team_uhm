@@ -1,0 +1,38 @@
+.more-button {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+ }
+ 
+ .dashboard-card {
+    position: absolute;
+    margin: 5px; 
+    padding-top: 10px;
+    padding-left: 30px;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border-collapse: collapse;
+    border-radius: 1em;
+
+    -webkit-box-shadow: -10px 0px 13px -7px #e0e0e0c5, 10px 0px 13px -7px #d3d3d391, 4px 10px 30px 22px rgba(196, 194, 194, 0.103);
+    box-shadow: -10px 0px 13px -7px #ebebeb86, 10px 0px 13px -7px #ffffff3d, 4px 10px 30px 22px rgba(196, 194, 194, 0);
+ }
+ 
+ .dashboard-card-content {
+    text-align: left;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 100%;
+    justify-content: left;
+    align-items: stretch;
+ }
+ 
+ mat-card {
+    display: flex;
+    flex-direction: column;
+ }
+

@@ -1,0 +1,341 @@
+* {
+    font-family: 'mulish';
+}
+
+a {
+    text-decoration: none;
+}
+.loader-container {
+    position: fixed;
+    width: 100%;
+    z-index: 99;
+}
+
+.toolbar{
+    color: rgb(155, 155, 155);
+    background-color: white;
+    opacity: .9;
+    z-index: 1;
+}
+.companyName{
+    font-size: 50%;
+}
+
+.dashboard-title {
+    position: absolute;
+    top: 55px;
+}
+
+.active {
+    font-size: 78%;
+    font-weight: bold;
+    color:black;
+    margin-right: 20px;
+}
+
+.mat-toolbar{
+  height: 14vh;
+}
+
+.toolbar-buttons{
+    text-decoration: none;
+    margin-right: 20px;
+    font-size: 78%;
+    white-space: normal;
+}
+
+button{
+    font-size: 110%;
+    min-width: min-content;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.logo {
+    width:80px;
+    margin-top: -20px;
+    margin-left: 160px;
+}
+
+.logo-2 {
+    width:80px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 48px;
+    font-family: 'Mulish', sans-serif;
+    font-weight: 900;
+    margin-top: 250px;
+    margin-left: 190px;
+    line-height: 50px;
+    word-spacing: 15px;
+    width: 60%;
+}
+
+.side-image {
+    position: absolute;
+    width: 400px;
+    left: 800px;
+    margin-left: 100px;
+    margin-right: 50px;
+    margin-top: -400px;
+}
+
+body {
+    background-image: white;
+    height: 400vh; 
+    width: 150vh;
+}
+
+.row {
+    display: flex;
+    height: 88%;
+    align-items: center;
+}
+
+p {
+    color: rgb(155, 155, 155);
+    padding: 20px;
+    width: 460px;
+    margin-top: -20px;
+    margin-left: 170px;
+    font-size: 15px;
+    font-family: 'Mulish', sans-serif;
+    line-height: 30px;
+    text-align: justify;
+}
+
+ul {
+    font-family: 'Mulish', sans-serif;
+    list-style-type: none;
+    margin-top: 10px;
+    font-size: 12px;
+    line-height: 30px;
+}
+
+.dashboard {
+    cursor: default;
+    text-decoration: none;
+    color: #808080;
+}
+
+.start-register {
+    background-color: rgb(37,150,255);
+    color: white;
+    margin-left: 190px;
+    margin-top: 15px;
+    width: 190px;
+    font-size: 20px;
+    padding: 5px 0;
+}
+
+.create-account {
+    position: relative;
+    top: 150px;
+    left: -700px;
+    color: rgb(37,150,255);
+    height: 50px;
+    width: 190px;
+    font-size: 20px;
+    padding: 5px 0;
+}
+
+.start-dashboard {
+    color: rgb(37,150,255);
+}
+
+.small-text {
+    font-family: 'Mulish';
+    font-weight: bolder;
+    color: #FFFFFF;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.title {
+    font-size: 50px;
+    font-family: 'Mulish';
+    font-weight: bolder;
+    color: #FFFFFF;
+}
+
+.title-container {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center; 
+    margin-left: 450px;
+}
+
+.additional-info-container {
+    background-color: #FFFFFF;
+    padding-top: 50px;
+    padding-bottom: 100px;
+    margin-bottom: 30px;
+    height: 800px;
+}
+
+.description {
+    font-family: 'Mulish';
+    color: #FFFFFF;
+    width: 33%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    line-height: 35px;
+    padding-top: 10px;
+    margin-left: 505px;
+}
+
+.floating {   
+    animation-name: floating; 
+    animation-duration: 1.3s; 
+    animation-iteration-count: 1; 
+    animation-timing-function: ease-in-out; 
+} 
+
+@keyframes floating { 
+    0% { transform: translate(0,  60px); } 
+    50%  { transform: translate(0, 0px); } 
+    100%   { transform: translate(0, -0px); }     
+} 
+
+.med-dash-button {
+    padding: 10px;
+    margin-left: 30px;
+    color: rgb(37,150,255);
+}
+
+.demo-video-container {
+    height: 50%;
+    width: 1519px;
+    margin-top: 11%;
+    background: linear-gradient(144deg, rgba(0,121,235,1) 0%, rgba(64,211,245,1) 100%);
+}
+
+.demo-video-card {
+    width: 70%;
+    height: 650px;
+    margin-top: 40px;
+    border-collapse: collapse;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+    border-bottom-left-radius: 0em;
+    border-bottom-right-radius: 0em;
+    box-shadow: none !important;
+}
+
+.third-row-left-card {
+    width: 500px;
+    height: 650px;
+    margin-left: 50px;
+    margin-bottom: 100px;
+    padding-top: 50px;
+    padding-right: 100px;
+    padding-left: 60px;
+}
+
+.user-table-img {
+    width: 430px;
+    margin-top: 35px;
+}
+.third-row-right-card {
+    font-family: 'mulish', sans-serif;
+    font-weight: bold;
+    color: #FFFFFF;
+    width: 550px;
+    height: 650px;
+    margin-bottom: 100px;
+    padding-right: 100px;
+    padding-left: 60px;
+    background: linear-gradient(144deg, rgba(0,121,235,1) 0%, rgba(64,211,245,1) 100%);
+}
+
+.privacy-matters {
+    font-size: 60px;
+    font-family: 'mulish', sans-serif;
+    font-weight: bold;
+    line-height: 60px;
+}
+
+.details {
+    position: absolute;
+    top: 50px;
+    font-size: 60px;
+    font-family: 'mulish', sans-serif;
+    font-weight: bold;
+    line-height: 60px;
+}
+
+.details-description {
+    margin-top: 180px;
+    font-weight: normal;
+}
+
+.register-container {
+    margin-top: 260px;
+    background-color: rgb(76, 129, 228);
+    height: 250px;
+    width: 1519px;
+}
+
+.doctor-img {
+    margin-top: 30px;
+    width: 300px;
+    height: 400px;
+}
+
+.before-footer {
+    width: 700px;
+    font-size: 30px;
+    font-family: 'mulish', sans-serif;
+    font-weight: bold;
+    margin-top: 30px;
+    margin-left: 160px;
+    color: #FFFFFF;
+}
+
+footer {
+    height: 400px;
+    background-color: #FFFFFF;
+}
+
+.footer-description-container {
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-top: 20px;
+    margin-left: 160px;
+}
+
+.footer-description-container-2 {
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-top: 50px;
+    margin-left: 150px;
+    margin-right: -200px;
+}
+.footer-all-rights-reserved {
+    margin-top: 50px;
+}
+
+.footer-label {
+    color: #808080;
+    font-weight: bold;
+    margin-left: 40px;
+}
+
+.animated {
+    visibility: visible !important;
+}
+.hide-on-init {
+    visibility: hidden;
+}

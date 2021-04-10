@@ -1,0 +1,47 @@
+.content {
+    margin: 30px 180px 0 180px;
+    height: 100%;
+}
+
+.footer {
+    background-color: #6294ff;
+    padding: 30px 180px 30px 180px;
+}
+
+.landing-home {
+    margin-top: 5%;
+}
+
+.landing-main .landing-title .title {
+    font-size: 40px;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.landing-main .landing-title .subtext {
+    font-weight: 200;
+    line-height: 1.5rem;
+}
+
+.landing-main .landing-title .btn-menu {
+    margin-top: 10%;
+}
+
+.landing-main .landing-title .btn-apply {
+    padding: 2px 2px 2px 2px;
+    width: 30%;
+    font-size: 16px;
+    background-color: #6294ff;
+    border-radius: 25px;
+    color: white;
+}
+
+.landing-main .landing-title .btn-check {
+    margin-left: 5%;
+    font-size: 16px;
+}
+
+.landing-main .landing-img img{
+    width: 95%;
+    height: 95%;
+}

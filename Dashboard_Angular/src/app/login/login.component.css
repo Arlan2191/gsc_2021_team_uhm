@@ -1,0 +1,152 @@
+mat-card {
+  height: 100vh;
+}
+
+h1 {
+  position: relative;
+  font-family: 'mulish';
+  margin-top: 10px;
+  color: rgb(43, 43, 43);
+  font-size: 40px;
+  font-weight: bolder;
+
+}
+h2 {
+  font-family: 'mulish';
+  font-weight: bold;
+  font-size: 40px;
+  margin-bottom: 40px;
+}
+
+span {
+  position: absolute;
+}
+
+p {
+  position: relative;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  color: rgb(43, 43, 43);
+  font-size: 18px;
+  font-weight: lighter;
+}
+
+
+.logo {
+  position: relative;
+  top: -194px;
+  left: -30px;
+  width: 80px;
+}
+
+mat-form-field {
+  font-size: 12px;
+  font-family: 'mulish';
+}
+
+.pin {
+  width: 200px;
+}
+
+
+.login-button {
+  background-color: rgb(37,150,255);
+  color: white;
+  margin-top: 15px;
+  width: 90px;
+  height: 40px;
+  font-size: 15px;
+}
+
+.new-text {
+  position: relative;
+  margin-top: -5px;
+  font-size: 16px;
+}
+
+.create-account-btn {
+  color: white;
+  background-color: transparent;
+}
+
+mat-grid-tile {
+  padding: 0px !important;
+  height: 100vh;
+  justify-content: left !important;
+}
+
+.left {
+  left: 0;
+  background-color: rgb(250, 250, 250);
+}
+
+.right {
+  right: 0;
+  background: linear-gradient(308deg, rgba(51,193,243,1) 29%, rgba(37,150,255,1) 70%);
+}
+
+/*Left side image*/
+#sign-up-img {
+  position: relative;
+  display: flex;
+  width: 300px;
+}
+
+#welcome-header {
+  position: absolute;
+  top: 520px;
+  color: white;
+}
+
+.divider {
+  border-top: 3px solid #2596ff;
+  width: 10%;
+  margin-top: -25px;
+  margin-right: 500px;
+}
+
+h1 {
+  font-size: 40px;
+  font-weight: bolder;
+}
+
+.new-text {
+  position: absolute;
+  top: 560px;
+  left: 135px;
+}
+
+.btn {
+  position: absolute;
+  top: 550px;
+  left: 220px;
+}
+
+/*right*/
+.welcome-text {
+  color: #FAFAFA;
+}
+
+.dashboard {
+  cursor: default;
+  text-decoration: none;
+  position: absolute;
+  top: 50px;
+  left: 230px;
+  font-size: 20px;
+  color: rgb(155, 155, 155);
+}
+
+/* animations */
+.floating {   
+  animation-name: floating; 
+  animation-duration: 1.3s; 
+  animation-iteration-count: 1; 
+  animation-timing-function: ease-in-out; 
+} 
+
+@keyframes floating { 
+  0% { transform: translate(0,  60px); } 
+  50%  { transform: translate(0, 0px); } 
+  100%   { transform: translate(0, -0px); }     
+} 
