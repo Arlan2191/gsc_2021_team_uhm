@@ -1,4 +1,5 @@
 import time
+import re
 from SMS.views import SMSView
 from django.db.models.query import QuerySet
 from API.models import Local_Government_Units
@@ -7,7 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt, requires_csrf_token
-from API.services import CreatePersonnelService, EligibilityService, NotificationService, SMSService, DatastoreService, TrackingService
+from API.services import ConfirmationService, CreatePersonnelService, EligibilityService, NotificationService, SMSService, DatastoreService, TrackingService
 from SMS.library import defaultResponse
 from projectBakuna.environment import globeConfig, TABLES, SERIALIZERS, ENGINE
 from aldjemy import core
@@ -385,7 +386,7 @@ class NotificationAPIView(APIView):  # TODO
                                     filters += " AND (p.birthdate >= CAST('{}' AS DATE) AND p.birthdate <= CAST('{}' AS DATE))".format(
                                         *birth_range)
                         query = text(
-                            "SELECT m.mobile_number, auth_token, email, first_name FROM ((personal_information AS p INNER JOIN auth_mobile_number AS m ON p.mobile_number=m.mobile_number AND (m.auth_token!='Unsubscribed' OR p.email!='N/A')) INNER JOIN eligibility_status AS e ON p.id=e.id_id) INNER JOIN tracking_information as t ON t.user_id=p.id WHERE (t.dose='{}' AND t.status='P') AND (e.status='G' OR e.status='G@R') AND p.lgu_id_id={}{} LIMIT {}".format(dose, lgu_id, filters, max_cap))
+                            "SELECT m.mobile_number, auth_token, email, first_name, p.id FROM ((personal_information AS p INNER JOIN auth_mobile_number AS m ON p.mobile_number=m.mobile_number AND (m.auth_token!='Unsubscribed' OR p.email!='N/A')) INNER JOIN eligibility_status AS e ON p.id=e.id_id) INNER JOIN tracking_information as t ON t.user_id=p.id WHERE (t.dose='{}' AND (t.status='P' OR t.status='M')) AND (e.status='G' OR e.status='G@R') AND p.lgu_id_id={}{} LIMIT {}".format(dose, lgu_id, filters, max_cap))
                         connection = ENGINE.connect()
                         recipients = connection.execute(query).fetchall()
                         Thread(target=self.notify, args=[
@@ -401,14 +402,21 @@ class NotificationAPIView(APIView):  # TODO
             print(e)
             return HttpResponse(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    def notify(self, recipients: list, instance: dict):
+    def notify(self, recipients: list, data: dict):
         time.sleep(0.01)
-        site = TABLES["VS"].objects.get(pk=instance.get("site"))
+        site = TABLES["VS"].objects.get(pk=data.get("site"))
         address = "{}, {}".format(site.site_address, site.barangay)
         for r in recipients:
             message = defaultResponse["defaultSessionNotification"].format(
-                r[3], instance.get("date"), instance.get("time"), address)
-            _ = SMSView.sendSMSMessage(r[0], r[1], message)
+                r[3], data.get("date"), data.get("time"), address)
+            print(message)
+            # _ = SMSView.sendSMSMessage(r[0], r[1], message)
+            instance = TABLES["TI"].objects.get(
+                user_id=r[4], dose=data.get("dose"))
+            serializer = SERIALIZERS["TI"](
+                instance, data={"notified": True, "session": data.get("vs_id")}, partial=True)
+            if serializer.is_valid(raise_exception=True):
+                serializer.update(instance, serializer.validated_data)
 
 
 # class InitiateLGUAPIView(APIView):
@@ -462,3 +470,19 @@ class InitiateDatabasePIView(APIView):
 #         table = request.GET.get("name")
 #         data = TABLES[table].objects.raw(command)
 #         return JsonResponse({"result": [str(x.pk) for x in data]}, status=status.HTTP_200_OK)
+
+# class TestConfirmAPIView(APIView):
+#     permission_classes = (AllowAny,)
+
+#     def post(self, request):
+#         text = request.data.get("message")
+#         message = re.fullmatch(
+#             "^\s*CONFIRM\s+<?(([0-9]{2})\-([0-9]{4})\-([0-9]+))>?\s*$", text)
+#         lgu_id = message.group(3)
+#         uID = message.group(4)
+#         instance = ConfirmationService.handle(uID, lgu_id)
+#         site = TABLES["VS"].objects.get(pk=instance.site.pk)
+#         address = "{}, {}".format(site.site_address, site.barangay)
+#         print(defaultResponse["defaultSessionConfirmation"].format(
+#             instance.date, instance.time, address, ""))
+#         return HttpResponse(status=status.HTTP_200_OK)

@@ -35,7 +35,6 @@ class SMSView(View):
         senderAddress = globeConfig.get("shortCode")[-4:]
         _ = post(url="https://devapi.globelabs.com.ph/smsmessaging/v1/outbound/{}/requests?access_token={}".format(
             senderAddress, access_token), json=data)
-        print("Message Sent")
 
     def asyncSendSMS(access_token, mobile_number: str, message=None):
         time.sleep(0.01)
@@ -85,96 +84,97 @@ class SMSView(View):
     @require_POST
     @csrf_exempt
     def receiveSMS(request):
-        try:
-            message = json.loads(request.body)
-            dataQuery = TABLES["AM"].objects.get(pk=int(str(
-                message["inboundSMSMessageList"]["inboundSMSMessage"][0]["senderAddress"]).split(":")[-1].replace("+", "")))
-            text = message["inboundSMSMessageList"]["inboundSMSMessage"][0]["message"]
-            if "STATUS" in text:
+        # try:
+        message = json.loads(request.body)
+        dataQuery = TABLES["AM"].objects.get(pk=int(str(
+            message["inboundSMSMessageList"]["inboundSMSMessage"][0]["senderAddress"]).split(":")[-1].replace("+", "")))
+        text = message["inboundSMSMessageList"]["inboundSMSMessage"][0]["message"]
+        if "STATUS" in text:
+            try:
+                message = re.fullmatch(
+                    "^\s*STATUS\s+<?(([0-9]{2})\-([0-9]{4})\-([0-9]+))>?\s+<?(.+)>?\s*$", text)
+                rID = message.group(1)
+                uID = message.group(4)
+                PIN = message.group(5)
+                firstName, statusObj = SMSService.getStatusObject(
+                    uID, dataQuery.mobile_number, rID, PIN)
+                SMSView.sendSMSMessage(dataQuery.mobile_number, dataQuery.auth_token, defaultResponse["defaultStatusCheck"].format(
+                    firstName, statusObj.get_status_display(), statusObj.reason))
+                return HttpResponse(status=status.HTTP_200_OK)
+            except ObjectDoesNotExist:
+                SMSView.sendSMSMessage(
+                    dataQuery.mobile_number, dataQuery.auth_token, defaultResponse["errorID"])
+                return HttpResponse(status=status.HTTP_200_OK)
+            except IncorrectPINException:
+                SMSView.sendSMSMessage(
+                    dataQuery.mobile_number, dataQuery.auth_token, defaultResponse["errorPIN"])
+                return HttpResponse(status=status.HTTP_200_OK)
+            except Exception as e:
+                print(str(e))
+                SMSView.sendSMSMessage(
+                    dataQuery.mobile_number, dataQuery.auth_token, defaultResponse["defaultError"])
+                return HttpResponse(status=status.HTTP_200_OK)
+        elif "CONFIRM" in text:
+            try:
+                message = re.fullmatch(
+                    "^\s*CONFIRM\s+<?(([0-9]{2})\-([0-9]{4})\-([0-9]+))>?\s*$", text)
+                lgu_id = message.group(3)
+                uID = message.group(4)
+                instance = ConfirmationService.handle(uID, lgu_id)
+                site = TABLES["VS"].objects.get(pk=instance.site.pk)
+                address = "{}, {}".format(site.site_address, site.barangay)
+                SMSView.sendSMSMessage(dataQuery.mobile_number, dataQuery.auth_token, defaultResponse["defaultSessionConfirmation"].format(
+                    instance.date, instance.time, address, ""))
+                return HttpResponse(status=status.HTTP_200_OK)
+            except ConfirmationException as e:
+                SMSView.sendSMSMessage(
+                    dataQuery.mobile_number, dataQuery.auth_token, str(e))
+                return HttpResponse(status=status.HTTP_200_OK)
+            # except Exception as e:
+            #     print(e)
+            #     # SMSView.sendSMSMessage(
+            #     #     dataQuery.mobile_number, dataQuery.auth_token, defaultResponse["defaultError"])
+            #     return HttpResponse(status=status.HTTP_200_OK)
+        else:
+            session = sessionClient.session_path(
+                dialogflowConfig["project_id"], dataQuery.mn_id)
+            text_input = TextInput(text=text, language_code='en-US')
+            query_input = QueryInput(text=text_input)
+            dialogflowResponse = sessionClient.detect_intent(request={
+                "session": session, "query_input": query_input})
+            prefix = SMSView.checkResponse(
+                dialogflowResponse.query_result.query_text, dialogflowResponse.query_result.parameters)
+            if dialogflowResponse.query_result.all_required_params_present and dialogflowResponse.query_result.intent.display_name == "Save SMS Form":
+                params = dict(dialogflowResponse.query_result.parameters)
                 try:
-                    message = re.fullmatch(
-                        "^\s*STATUS\s+<?(([0-9]{2})\-([0-9]{4})\-([0-9]+))>?\s+<?(.+)>?\s*$", text)
-                    rID = message.group(1)
-                    uID = message.group(4)
-                    PIN = message.group(5)
-                    firstName, statusObj = SMSService.getStatusObject(
-                        uID, dataQuery.mobile_number, rID, PIN)
-                    SMSView.sendSMSMessage(dataQuery.mobile_number, dataQuery.auth_token, defaultResponse["defaultStatusCheck"].format(
-                        firstName, statusObj.get_status_display(), statusObj.reason))
-                    return HttpResponse(status=status.HTTP_200_OK)
-                except ObjectDoesNotExist:
-                    SMSView.sendSMSMessage(
-                        dataQuery.mobile_number, dataQuery.auth_token, defaultResponse["errorID"])
-                    return HttpResponse(status=status.HTTP_200_OK)
-                except IncorrectPINException:
-                    SMSView.sendSMSMessage(
-                        dataQuery.mobile_number, dataQuery.auth_token, defaultResponse["errorPIN"])
+                    rID, PIN = SMSView.saveResponse(
+                        dataQuery.mobile_number, dataQuery.auth_token, params)
+                    if rID != None and PIN != None:
+                        if dialogflowResponse.query_result.fulfillment_text[0:11] == "Application":
+                            SMSView.sendSMSMessage(dataQuery.mobile_number, dataQuery.auth_token, dialogflowResponse.query_result.fulfillment_text.format(
+                                rID, PIN, dataQuery.mobile_number, EMAIL, HOTLINE))
+                        else:
+                            SMSView.sendSMSMessage(
+                                dataQuery.mobile_number, dataQuery.auth_token, dialogflowResponse.query_result.fulfillment_text)
                     return HttpResponse(status=status.HTTP_200_OK)
                 except Exception as e:
-                    print(str(e))
+                    print(e)
                     SMSView.sendSMSMessage(
                         dataQuery.mobile_number, dataQuery.auth_token, defaultResponse["defaultError"])
                     return HttpResponse(status=status.HTTP_200_OK)
-            elif "CONFIRM" in text:
-                try:
-                    message = re.fullmatch(
-                        "^\s*CONFIRM\s+<?(([0-9]{2})\-([0-9]{4})\-([0-9]+))>?\s*$", text)
-                    lgu_id = message.group(3)
-                    uID = message.group(4)
-                    instance = ConfirmationService.handle(uID, lgu_id)
-                    site = TABLES["VS"].objects.get(pk=instance.get("site"))
-                    address = "{}, {}".format(site.site_address, site.barangay)
-                    SMSView.sendSMSMessage(dataQuery.mobile_number, dataQuery.auth_token, defaultResponse["defaultSessionConfirmation"].format(
-                        instance.date, instance.time, address))
-                    return HttpResponse(status=status.HTTP_200_OK)
-                except ConfirmationException as e:
+            elif dialogflowResponse.query_result.fulfillment_text[0:2] == "{}" and dialogflowResponse.query_result.intent.display_name == "Save SMS Form":
+                if text == "APPLY" and dataQuery.amount_entry == 10:
                     SMSView.sendSMSMessage(
-                        dataQuery.mobile_number, dataQuery.auth_token, str(e))
+                        dataQuery.mobile_number, dataQuery.auth_token, str(MaxEntryException()))
                     return HttpResponse(status=status.HTTP_200_OK)
-                except Exception:
-                    SMSView.sendSMSMessage(
-                        dataQuery.mobile_number, dataQuery.auth_token, defaultResponse["defaultError"])
-                    return HttpResponse(status=status.HTTP_200_OK)
+                SMSView.sendSMSMessage(dataQuery.mobile_number, dataQuery.auth_token,
+                                       dialogflowResponse.query_result.fulfillment_text.format(prefix))
             else:
-                session = sessionClient.session_path(
-                    dialogflowConfig["project_id"], dataQuery.mn_id)
-                text_input = TextInput(text=text, language_code='en-US')
-                query_input = QueryInput(text=text_input)
-                dialogflowResponse = sessionClient.detect_intent(request={
-                    "session": session, "query_input": query_input})
-                prefix = SMSView.checkResponse(
-                    dialogflowResponse.query_result.query_text, dialogflowResponse.query_result.parameters)
-                if dialogflowResponse.query_result.all_required_params_present and dialogflowResponse.query_result.intent.display_name == "Save SMS Form":
-                    params = dict(dialogflowResponse.query_result.parameters)
-                    try:
-                        rID, PIN = SMSView.saveResponse(
-                            dataQuery.mobile_number, dataQuery.auth_token, params)
-                        if rID != None and PIN != None:
-                            if dialogflowResponse.query_result.fulfillment_text[0:11] == "Application":
-                                SMSView.sendSMSMessage(dataQuery.mobile_number, dataQuery.auth_token, dialogflowResponse.query_result.fulfillment_text.format(
-                                    rID, PIN, dataQuery.mobile_number, EMAIL, HOTLINE))
-                            else:
-                                SMSView.sendSMSMessage(
-                                    dataQuery.mobile_number, dataQuery.auth_token, dialogflowResponse.query_result.fulfillment_text)
-                        return HttpResponse(status=status.HTTP_200_OK)
-                    except Exception as e:
-                        print(e)
-                        SMSView.sendSMSMessage(
-                            dataQuery.mobile_number, dataQuery.auth_token, defaultResponse["defaultError"])
-                        return HttpResponse(status=status.HTTP_200_OK)
-                elif dialogflowResponse.query_result.fulfillment_text[0:2] == "{}" and dialogflowResponse.query_result.intent.display_name == "Save SMS Form":
-                    if text == "APPLY" and dataQuery.amount_entry == 10:
-                        SMSView.sendSMSMessage(
-                            dataQuery.mobile_number, dataQuery.auth_token, str(MaxEntryException()))
-                        return HttpResponse(status=status.HTTP_200_OK)
-                    SMSView.sendSMSMessage(dataQuery.mobile_number, dataQuery.auth_token,
-                                           dialogflowResponse.query_result.fulfillment_text.format(prefix))
-                else:
-                    SMSView.sendSMSMessage(
-                        dataQuery.mobile_number, dataQuery.auth_token, dialogflowResponse.query_result.fulfillment_text)
-                return HttpResponse(status=status.HTTP_200_OK)
-        except:
-            return HttpResponse(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                SMSView.sendSMSMessage(
+                    dataQuery.mobile_number, dataQuery.auth_token, dialogflowResponse.query_result.fulfillment_text)
+            return HttpResponse(status=status.HTTP_200_OK)
+        # except:
+        #     return HttpResponse(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     @csrf_exempt
     def receiveUserToken(request):

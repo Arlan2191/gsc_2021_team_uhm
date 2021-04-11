@@ -9,4 +9,5 @@ urlpatterns = [
     re_path(r'^otp/?$', SMSVerificationAPIView.as_view()),
     re_path(r'^token/?$', SMSSubscriptionAPIView.as_view()),
     re_path(r'^notify/?$', NotificationAPIView.as_view()),
+    # re_path(r'^test/?$', TestConfirmAPIView.as_view()),
 ]
