@@ -1,0 +1,75 @@
+<h1 mat-dialog-title><strong>{{action}}</strong> Session</h1>
+<div mat-dialog-content>
+    <form [formGroup]="AddSessionFormGroup">
+        <mat-form-field *ngIf="action != 'Delete'; else elseTemplate" class="date-field">
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker" matInput [(ngModel)]="local_data.date" formControlName="date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+           <mat-form-field *ngIf="action != 'Delete'">
+            <mat-label>Time</mat-label>
+            <mat-select [(value)]="local_data.time" formControlName="time" required>
+              <mat-option value="7:00 AM">7:00 AM</mat-option>
+              <mat-option value="8:00 AM">8:00 AM</mat-option>
+              <mat-option value="9:00 AM">9:00 AM</mat-option>
+              <mat-option value="10:00 AM">10:00 AM</mat-option>
+              <mat-option value="11:00 AM">11:00 AM</mat-option>
+              <mat-option value="12:00 PM">12:00 PM</mat-option>
+              <mat-option value="1:00 PM">1:00 PM</mat-option>
+              <mat-option value="2:00 PM">2:00 PM</mat-option>
+              <mat-option value="3:00 PM">3:00 PM</mat-option>
+              <mat-option value="4:00 PM">4:00 PM</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="action != 'Delete'">
+            <mat-label>Max Capacity</mat-label>
+            <input placeholder="{{action}} Max Cap." matInput [(ngModel)]="local_data.max_cap" formControlName="max_cap">
+           </mat-form-field>
+
+          <mat-form-field *ngIf="action != 'Delete'">
+            <input placeholder="{{action}} Target Barangay" matInput [(ngModel)]="local_data.target_barangay" formControlName="barangay">
+          </mat-form-field>
+
+          <mat-form-field *ngIf="action != 'Delete'" class="birthrange-field">
+            <mat-label>Add a date range</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+              <input matStartDate placeholder="Start date"  [(ngModel)]="local_data.birth_range1" formControlName="birth_range1">
+              <input matEndDate placeholder="End date"  [(ngModel)]="local_data.birth_range2" formControlName="birth_range2">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="action != 'Delete'">
+            <mat-label>Priority</mat-label>
+            <mat-select [(value)]="local_data.priority" formControlName="priority" required multiple formControlName="priority">
+                <mat-option value="1">1st Priority - Frontliner</mat-option>
+                <mat-option value="2">2nd Priority - Indigent Senior Citizens</mat-option>
+                <mat-option value="3">3rd Priority - Remaining Senior Citizens</mat-option>
+                <mat-option value="4">4th Priority - Remaining Indigent population</mat-option>
+                <mat-option value="5">5th Priority - Uniformed Personnel</mat-option>
+                <mat-option value="6">6th Priority - Teachers and School Health Workers</mat-option>
+                <mat-option value="7">7th Priority - All Government Workers</mat-option>
+                <mat-option value="8">8th Priority - Essential Workers in agriculture, food industry, transportation, and tourism</mat-option>
+                <mat-option value="9">9th Priority - Sociodemographic groups</mat-option>
+                <mat-option value="10">10th Priority - Overseas Filipino Workers</mat-option>
+                <mat-option value="11">11th Priorty - Other remaining workforce</mat-option>
+                <mat-option value="12">12th Priority - Students</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+          <mat-form-field *ngIf="action != 'Delete'">
+            <input placeholder="{{action}} Site ID" matInput [(ngModel)]="local_data.site_id" formControlName="site_id">
+          </mat-form-field>
+          <ng-template #elseTemplate>
+            <p>Are you sure you want to delete vs_ID:<b>{{local_data.vs_id}}</b>?</p>
+          </ng-template>
+        <div mat-dialog-actions>
+          <button mat-button (click)="doAction()" class="action-btn">{{action}}</button>
+          <button mat-button (click)="closeDialog()" mat-flat-button class="cancel-btn">Cancel</button>
+        </div>        
+    </form>
+</div>

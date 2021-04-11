@@ -1,92 +1,116 @@
-
 h1 {
-    font-family: 'mulish';
     margin-top:20px;
     margin-left: 1.5%;
+    font-size: 35px;
     font-weight: bold;
-}
-
-h2 {
     font-family: 'mulish';
+  }
+  
+  h2 {
+    font-size: 25px;
     font-weight: bold;
+    font-family: 'mulish';
     color: rgb(121, 121, 121);
-}
-
-h3 {
-    margin-top: -10px;
-    color: rgb(121, 121, 121);
-}
-a{
+  }
+  
+  .header {
+    font-size: 15px;
+    font-family: 'mulish';
+    padding-left: 10px;
+  }
+  
+  a{
     text-decoration: none;
-    font-size: 78%;
+    font-size: 50%;
     white-space: normal;
-    font-family: 'mulish';
     font-weight: bold;
-}
-
-a:hover {
+    font-family: 'mulish';
+  }
+  
+  a:hover {
     background-color: rgb(224, 255, 252);
-}
-
-button{
+  }
+  
+  button{
     font-size: 110%;
     min-width: min-content;
-}
-
-.example-icon {
+  }
+  
+  .example-icon {
     padding: 0 14px;
   }
   
-.example-spacer {
+  .example-spacer {
     flex: 1 1 auto;
-}
-
-mat-nav-list {
+  }
+  
+  mat-nav-list {
     width: 60%;
-}
-
-img {
+  }
+  
+  img {
     width: 50px;
-}
-
-#sidenav-logo {
+  }
+  
+  #sidenav-logo {
     width: 100px;
     margin-left: 30px;
     margin-top: 20px;
-}
-
-.sidenav-container {
+  }
+  
+  
+  mat-sidenav-container {
     height: 100vh;
-}
-
-.sidenav {
-    width: 240px;
-    box-shadow: 3px 0 6px rgba(138, 138, 138, 0.24);
-    white-space: nowrap;
-    display: flex;
-}
-
-.home-button {
+  }
+  
+  .home-button {
+    text-decoration: none;
     justify-content: center;
-}
-
-mat-sidenav-content {
-    height: 100vh;
+  }
+  
+  .form-button {
+    background-color: rgb(37,150,255);
+    color: #FAFAFA;
+  }
+  
+  mat-sidenav-content {
+    height: 300vh;
     background-image: #FAFAFA;
     padding-top: 30px;
     padding-left: 50px;
     padding-right: 50px;
-}
-
-#description {
+    overflow: hidden;
+  }
+  
+  .sidenav {
+    width: 20%;
+    box-shadow: 3px 0 6px rgba(138, 138, 138, 0.24);
+    white-space: nowrap;
+    min-height: 100%;
+    display: flex;
+    overflow-y:hidden;
+    margin: 0%;
+  }
+  
+  
+  #description {
     margin-top: 30px;
-    margin-left: 50px;
+    margin-left: 25%;
     color:rgb(150, 150, 150);
-}
-
-.admin-toolbar {
-    margin-left: 30px;
-}
+  }
+  
+  .admin-toolbar {
+    margin-left: 10%;
+    font-size: 105%;
+  }
+  
+  
+  /*navigation tab*/
+  .divider {
+    width: 130%;
+    margin-top: 150%;
+    margin-left: 18%;
+  }
 
 /*navigation tab*/
 .divider {

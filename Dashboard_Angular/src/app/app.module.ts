@@ -46,6 +46,11 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { InterceptorService } from 'src/app/loader/interceptor.service';
 import { AnimateOnScrollModule } from 'ng2-animate-on-scroll';
 import { SnackBarComponent } from './snack-bar/snack-bar.component';
+import { DialogBoxComponent } from './dialog-box/dialog-box.component';
+import { VsComponent } from './vs/vs.component';
+import { RegisterlguComponent } from './registerlgu/registerlgu.component';
+import { RegisterNavigationComponent } from './register-navigation/register-navigation.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +61,12 @@ import { SnackBarComponent } from './snack-bar/snack-bar.component';
     EsComponent,
     TiComponent,
     CardComponent,
-    SnackBarComponent
+    SnackBarComponent,
+    DialogBoxComponent,
+    VsComponent,
+    RegisterlguComponent,
+    RegisterNavigationComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

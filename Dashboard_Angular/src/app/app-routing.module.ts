@@ -6,6 +6,9 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { VsComponent } from './vs/vs.component';
+import { RegisterlguComponent } from './registerlgu/registerlgu.component';
+import { RegisterNavigationComponent } from './register-navigation/register-navigation.component';
 
 
 const routes: Routes = [
@@ -26,7 +29,15 @@ const routes: Routes = [
   },
   {
     path: 'register',
+    component: RegisterNavigationComponent
+  },
+  {
+    path: 'register-personnel',
     component: RegisterComponent
+  },
+  {
+    path: 'register-lgu',
+    component:  RegisterlguComponent
   },
   {
     path: 'review',
@@ -37,6 +48,10 @@ const routes: Routes = [
     path: 'track',
     component: TiComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'session',
+    component: VsComponent,
   }
 ];
 
