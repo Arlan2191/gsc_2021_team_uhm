@@ -133,7 +133,7 @@ class Personal_Information(models.Model):
 
 class Auth_Mobile_Number(models.Model):
     mn_id = models.BigIntegerField(primary_key=True)
-    mobile_number = models.CharField(max_length=15, unique=True, null=False)
+    mobile_number = models.CharField(max_length=15, null=False)
     auth_token = models.CharField(max_length=50, null=False)
     amount_entry = models.SmallIntegerField(default=0, null=False)
     current_verify_code = models.CharField(
