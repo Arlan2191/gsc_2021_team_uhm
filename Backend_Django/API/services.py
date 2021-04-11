@@ -170,8 +170,9 @@ class DatastoreService:
 
     def updateSessionConfirmations(self, lgu_id, id, uID):
         task = self.datastoreClient.get(
-            Key('Sessions', lgu_id, project='project-bakuna'))
-        task[str(id)] = task[str(id)] + [uID]
+            Key('Sessions', int(lgu_id), project='project-bakuna'))
+        print(task)
+        task[str(id)].append(uID)
         self.datastoreClient.put(task)
 
 
@@ -293,27 +294,40 @@ class EligibilityService:
             senderAddress, str(recipient[0][1])), json=data)
         TrackingService.update(id, instance.dose, {"notified": True})
 
+
 class ConfirmationService:
 
     def handle(uID, lgu_id):
+        print(lgu_id)
         try:
-            instance1 = TABLES["TI"].objects.get(pk=uID, dose='1st')
-            instance2 = TABLES["TI"].objects.get(pk=uID, dose='2nd')
+            isFirst = False
+            instance1 = TABLES["TI"].objects.get(user_id=uID, dose='1st')
+            instance2 = TABLES["TI"].objects.get(user_id=uID, dose='2nd')
             if (instance1.status == 'P' and instance1.notified == True) and (instance2.status == 'P' and instance2.notified == False):
-                session_id = instance1.session
+                session_id = instance1.session.vs_id
                 TrackingService.update(uID, '1st', {"confirmed": True})
+                isFirst = True
             elif instance2.status == 'P' and instance2.notified == True:
-                session_id = instance2.session
+                session_id = instance2.session.vs_id
                 TrackingService.update(uID, '2nd', {"confirmed": True})
             instance = TABLES["VSS"].objects.get(pk=session_id)
-            serializer = SERIALIZERS["VSS"](instance, data={"amount_confirm": instance.amount_confirm + 1}, partial=True)
+            if isFirst:
+                TrackingService.update(
+                    uID, '1st', {"site_id": instance.site_id, "date": instance.date})
+            else:
+                TrackingService.update(
+                    uID, '2nd', {"site_id": instance.site_id, "date": instance.date})
+            serializer = SERIALIZERS["VSS"](
+                instance, data={"amount_confirm": instance.amount_confirm + 1}, partial=True)
             if serializer.is_valid(raise_exception=True):
-                serializer.update(instance, validated_data=serializer.validated_data)
+                serializer.update(
+                    instance, validated_data=serializer.validated_data)
             ds = DatastoreService()
             ds.updateSessionConfirmations(lgu_id, session_id, uID)
             return instance
         except ObjectDoesNotExist:
             raise ConfirmationException
+
 
 class TrackingService:
     def create(uID: str):

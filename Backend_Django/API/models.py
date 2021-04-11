@@ -326,6 +326,7 @@ class Eligibility_Applications(models.Model):
 
 
 class Tracking_Information(models.Model):
+    id = models.BigAutoField(primary_key=True)
     user = models.ForeignKey(
         Personal_Information, on_delete=models.RESTRICT, blank=True, null=True)
     notified = models.BooleanField(default=False, null=False)
