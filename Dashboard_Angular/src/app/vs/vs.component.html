@@ -1,0 +1,166 @@
+<mat-sidenav-container class="sidenav-container" autosize>
+    <mat-sidenav #drawer class="sidenav" fixedInViewport="true"
+    [attr.role]="isHandset ? 'dialog' : 'navigation'"
+    [mode]="(isHandset | async)!.matches ? 'over' : 'side'"
+    [opened]="!(isHandset | async)!.matches">
+        <mat-nav-list>
+            <button mat-flat-button class="home-button" routerLink="/home" [disableRipple]="true">
+                <span>
+                    <img src="assets/images/Rise_Logo.png" alt="logo" id="sidenav-logo">
+                </span>
+            </button>
+            <p id="description">DASHBOARD</p>
+
+            <a mat-list-item routerLink="/" class="admin-toolbar">
+            <mat-icon class = "non-active-icon">home</mat-icon>Home</a>
+
+            <a mat-list-item routerLink="/review"  class="admin-toolbar">
+            <mat-icon class = "non-active-icon">assignment_ind</mat-icon>Eligiblity Status</a>
+	
+            <a mat-list-item routerLink="/track"  class="admin-toolbar active">
+            <mat-icon class = "non-active-icon">person_pin_circle</mat-icon>Tracking Info</a>
+
+            <a mat-list-item routerLink="/session"  class="admin-toolbar active">
+            <mat-icon class = "active-icon">event</mat-icon>Vaccination Session</a>
+
+            <a mat-list-item routerLink="/" class="admin-toolbar">
+            <mat-icon class = "non-active-icon">exit_to_app</mat-icon>Log Out</a>    
+
+            <a mat-list-item routerLink="/"  class="admin-toolbar help">
+            <span class="material-icons  non-active-icon" >help</span>Help</a>
+        </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="floating">
+        <mat-grid-list cols="{{ ( cardLayout | async )?.columns }}" rowHeight="80px">
+                    <!--Vaccination Sites Card-->
+        <mat-grid-tile [colspan]="( cardLayout | async )?.questionnaire_response_card.cols"
+        [rowspan]="( cardLayout | async )?.questionnaire_response_card.rows">
+        <app-card title="Questionnaire Response">
+          <h1 class="title">Vaccination Sites</h1>
+          <div class="sites-table" animateOnScroll animationName="floating" offset="120">
+              <button mat-button (click)="delete()">Delete</button>
+              <button mat-button (click)="edit()">Edit</button>
+              <button mat-button (click)="cancel()" *ngIf="allowEdit">Cancel</button>
+              <button mat-button (click)="save()">Save</button>
+              <table mat-table [dataSource]="sitesTable" #SitesTable="matSort" matSort class="mat-elevation-28 vaccination-sites-table">
+                  <form [formGroup]="siteEditFormGroup">
+                      <ng-container matColumnDef="select">
+                          <th mat-header-cell *matHeaderCellDef>
+                              <mat-checkbox (change)="$event ? masterToggle() : null"
+                                  [checked]="selection.hasValue() && isAllSelected()"
+                                  [indeterminate]="selection.hasValue() && !isAllSelected()" [disabled]="allowEdit">
+                              </mat-checkbox>
+                          </th>
+                          <td mat-cell *matCellDef="let row">
+                              <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+                                  [checked]="selection.isSelected(row)" [disabled]="allowEdit">
+                              </mat-checkbox>
+                          </td>
+                      </ng-container>
+                      <ng-container matColumnDef="site_id">
+                          <th mat-header-cell *matHeaderCellDef> ID </th>
+                          <td mat-cell *matCellDef="let element">{{element.site_id}}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="site_address">
+                          <th mat-header-cell *matHeaderCellDef> Address </th>
+                          <td mat-cell *matCellDef="let element">
+                              <mat-form-field appearance="standard" *ngIf="match(element.site_id)">
+                                  <input matInput placeholder="Address" formControlName="site_address" required>
+                              </mat-form-field>
+                              <span *ngIf="!match(element.site_id)">{{element.site_address}}</span>
+                          </td>
+                      </ng-container>
+                      <ng-container matColumnDef="barangay">
+                          <th mat-header-cell *matHeaderCellDef> Barangay </th>
+                          <td mat-cell *matCellDef="let element">
+                              <mat-form-field appearance="standard" *ngIf="match(element.site_id)">
+                                  <input matInput placeholder="Barangay" formControlName="barangay" required>
+                              </mat-form-field>
+                              <span *ngIf="!match(element.site_id)">{{element.barangay}}</span>
+                          </td>
+                      </ng-container>
+                      <tr mat-header-row *matHeaderRowDef="sitesColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: sitesColumns;"></tr>
+                  </form>
+              </table>
+          </div>
+        </app-card>
+      </mat-grid-tile>
+      
+      <!--Vaccination Session Card-->
+      <mat-grid-tile [colspan]="( cardLayout | async )?.vaccination_session_card.cols"
+        [rowspan]="( cardLayout | async )?.vaccination_session_card.rows">
+        <app-card title="Questionnaire Response">
+          <h1 class="title">Vaccination Session</h1>
+                <button mat-button (click)="openDialog('Add',{})" mat-flat-button class="add-btn">Add Session<mat-icon class="add-icon">add</mat-icon></button>
+                    <div class="container table-responsive">
+                    
+                        <table mat-table [dataSource]="dataSource" #mytable class="vs-table">
+                    
+                        <!-- VS Id Column -->
+                        <ng-container matColumnDef="vs_id">
+                            <th mat-header-cell *matHeaderCellDef> VS ID </th>
+                            <td mat-cell *matCellDef="let element"> {{element.vs_id}} </td>
+                        </ng-container>
+                    
+                        <!-- Date Column -->
+                        <ng-container matColumnDef="date">
+                            <th mat-header-cell *matHeaderCellDef> Date </th>
+                            <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+                        </ng-container>
+
+                        <!-- Time Column -->
+                        <ng-container matColumnDef="time">
+                            <th mat-header-cell *matHeaderCellDef> Time </th>
+                            <td mat-cell *matCellDef="let element"> {{element.time}} </td>
+                        </ng-container>
+
+                        <!-- Max Cap Column -->
+                        <ng-container matColumnDef="max_cap">
+                            <th mat-header-cell *matHeaderCellDef> Max Capacity </th>
+                            <td mat-cell *matCellDef="let element"> {{element.max_cap}}</td>
+                        </ng-container>
+
+                        <!-- Target Barangay Column -->
+                        <ng-container matColumnDef="target_barangay">
+                            <th mat-header-cell *matHeaderCellDef> Barangay </th>
+                            <td mat-cell *matCellDef="let element"> {{element.target_barangay}}</td>
+                        </ng-container>
+
+                        <!-- Birth Range Column -->
+                        <ng-container matColumnDef="birth_range">
+                            <th mat-header-cell *matHeaderCellDef> Birth Range </th>
+                            <td mat-cell *matCellDef="let element"> {{element.birth_range1}} - {{element.birth_range2}}</td>
+                        </ng-container>
+
+                        <!-- Priority Column -->
+                        <ng-container matColumnDef="priority">
+                            <th mat-header-cell *matHeaderCellDef> Priority </th>
+                            <td mat-cell *matCellDef="let element"> {{element.priority}}</td>
+                        </ng-container>
+
+                        <!-- Site ID Column -->
+                        <ng-container matColumnDef="site_id">
+                            <th mat-header-cell *matHeaderCellDef> Site ID </th>
+                            <td mat-cell *matCellDef="let element"> {{element.site_id}}</td>
+                        </ng-container>
+
+                        <!-- Action Column -->
+                        <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef> Action </th>
+                            <td mat-cell *matCellDef="let element" class="action-link"> 
+                            <a (click)="openDialog('Delete',element)" class="delete">Delete</a>  
+                            </td>
+                        </ng-container>
+                    
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                    
+                    </div>
+                </app-card>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </mat-sidenav-content>
+</mat-sidenav-container>

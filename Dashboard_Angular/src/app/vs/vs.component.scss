@@ -1,0 +1,284 @@
+h1 {
+    margin-top:20px;
+    margin-left: 1.5%;
+    font-size: 35px;
+    font-weight: bold;
+    font-family: 'mulish';
+  }
+  
+  h2 {
+    font-size: 25px;
+    font-weight: bold;
+    font-family: 'mulish';
+    color: rgb(121, 121, 121);
+  }
+  
+  .header {
+    font-size: 15px;
+    font-family: 'mulish';
+    padding-left: 10px;
+  }
+  
+  a{
+    text-decoration: none;
+    font-size: 50%;
+    white-space: normal;
+    font-weight: bold;
+    font-family: 'mulish';
+  }
+  
+  a:hover {
+    background-color: rgb(224, 255, 252);
+  }
+  
+  button{
+    font-size: 110%;
+    min-width: min-content;
+  }
+  
+  .example-icon {
+    padding: 0 14px;
+  }
+  
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+  
+  mat-nav-list {
+    width: 60%;
+  }
+  
+  img {
+    width: 50px;
+  }
+  
+  #sidenav-logo {
+    width: 100px;
+    margin-left: 30px;
+    margin-top: 20px;
+  }
+  
+  
+  mat-sidenav-container {
+    height: 150vh;
+  }
+  
+  .home-button {
+    text-decoration: none;
+    justify-content: center;
+  }
+  
+  .form-button {
+    background-color: rgb(37,150,255);
+    color: #FAFAFA;
+  }
+  
+  mat-sidenav-content {
+    height: 300vh;
+    background-image: #FAFAFA;
+    padding-top: 30px;
+    padding-left: 50px;
+    padding-right: 50px;
+    overflow: hidden;
+  }
+  
+  .sidenav {
+    width: 20%;
+    box-shadow: 3px 0 6px rgba(138, 138, 138, 0.24);
+    white-space: nowrap;
+    min-height: 100%;
+    display: flex;
+    overflow-y:hidden;
+    margin: 0%;
+  }
+  
+  
+  #description {
+    margin-top: 30px;
+    margin-left: 25%;
+    color:rgb(150, 150, 150);
+  }
+  
+  .admin-toolbar {
+    margin-left: 10%;
+    font-size: 105%;
+  }
+  
+  
+  /*navigation tab*/
+  .divider {
+    width: 130%;
+    margin-top: 150%;
+    margin-left: 18%;
+  }
+  
+  /*tables*/
+  
+  table {
+      width: 98%;
+      border-collapse: collapse;
+      margin-bottom: 60px;
+      font-family: 'mulish';
+   }
+  
+   .vs-table, th, td {
+    font-size: 12px;
+  }
+  
+  a {
+      cursor: pointer;
+  }
+  
+  .visible {
+    visibility: visible;
+  }
+  
+  .hidden {
+    visibility: hidden;
+  }
+  
+  
+  /*responsive-table */
+  .table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    .mat-table {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 1rem;
+        display: table;
+        border-collapse: collapse;
+        margin: 0px;
+    }
+    .mat-row,
+    .mat-header-row {
+        display: table-row;
+    }
+    .mat-cell,
+    .mat-header-cell {
+        word-wrap: initial;
+        display: table-cell;
+        padding: 5px 5px;
+        line-break: unset;
+        width: auto;
+        white-space: nowrap;
+        overflow: hidden;
+        vertical-align: middle;
+    }
+  }
+  
+  /*responses*/
+  
+  .title {
+    font-size: 18px;
+    font-family: 'mulish';
+  }
+  
+  .review {
+    width: 230px;
+  }
+  
+  .review li {
+    font-size: 18px;
+    font-family: 'mulish';
+    margin-right: 15px;
+    list-style: none;
+    display: inline;
+  }
+  
+  .applications-table {
+    width: 95%;
+    margin-top: -20px;
+    height: auto;
+  }
+  
+  /*user profile*/
+  
+  .first-row-info {
+    padding-top: 30px;
+    padding-left: 10px;
+  }
+  .name {
+    margin-right: 20px;
+    font-size: 45px;
+    font-family: 'mulish';
+    font-weight: bolder;
+  }
+  
+  .vaccination-status {
+     color: rgb(37,150,255);
+     font-family: 'mulish';
+     font-weight: bold;
+     font-size: 16px;
+  }
+  
+  ul {
+     margin-left: -30px;
+  }
+  
+  .personal-info{
+     list-style:none; 
+     float:left;
+     margin-top: 20px;
+     margin-right: 10px;
+     margin-bottom: 5px;
+  }
+  
+  .heading {
+     text-transform: uppercase;
+     font-family: 'mulish';
+     color: rgb(192, 192, 192);
+  }
+  
+  .info {
+     font-family: 'mulish';
+  }
+  
+  ul li:nth-child(5){clear:both;}
+  ul li h1 a{text-decoration:none;}
+  
+  /*status*/
+  .status {
+    margin-left: 60px;
+    padding: 20px;
+    width: 200px;
+  }
+  
+  /*input*/
+  mat-form-field {
+    font-size: 12px;
+  }
+  
+  /* animations */
+  .floating {   
+    animation-name: floating; 
+    animation-duration: 1.3s; 
+    animation-iteration-count: 1; 
+    animation-timing-function: ease-in-out; 
+  } 
+  
+  @keyframes floating { 
+    0% { transform: translate(0,  60px); } 
+    50%  { transform: translate(0, 0px); } 
+    100%   { transform: translate(0, -0px); }     
+  } 
+  
+  /*buttons*/
+  .add-btn {
+    background-color: rgb(37,150,255);
+    color: #FAFAFA;
+    margin-top: 5px;
+    border-collapse: collapse;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+  }
+  
+  .add-icon {
+    font-size: 22px;
+  }
+
+  .delete {
+    font-size: 10px;
+    color: red
+  }

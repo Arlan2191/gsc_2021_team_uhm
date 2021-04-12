@@ -1,0 +1,46 @@
+mat-form-field {
+    margin-left: 10px;
+}
+
+.action-btn {
+    margin-left: 22px;
+    margin-right: 10px;
+}
+
+.cancel-btn {
+    background-color: rgb(37,150,255);
+    color: #FAFAFA;
+}
+
+.birth-range {
+    width: 45%;
+    margin-top: -10px;
+    padding-right: 10px;
+}
+
+.date-field {
+    width:90%;
+}
+
+.birthrange-field {
+    width: 90%;
+}
+
+span {
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+label {
+    font-family: 'mulish';
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+ng-template {
+    padding: 10px;
+}
+
+p {
+    line-height: 20px;
+} 

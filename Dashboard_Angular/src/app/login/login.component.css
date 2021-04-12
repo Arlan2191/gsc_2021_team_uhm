@@ -52,7 +52,7 @@ mat-form-field {
 .login-button {
   background-color: rgb(37,150,255);
   color: white;
-  margin-top: 15px;
+  margin-top: 0%;
   width: 90px;
   height: 40px;
   font-size: 15px;
@@ -89,7 +89,8 @@ mat-grid-tile {
 #sign-up-img {
   position: relative;
   display: flex;
-  width: 300px;
+  padding-right: 50px;
+  width: 320px;
 }
 
 #welcome-header {
@@ -111,28 +112,28 @@ h1 {
 }
 
 .new-text {
-  position: absolute;
-  top: 560px;
-  left: 135px;
+  position: relative;
+  top: 60px;
+  left: -90px;
 }
 
 .btn {
-  position: absolute;
-  top: 550px;
-  left: 220px;
+  position: relative;
+  top: 60px;
+  left: -80px;
 }
 
 /*right*/
 .welcome-text {
   color: #FAFAFA;
+  padding: 30px;
 }
 
 .dashboard {
   cursor: default;
   text-decoration: none;
-  position: absolute;
-  top: 50px;
-  left: 230px;
+  margin-top: -290%;
+  margin-left: 95%;
   font-size: 20px;
   color: rgb(155, 155, 155);
 }

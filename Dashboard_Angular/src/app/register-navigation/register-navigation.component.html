@@ -1,0 +1,46 @@
+
+<div> 
+    <body>
+        <div fxLayoutAlign="space-between center" class="split-screen-parent">
+            <!-- LEFT SIDE -->
+            <section fxLayoutAlign="center center"
+                    [@leftScreen]="focus"
+                    (click)="focus = 'left'"
+                    class="left-screen-parent"
+                    [ngClass]="{'selected': focus === 'left'  || focus === 'bumpLeft'}">
+            <div fxLayout="column" fxLayoutAlign="center center">
+                <div>
+                    <div class='text-content'>
+                      <mat-icon>location_city</mat-icon>
+                      <div class="bold">Register Your LGU</div>
+                    </div>
+                    <button class="white-button floating" routerLink="/register-lgu">
+                      Register Here
+                    </button>
+                </div>    
+            </div>
+            </section>
+            
+            <!-- RIGHT SIDE -->
+            <section fxLayoutAlign="center center"
+                    [@rightScreen]="focus"
+                    (click)="focus = 'right'"
+                    class="right-screen-parent"
+                    [ngClass]="{'selected': focus === 'right' || focus === 'bumpRight'}">
+            <div fxLayout="column" fxLayoutAlign="center center">
+                <div>
+                    <div class='text-content black'>
+                      <mat-icon class="black">face</mat-icon>
+                      <div class="bold">Register Your Staff</div>
+                    </div>
+                    <button class="black-button floating" routerLink="/register-personnel">
+                      Register Here
+                    </button>
+                </div>  
+            </div>
+            </section>
+        </div>
+    </body>
+</div>
+
+

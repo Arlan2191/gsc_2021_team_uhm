@@ -15,7 +15,6 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 import { MomentDateOnlyAdapter } from './moment-utc-adapter';
 import { MomentConstructor, Moment } from './moment-date-only';
 
-
 export interface Label {
   value: string;
   title: string;
@@ -46,18 +45,12 @@ const ELEMENT_DATA: UsersData[] = [
 ];
 
 @Component({
-  selector: 'app-es',
-  templateUrl: './es.component.html',
-  styleUrls: ['./es.component.scss'],
-  providers: [
-    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
-    // application's root module. We provide it at the component level here, due to limitations of
-    // our example generation script.
-    {provide: DateAdapter, useClass: MomentDateOnlyAdapter, deps: [MAT_DATE_LOCALE]},
-
-  ],
+  selector: 'app-vs',
+  templateUrl: './vs.component.html',
+  styleUrls: ['./vs.component.scss']
 })
-export class EsComponent implements OnInit {
+export class VsComponent implements OnInit {
+
   durationInSeconds = 5;
   currentID: number;
   reviewFormGroup: FormGroup;
@@ -103,14 +96,18 @@ export class EsComponent implements OnInit {
           pending_application__card: { cols: 3, rows: 4 },
           user_information_card: { cols: 3, rows: 4 },
           review_card: { cols: 3, rows: 4 },
+          questionnaire_response_card: { cols: 3, rows: 8},
+          vaccination_session_card: { cols: 12, rows: 3}, 
         };
       }
  
      return {
         columns: 12,
-        pending_application__card: { cols: 3, rows: 5 },
+        pending_application__card: { cols: 3, rows: 4 },
         user_information_card: { cols: 9, rows: 8 },
-        review_card: { cols: 3, rows: 3 }, 
+        review_card: { cols: 3, rows: 4 },
+        questionnaire_response_card: { cols: 12, rows: 5},
+        vaccination_session_card: { cols: 12, rows: 8}, 
       };
     })
   );
@@ -272,10 +269,12 @@ export class EsComponent implements OnInit {
     });
   }
 
-  /*refreshing data changes*/
-  // refresh() {
+//   /*refreshing data changes*/
+//   // refresh() {
   
-  //   });
-  // }
+//   //   });
+//   // }
+
+// }
 
 }

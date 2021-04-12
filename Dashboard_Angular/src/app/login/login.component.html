@@ -1,18 +1,12 @@
 <body>
-
-    <!-- <div *ngFor="loaderService.isLoading | async" class="loader-container">
-        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-    </div> -->
-
     <mat-grid-list cols="2" rowHeight="2:1">
         <mat-grid-tile class="left">
             <form [formGroup]="loginFormGroup">
 
                 <a mat-flat-button [disableRipple]="true" routerLink="/">
                     <span><img src="assets/images/Rise_Logo.png" alt="logo" class="logo"></span>
+                    <span class="dashboard">Dashboard</span>
                 </a>
-
-                <a class="dashboard">Dashboard</a>
 
                 <h2>Hello there, frontliner.</h2>
 

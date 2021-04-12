@@ -63,7 +63,7 @@ export class ApiService {
     "32": "Kasama ka ba sa COVID-19 Clinical Study?",
   };
   labels = { "G": "GRANTED", "G@R": "GRANTED@RISK", "D": "DENIED", "W": "WAITLISTED", "P": "PENDING" }
-  token = "";
+  token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjUiLCJleHAiOjE2MTgyMTIxNTJ9.j7NNjefl12923Smw_EP4zbsdA16aCVYbJgkjsZpzirs";
   id = "";
   constructor(private _http: HttpClient) { }
 
