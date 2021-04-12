@@ -10,6 +10,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Icons } from 'ng-bootstrap-icons/bootstrap-icons/icons.provider';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatPaginator } from '@angular/material/paginator';
+import { registerLocaleData } from '@angular/common';
 
 @Component({
   selector: 'app-ti',
@@ -32,7 +33,7 @@ export class TiComponent implements OnInit {
   esTable = { "priority": "__", "status": "_____", reason: "..." };
   // esTable = { "priority": "1", "status": "Pending", reason: "Assigned medical personnel has yet to review your application" };
   instructions = "";
-  labels = this._api.labels;
+  labels = [{ label: "C", value: "COMPLETED" }, { label: "I", value: "INELIGIBLE" }, { label: "W", value: "WAITING" }, { label: "P", value: "PENDING" }, { label: "M", value: "MISSED" }];
   questions = this._api.questions;
 
   respsTable: MatTableDataSource<any>;
@@ -102,38 +103,49 @@ export class TiComponent implements OnInit {
   }
 
   tabChanged() {
-    if (this.tabGroup.selectedIndex == 0) {
+    if (this.tabGroup.selectedIndex == 0 && this.secondVSS != undefined) {
       this.vssTable = this.firstVSS;
     }
-    if (this.tabGroup.selectedIndex == 1) {
+    if (this.tabGroup.selectedIndex == 1 && this.secondVSS != undefined) {
       this.vssTable = this.secondVSS;
     }
   }
 
   search() {
-    console.log(this.tabGroup.selectedIndex);
     let id = this.referenceID.controls["rID"].value;
     this.currentID = id;
     this.firstDose.patchValue({ "user": this.currentID });
     this.secondDose.patchValue({ "user": this.currentID });
     this._api.getTracking(id).then((value: any) => {
       let data = this._api.handle(value, 5);
-      this._api.getSession(data[0].session).then((value: any) => {
+      this._api.getSessions(data[0].session).then((value: any) => {
         this.firstVSS = value["query_result"][0];
         this.vssTable = this.firstVSS;
         this._api.getSites(this.firstVSS["session"]).then((value: any) => {
-          let address: string = `${value["query_result"][0]["site_address"]}, ${value["query_result"][0]["barangay"]}`;
+          let val: any = value["query_result"][0];
+          let address: string = `${val["site_address"]}, ${val["barangay"]}`;
+          this.firstDose.patchValue({ "site": val["site_id"] });
           this.firstVSS["site_address"] = address;
         });
       });
-      this._api.getSession(data[1].session).then((value: any) => {
+      this._api.getSessions(data[1].session).then((value: any) => {
         this.secondVSS = value;
         this._api.getSites(this.secondVSS["session"]).then((value: any) => {
-          let address: string = `${value["query_result"][0]["site_address"]}, ${value["query_result"][0]["barangay"]}`;
+          let val: any = value["query_result"][0];
+          let address: string = `${val["site_address"]}, ${val["barangay"]}`;
+          this.secondDose.patchValue({ "site": val["site_id"] });
           this.secondVSS["site_address"] = address;
         });
       });
+      delete data[0]["notified"];
+      delete data[0]["notified"];
+      delete data[0]["confirmed"];
+      delete data[0]["confirmed"];
       this.firstDose.setValue(data[0]);
+      delete data[1]["notified"];
+      delete data[1]["notified"];
+      delete data[1]["confirmed"];
+      delete data[1]["confirmed"];
       this.secondDose.setValue(data[1]);
     });
     this._api.getProfile(id, true).then((value: any) => {
@@ -152,7 +164,10 @@ export class TiComponent implements OnInit {
   }
 
   update(dose: string) {
+    let current_time = new Date().toLocaleTimeString('en-US', { minute: 'numeric', hour: 'numeric', hour12: false });
+    let current_date = new Date().toLocaleDateString('en-US');
     if (dose === "1st") {
+      this.firstDose.patchValue({ "time": current_time, "date": current_date });
       this._api.putRequest(this.firstDose, 5, this.currentID, dose).then(() => {
         this.firstDose.reset();
         this.secondDose.reset();
@@ -162,6 +177,7 @@ export class TiComponent implements OnInit {
         alert("Successfully updated patient's tracking information");
       });
     } else {
+      this.secondDose.patchValue({ "time": current_time, "date": current_date });
       this._api.putRequest(this.secondDose, 5, this.currentID, dose).then(() => {
         this.firstDose.reset();
         this.secondDose.reset();
@@ -171,7 +187,6 @@ export class TiComponent implements OnInit {
         alert("Successfully updated patient's tracking information");
       });
     }
-
   }
 
   color() {

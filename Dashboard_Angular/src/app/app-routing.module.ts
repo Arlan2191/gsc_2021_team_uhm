@@ -27,7 +27,7 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',
@@ -48,7 +48,7 @@ const routes: Routes = [
   {
     path: 'review',
     component: EsComponent,
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'track',
@@ -58,6 +58,7 @@ const routes: Routes = [
   {
     path: 'session',
     component: VsComponent,
+    canActivate: [AuthGuard]
   }
 ];
 

@@ -16,6 +16,9 @@ export class ApiService {
     { 'dose': 0, 'user': 0, 'status': 'N/A', 'batch_number': 'N/A', 'session': 'N/A', 'time': 'N/A', 'site': 'N/A', 'manufacturer': 'N/A', 'license_number': 'N/A', 'serial': 'N/A' },
     { 'first_name': 'N/A', 'middle_name': 'N/A', 'last_name': 'N/A', 'birthdate': 'N/A', 'sex': 'N/A', 'occupation': 'N/A', 'email': 'N/A', 'mobile_number': 'N/A', 'municipality': 'N/A', 'barangay': 'N/A' },
     { 'date': 'N/A', 'time': 'N/A' },
+    {},
+    {},
+    { 'time': 'N/A', 'max_cap': 'N/A', 'target_barangay': 'N/A', 'birth_range1': 'N/A', 'birth_range2': 'N/A', 'priority': 'N/A', 'date': 'N/A', 'vs_id': 'N/A', 'site_id': 'N/A' }
   ];
   formKeys = [
     ["id", "status"],
@@ -26,7 +29,8 @@ export class ApiService {
     ['dose', 'user', 'status', 'batch_number', 'session', 'time', 'site', 'manufacturer', 'license_number', 'serial'],
     ['first_name', 'middle_name', 'last_name', 'birthdate', 'sex', 'occupation', 'email', 'mobile_number', 'municipality', 'barangay'],
     ["license_number", "first_name", "middle_name", "last_name", "birthdate", "sex", "occupation", "email", "mobile_number", "organization", "organization_email", "organization_telecom", "organization_region", "organization_province", "organization_municipality", "organization_barangay", "organization_address"],
-    ['date', 'time']
+    ['date', 'time'],
+    ['time', 'max_cap', 'target_barangay', 'birth_range1', 'birth_range2', 'priority', 'date', 'vs_id', 'site_id']
   ];
   questions = {
     "1": "Nagpositibo ka na ba sa COVID-19?",
@@ -63,9 +67,16 @@ export class ApiService {
     "32": "Kasama ka ba sa COVID-19 Clinical Study?",
   };
   labels = { "G": "GRANTED", "G@R": "GRANTED@RISK", "D": "DENIED", "W": "WAITLISTED", "P": "PENDING" }
-  token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjUiLCJleHAiOjE2MTgyMTIxNTJ9.j7NNjefl12923Smw_EP4zbsdA16aCVYbJgkjsZpzirs";
+  token = "";
   id = "";
+  username = "";
+  currentPage = "";
+
   constructor(private _http: HttpClient) { }
+
+  getPage() {
+
+  }
 
   async getApplications(id?: number) {
     if (id == undefined) {
@@ -97,8 +108,15 @@ export class ApiService {
     }).toPromise();
   }
 
-  async getSession(id: number) {
-    return await this._http.get<Array<any>>(`${this.BASEURL}/site/table?name=VSS&id=${id}`, {
+  async getSessions(id?: number) {
+    if (id) {
+      return await this._http.get<Array<any>>(`${this.BASEURL}/site/table?name=VSS&id=${id}`, {
+        headers: new HttpHeaders({
+          "Authorization": this.token,
+        })
+      }).toPromise();
+    }
+    return await this._http.get<Array<any>>(`${this.BASEURL}/site/table?name=VSS`, {
       headers: new HttpHeaders({
         "Authorization": this.token,
       })
@@ -188,9 +206,9 @@ export class ApiService {
   async postRequest(table_code: number, formGroup: FormGroup) {
     let formData = new FormData();
     this.formKeys[table_code].forEach((v: string) => {
-      if (v != "id" && v != "num" && v != "select") {
+      if (v != "id" && (v != 'site_id' || table_code == 9) && v != 'vs_id' && v != 'action' && v != "num" && v != "select") {
+        console.log(v);
         formData.append(v, formGroup.controls[v].value);
-        console.log(v, formGroup.controls[v].value);
       }
     });
     if (table_code == 1) {
@@ -217,7 +235,7 @@ export class ApiService {
   async putRequest(formGroup: FormGroup, table_code: number, id: number, dose?: string) {
     let formData = new FormData();
     this.formKeys[table_code].forEach((v: string) => {
-      if (v != "id" && v != "num" && v != "select") {
+      if (v != "id" && (v != 'site_id' || table_code == 9) && v != 'vs_id' && v != 'action' && v != "num" && v != "select") {
         formData.append(v, formGroup.controls[v].value);
       }
     });
@@ -239,14 +257,17 @@ export class ApiService {
     }
   }
 
-  async deleteSite(sites: Array<any>) {
-    let siteIDs: Array<any>;
-    sites.forEach((value) => {
-      siteIDs.push(value["site_id"]);
-    });
-    return await this._http.post(`${this.BASEURL}/site-api/DELETE`, JSON.stringify({ "delete_query": siteIDs }), {
+  async deleteSite(id: number) {
+    return await this._http.delete(`${this.BASEURL}/site/table?name=VS&id=${id}}`, {
       headers: new HttpHeaders({
-        "Content-Type": "application/json",
+        "Authorization": this.token,
+      })
+    }).toPromise();
+  }
+
+  async deleteSession(id: number) {
+    return await this._http.delete(`${this.BASEURL}/site/table?name=VSS&id=${id}}`, {
+      headers: new HttpHeaders({
         "Authorization": this.token,
       })
     }).toPromise();

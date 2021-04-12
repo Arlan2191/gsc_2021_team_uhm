@@ -1,5 +1,7 @@
 import time
 import re
+
+from django.http.request import QueryDict
 from SMS.views import SMSView
 from django.db.models.query import QuerySet
 from API.models import Local_Government_Units
@@ -8,7 +10,7 @@ from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt, requires_csrf_token
-from API.services import ConfirmationService, CreatePersonnelService, EligibilityService, NotificationService, SMSService, DatastoreService, TrackingService
+from API.services import ConfirmationService, CreatePersonnelService, EligibilityService, SMSService, DatastoreService, TrackingService
 from SMS.library import defaultResponse
 from projectBakuna.environment import globeConfig, TABLES, SERIALIZERS, ENGINE
 from aldjemy import core
@@ -99,7 +101,7 @@ class DashboardAPIView(APIView):
             lgu_id = request.user.lgu_id.lgu_id
             # and request.user.is_authenticated and request.user.is_staff and request.user.has_perms(('API.add_vaccination_site', 'API.add_vaccination_session')):
             if table in ['VS', 'VSS', 'TI'] and lgu_id is not None:
-                data = request.data
+                data = dict([(k, v[0])for k, v in request.data.items()])
                 data["lgu_id"] = lgu_id
                 serializer = SERIALIZERS[table](data=data)
                 if serializer.is_valid(raise_exception=True):
@@ -145,7 +147,7 @@ class DashboardAPIView(APIView):
                         _ = EligibilityService.update(id, data)
                         return HttpResponse(status=status.HTTP_200_OK)
                     elif table == 'TI' and dose is not None:
-                        _ = TrackingService.update(id, dose, data)
+                        _ = TrackingService.update(id, [dose], data)
                         return HttpResponse(status=status.HTTP_200_OK)
                     else:
                         instance = TABLES[table].objects.get(pk=id)
@@ -159,7 +161,8 @@ class DashboardAPIView(APIView):
                         return HttpResponse(status=status.HTTP_404_NOT_FOUND)
                 return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
             return HttpResponse(status=status.HTTP_401_UNAUTHORIZED)
-        except Exception:
+        except Exception as e:
+            print(e)
             return HttpResponse(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def delete(self, request):

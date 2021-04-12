@@ -52,6 +52,7 @@ import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 import { VsComponent } from './vs/vs.component';
 import { RegisterlguComponent } from './registerlgu/registerlgu.component';
 import { RegisterNavigationComponent } from './register-navigation/register-navigation.component';
+import { DialogSiteComponent } from './dialog-site/dialog-site.component';
 
 
 @NgModule({
@@ -70,6 +71,7 @@ import { RegisterNavigationComponent } from './register-navigation/register-navi
     VsComponent,
     RegisterlguComponent,
     RegisterNavigationComponent,
+    DialogSiteComponent,
   ],
   imports: [
     BrowserModule,

@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
       if (v != undefined) {
         this._api.token = "Token " + v.user.token;
         this._api.id = v.user.id;
-        this._router.navigate(["/review"]);
+        this._router.navigate(["/home"]);
       }
     }).catch(() => {
       alert("[TODO] Better Error Display: " + "Invalid Username and Password");

@@ -242,6 +242,7 @@ class DropboxService:
 
     def update(id: int, data: dict):
         time.sleep(0.01)
+        print(data)
         instance = TABLES["EA"].objects.get(pk=id)
         serializer = SERIALIZERS["EA"](data=data, partial=True)
         if serializer.is_valid(raise_exception=True):
@@ -252,7 +253,8 @@ class EligibilityService:
 
     def initialize(id: int, validated_data: dict):
         personnel = TABLES["EA"].objects.raw(
-            "SELECT id_id FROM eligibility_applications WHERE pending_applications=(SELECT MIN(pending_applications) FROM eligibility_applications) AND lgu_id_id='{}' LIMIT 1".format(validated_data.get("lgu_id").lgu_id))[0]
+            "SELECT id_id FROM eligibility_applications WHERE pending_applications=(SELECT MIN(pending_applications) FROM eligibility_applications WHERE lgu_id_id=%(lgu_id)s) AND lgu_id_id=%(lgu_id)s LIMIT 1" % {"lgu_id": validated_data.get("lgu_id").lgu_id})[0]
+        print(personnel)
         data = {"id": id, "lgu_id": validated_data.get("lgu_id").lgu_id, "status": "P", "assigned_to": personnel.id_id,
                 "reason": "Assigned medical personnel has yet to review your application"}
         serializer = SERIALIZERS["ES"](data=data)
@@ -262,6 +264,7 @@ class EligibilityService:
                 "pending_applications": personnel.pending_applications + 1}]).start()
 
     def view(id: int):
+        print(id)
         instance = TABLES["ES"].objects.get(pk=id)
         return instance
 
@@ -270,13 +273,14 @@ class EligibilityService:
         serializer = SERIALIZERS["ES"](data=data, partial=True)
         if serializer.is_valid(raise_exception=True):
             instance = serializer.update(instance, serializer.validated_data)
-            data = DropboxService.view(id)
-            data["reviewed_applications"] += 1
+            ea_data = DropboxService.view(instance.assigned_to.pk)
+            ea_data["reviewed_applications"] += 1
             if data.get("status") == "G" or data.get("status") == "G@R":
                 Thread(target=TrackingService.create, args=[id]).start()
-            Thread(target=EligibilityService.notify,
-                   args=[id, instance]).start()
-            Thread(target=DropboxService.update, args=[id, data]).start()
+                Thread(target=EligibilityService.notify,
+                       args=[id, instance]).start()
+            Thread(target=DropboxService.update, args=[
+                   instance.assigned_to.pk, data]).start()
             return instance.pk
 
     def notify(id: int, instance):
@@ -292,7 +296,6 @@ class EligibilityService:
         senderAddress = globeConfig.get("shortCode")[-4:]
         _ = post(url="https://devapi.globelabs.com.ph/smsmessaging/v1/outbound/{}/requests?access_token={}".format(
             senderAddress, str(recipient[0][1])), json=data)
-        TrackingService.update(id, instance.dose, {"notified": True})
 
 
 class ConfirmationService:
@@ -341,88 +344,9 @@ class TrackingService:
         if s2.is_valid():
             s2.create(validated_data=s2.validated_data)
 
-    def update(uID, dose: str, data: dict):
-        u = TABLES["TI"].objects.get(user=uID, dose=dose)
-        s = SERIALIZERS["TI"](u, data=data, partial=True)
-        if s.is_valid(raise_exception=True):
-            s.update(u, validated_data=s.validated_data)
-
-
-class NotificationService:  # TODO
-    def get(lgu_id: int, filters: OrderedDict):
-        members = TABLES["PI"].objects.filter(lgu_id=lgu_id)
-        # recipients = []
-        # for f in filters.keys():
-        #     f = filters.get(f, None)
-        #     if f is not None:
-        #         recipients += [SERIALIZERS["PI"](x).data.get("mobile_number") for x in TABLES["PI"].objects.filter(
-        #                                         priority=p, barangay=b, birthdate_range=birth_range)]
-
-        # if not ordered:
-        #     priority = filters.get("priority", None)
-        #     birth_range = filters.get("birth_range", None)
-        #     max_cap = filters.get("max_cap", None)
-        #     barangay = filters.get("barangay", None)
-        #     if max_cap is not None:
-        #         if priority is not None:
-        #             if barangay is not None:
-        #                 if birth_range is not None:
-        #                     if isinstance(priority, (list, tuple)):
-        #                         for p in priority:
-        #                             if isinstance(barangay, (list, tuple)):
-        #                                 for b in barangay:
-        #                                     recipients += [SERIALIZERS["PI"](x).data.get("mobile_number") for x in TABLES["PI"].objects.filter(
-        #                                         priority=p, barangay=b, birthdate_range=birth_range)]
-        #                             else:
-        #                                 recipients += [SERIALIZERS["PI"](x).data.get("mobile_number") for x in TABLES["PI"].objects.filter(
-        #                                     priority=p, barangay=barangay, birthdate_range=birth_range)]
-        #                     else:
-        #                         recipients += [SERIALIZERS["PI"](x).data.get("mobile_number") for x in TABLES["PI"].objects.filter(
-        #                             priority=priority, barangay=barangay, birthdate_range=birth_range)]
-        #                 else:
-        #                     if isinstance(priority, (list, tuple)):
-        #                         for p in priority:
-        #                             if isinstance(barangay, (list, tuple)):
-        #                                 for b in barangay:
-        #                                     recipients += [SERIALIZERS["PI"](x).data.get(
-        #                                         "mobile_number") for x in TABLES["PI"].objects.filter(priority=p, barangay=b)]
-        #                             else:
-        #                                 recipients += [SERIALIZERS["PI"](x).data.get(
-        #                                     "mobile_number") for x in TABLES["PI"].objects.filter(priority=p, barangay=barangay)]
-        #                     else:
-        #                         recipients += [SERIALIZERS["PI"](x).data.get(
-        #                             "mobile_number") for x in TABLES["PI"].objects.filter(priority=priority, barangay=barangay)]
-        #             elif birth_range is not None:
-        #                 if isinstance(priority, (list, tuple)):
-        #                     for p in priority:
-        #                         recipients += [SERIALIZERS["PI"](x).data.get(
-        #                             "mobile_number") for x in TABLES["PI"].objects.filter(priority=p, birthdate_range=birth_range)]
-        #                 else:
-        #                     recipients += [SERIALIZERS["PI"](x).data.get("mobile_number") for x in TABLES["PI"].objects.filter(
-        #                         priority=priority, birthdate_range=birth_range)]
-        #             else:
-        #                 if isinstance(priority, (list, tuple)):
-        #                     for p in priority:
-        #                         recipients += [SERIALIZERS["PI"](x).data.get(
-        #                             "mobile_number") for x in TABLES["PI"].objects.filter(priority=p)]
-        #                 else:
-        #                     recipients += [SERIALIZERS["PI"](x).data.get(
-        #                         "mobile_number") for x in TABLES["PI"].objects.filter(priority=priority)]
-        #         elif barangay is not None:
-        #             if birth_range is not None:
-        #                 pass
-        #             else:
-        #                 pass
-        #         elif birth_range is not None:
-        #             pass
-        #         else:
-        #             pass
-        #     else:
-        #         raise ValueError(
-        #             "Maximum number of recipients must be defined")
-        # else:
-        #     pass
-        pass
-
-    def send():
-        pass
+    def update(uID, dose, data: dict):
+        for d in dose:
+            u = TABLES["TI"].objects.get(user=uID, dose=d)
+            s = SERIALIZERS["TI"](u, data=data, partial=True)
+            if s.is_valid(raise_exception=True):
+                s.update(u, validated_data=s.validated_data)

@@ -1,0 +1,23 @@
+<h1 mat-dialog-title><strong>{{action}}</strong> Session</h1>
+<div mat-dialog-content>
+    <form [formGroup]="AddSessionFormGroup">
+
+        <mat-form-field *ngIf="action != 'Delete'">
+            <input placeholder="{{action}} Barangay" matInput [(ngModel)]="local_data.barangay"
+                formControlName="barangay">
+        </mat-form-field>
+
+        <mat-form-field *ngIf="action != 'Delete'">
+            <input placeholder="{{action}} Site Address" matInput [(ngModel)]="local_data.site_address"
+                formControlName="site_address">
+        </mat-form-field>
+
+        <ng-template #elseTemplate>
+            <p>Are you sure you want to delete vs_ID:<b>{{local_data.vs_id}}</b>?</p>
+        </ng-template>
+        <div mat-dialog-actions>
+            <button mat-button (click)="doAction()" class="action-btn">{{action}}</button>
+            <button mat-button (click)="closeDialog()" mat-flat-button class="cancel-btn">Cancel</button>
+        </div>
+    </form>
+</div>

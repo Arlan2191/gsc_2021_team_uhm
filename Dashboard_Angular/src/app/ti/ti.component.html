@@ -170,33 +170,49 @@
                                 <form [formGroup]="firstDose">
                                     <div class="container d-flex">
                                         <div class="row">
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-4">
                                                 <mat-form-field appearance="standard" class="manufacturer-input">
                                                     <mat-label>Manufacturer</mat-label>
                                                     <input matInput placeholder="Manufacturer"
                                                         formControlName="manufacturer" required>
                                                 </mat-form-field>
                                             </div>
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-4">
+                                                <mat-form-field appearance="standard" class="manufacturer-input">
+                                                    <mat-label>Batch Number</mat-label>
+                                                    <input matInput placeholder="Batch Number"
+                                                        formControlName="batch_number" required>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-lg-4">
                                                 <mat-form-field appearance="standard" class="space">
                                                     <mat-label>Status</mat-label>
-                                                    <input matInput placeholder="Status" formControlName="status"
-                                                        required>
+                                                    <mat-select formControlName="status" required>
+                                                        <mat-option *ngFor="let l of labels" [value]="l.label">
+                                                            {{l.value}}
+                                                        </mat-option>
+                                                    </mat-select>
                                                 </mat-form-field>
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="container d-flex">
                                         <div class="row">
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-4">
                                                 <mat-form-field appearance="standard">
                                                     <mat-label>Serial</mat-label>
                                                     <input matInput placeholder="Serial" formControlName="serial"
                                                         required>
                                                 </mat-form-field>
                                             </div>
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-4">
+                                                <mat-form-field appearance="standard" class="manufacturer-input">
+                                                    <mat-label>License Number</mat-label>
+                                                    <input matInput placeholder="License Number"
+                                                        formControlName="license_number" required>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-lg-4">
                                                 <button mat-flat-button color="primary" class="submit-btn"
                                                     (click)="update('1st')">Submit</button>
                                             </div>
@@ -206,38 +222,53 @@
                             </mat-tab>
                             <mat-tab label="2nd Dose" color="primary">
                                 <form [formGroup]="secondDose">
-
                                     <div class="container d-flex">
                                         <div class="row">
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-4">
                                                 <mat-form-field appearance="standard" class="manufacturer-input">
                                                     <mat-label>Manufacturer</mat-label>
                                                     <input matInput placeholder="Manufacturer"
                                                         formControlName="manufacturer" required>
                                                 </mat-form-field>
                                             </div>
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-4">
+                                                <mat-form-field appearance="standard" class="manufacturer-input">
+                                                    <mat-label>Batch Number</mat-label>
+                                                    <input matInput placeholder="Batch Number"
+                                                        formControlName="batch_number" required>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-lg-4">
                                                 <mat-form-field appearance="standard" class="space">
                                                     <mat-label>Status</mat-label>
-                                                    <input matInput placeholder="Status" formControlName="status"
-                                                        required>
+                                                    <mat-select formControlName="status" required>
+                                                        <mat-option *ngFor="let l of labels" [value]="l.label">
+                                                            {{l.value}}
+                                                        </mat-option>
+                                                    </mat-select>
                                                 </mat-form-field>
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="container d-flex">
                                         <div class="row">
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-4">
                                                 <mat-form-field appearance="standard">
                                                     <mat-label>Serial</mat-label>
                                                     <input matInput placeholder="Serial" formControlName="serial"
                                                         required>
                                                 </mat-form-field>
                                             </div>
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-4">
+                                                <mat-form-field appearance="standard" class="manufacturer-input">
+                                                    <mat-label>License Number</mat-label>
+                                                    <input matInput placeholder="License Number"
+                                                        formControlName="license_number" required>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-lg-4">
                                                 <button mat-flat-button color="primary" class="submit-btn"
-                                                    (click)="update('2nd')">Submit</button>
+                                                    (click)="update('1st')">Submit</button>
                                             </div>
                                         </div>
                                     </div>

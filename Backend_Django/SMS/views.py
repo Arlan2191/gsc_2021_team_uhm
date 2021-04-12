@@ -130,11 +130,11 @@ class SMSView(View):
                 SMSView.sendSMSMessage(
                     dataQuery.mobile_number, dataQuery.auth_token, str(e))
                 return HttpResponse(status=status.HTTP_200_OK)
-            # except Exception as e:
-            #     print(e)
-            #     # SMSView.sendSMSMessage(
-            #     #     dataQuery.mobile_number, dataQuery.auth_token, defaultResponse["defaultError"])
-            #     return HttpResponse(status=status.HTTP_200_OK)
+            except Exception as e:
+                print(e)
+                # SMSView.sendSMSMessage(
+                #     dataQuery.mobile_number, dataQuery.auth_token, defaultResponse["defaultError"])
+                return HttpResponse(status=status.HTTP_200_OK)
         else:
             session = sessionClient.session_path(
                 dialogflowConfig["project_id"], dataQuery.mn_id)
