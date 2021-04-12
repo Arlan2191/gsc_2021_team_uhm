@@ -3,7 +3,7 @@
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://github.com/Arlan2191/gsc_2021_team_uhm)
 
-Project RiSE is a two-way online platform that aids the public and local government health agencies (LGHAs) alike in implementing the vaccination plan. If you want to test out the SMS platform or Messenger platform, please email us at avgerman1.up.edu.ph so that we can make you an official tester of the platforms we used.
+Project RiSE is a two-way online platform that aids the public and local government health agencies (LGHAs) alike in implementing the vaccination plan. If you want to test out the SMS platform or Messenger platform, please email us at avgerman1@up.edu.ph so that we can make you an official tester of the platforms we used.
 
 ## Features
 - It provides a three-way vaccine application system; Website, Messenger, and SMS services (WMS),
