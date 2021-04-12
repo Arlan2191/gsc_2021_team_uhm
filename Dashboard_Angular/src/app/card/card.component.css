@@ -16,7 +16,7 @@
     border-collapse: collapse;
     border-radius: 1em;
 
-    -webkit-box-shadow: -10px 0px 13px -7px #a3a3a327, 10px 0px 13px -7px #5252523f, 4px 10px 30px 22px rgba(241, 241, 241, 0.192);
+    -webkit-box-shadow: -10px 0px 13px -7px #a3a3a327, 10px 0px 13px -7px #a1a1a13f, 4px 10px 30px 22px rgba(241, 241, 241, 0.192);
     box-shadow: -10px 0px 13px -7px #a3a3a327, 10px 0px 13px -7px #5252523f, 4px 10px 30px 22px rgba(241, 241, 241, 0.192);
  }
  

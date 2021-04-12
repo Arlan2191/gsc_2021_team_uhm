@@ -1,12 +1,3 @@
-
-.sidebar {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    box-shadow: 3px 0 6px rgba(138, 138, 138, 0.24);
-}
-
 .sidenav-container {
     width: 15vw;
     padding: 5vh 1vw 5vh 1vw;
@@ -49,7 +40,7 @@ h1 {
   
   a:hover {
     background-color: rgb(224, 255, 252);
-    
+
   }
   
   button{
