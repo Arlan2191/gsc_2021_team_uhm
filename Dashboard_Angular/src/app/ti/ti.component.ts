@@ -21,12 +21,17 @@ export class TiComponent implements OnInit {
   isLinear: boolean = true;
   referenceID: FormGroup;
   firstDose: FormGroup;
+  firstVSS: any;
   secondDose: FormGroup;
+  secondVSS: any;
 
   currentDose = "1st";
   currentID = 0;
+  vssTable = { "site_address": "", "date": "", "time": "" }
   userTable = { "first_name": "_____", "middle_name": "_", "last_name": "_____", "birthdate": "____-__-__", "sex": "_", "occupation": "_____", "email": "_____", "municipality": "______", "barangay": "_____", "mobile_number": "______" };
   esTable = { "priority": "__", "status": "_____", reason: "..." };
+  // esTable = { "priority": "1", "status": "Pending", reason: "Assigned medical personnel has yet to review your application" };
+  instructions = "";
   labels = this._api.labels;
   questions = this._api.questions;
 
@@ -35,6 +40,8 @@ export class TiComponent implements OnInit {
   respsColumns: string[] = this._api.formKeys[3];
   @ViewChild('RespsTable') rtSort: MatSort;
   @ViewChild('RespsPaginator', { static: true }) rtPage: MatPaginator;
+
+  @ViewChild('tabGroup') tabGroup: any;
 
 
   /**Grid Tiles**/
@@ -72,37 +79,62 @@ export class TiComponent implements OnInit {
       user: [this.currentID, Validators.required],
       dose: ['1st', Validators.required],
       status: ['C', Validators.required],
-      session: ['1', Validators.required],
-      time: ['12:00 PM', Validators.required],
-      site: ['4', Validators.required],
-      serial: ['asd1asa', Validators.required],
-      batch_number: ['1', Validators.required],
-      manufacturer: ['SinoVac', Validators.required],
+      session: ['0', Validators.required],
+      time: ['None', Validators.required],
+      site: ['0', Validators.required],
+      serial: ['None', Validators.required],
+      batch_number: ['0', Validators.required],
+      manufacturer: ['None', Validators.required],
       license_number: [this._api.id, Validators.required],
     });
     this.secondDose = this._formBuilder.group({
       user: [this.currentID, Validators.required],
       dose: ['2nd', Validators.required],
       status: ['C', Validators.required],
-      session: ['1', Validators.required],
-      time: ['12:00 PM', Validators.required],
-      site: ['4', Validators.required],
-      serial: ['asd1asa', Validators.required],
-      batch_number: ['1', Validators.required],
-      manufacturer: ['SinoVac', Validators.required],
+      session: ['0', Validators.required],
+      time: ['None', Validators.required],
+      site: ['0', Validators.required],
+      serial: ['None', Validators.required],
+      batch_number: ['0', Validators.required],
+      manufacturer: ['None', Validators.required],
       license_number: [this._api.id, Validators.required],
     });
   }
 
+  tabChanged() {
+    if (this.tabGroup.selectedIndex == 0) {
+      this.vssTable = this.firstVSS;
+    }
+    if (this.tabGroup.selectedIndex == 1) {
+      this.vssTable = this.secondVSS;
+    }
+  }
+
   search() {
+    console.log(this.tabGroup.selectedIndex);
     let id = this.referenceID.controls["rID"].value;
     this.currentID = id;
     this.firstDose.patchValue({ "user": this.currentID });
     this.secondDose.patchValue({ "user": this.currentID });
     this._api.getTracking(id).then((value: any) => {
       let data = this._api.handle(value, 5);
-      // this.firstDose.setValue(data[0]);
-      // this.secondDose.setValue(data[1]);
+      this._api.getSession(data[0].session).then((value: any) => {
+        this.firstVSS = value["query_result"][0];
+        this.vssTable = this.firstVSS;
+        this._api.getSites(this.firstVSS["session"]).then((value: any) => {
+          let address: string = `${value["query_result"][0]["site_address"]}, ${value["query_result"][0]["barangay"]}`;
+          this.firstVSS["site_address"] = address;
+        });
+      });
+      this._api.getSession(data[1].session).then((value: any) => {
+        this.secondVSS = value;
+        this._api.getSites(this.secondVSS["session"]).then((value: any) => {
+          let address: string = `${value["query_result"][0]["site_address"]}, ${value["query_result"][0]["barangay"]}`;
+          this.secondVSS["site_address"] = address;
+        });
+      });
+      this.firstDose.setValue(data[0]);
+      this.secondDose.setValue(data[1]);
     });
     this._api.getProfile(id, true).then((value: any) => {
       this.userTable = value["query_result"][0];
@@ -115,6 +147,7 @@ export class TiComponent implements OnInit {
     });
     this._api.getApplications(id).then((value: any) => {
       this.esTable = value["query_result"][0];
+      this.esTable.status = this._api.labels[`${this.esTable.status}`];
     });
   }
 
@@ -141,5 +174,19 @@ export class TiComponent implements OnInit {
 
   }
 
-
+  color() {
+    let c: string = this.esTable.status.toUpperCase();
+    if (c == "PENDING") {
+      return "#EC9007";
+    }
+    if (c == "GRANTED") {
+      return "#0BB608";
+    }
+    if (c == "GRANTED@RISK") {
+      return "#0BB608";
+    }
+    if (c == "DENIED") {
+      return "#E23333";
+    }
+  }
 }

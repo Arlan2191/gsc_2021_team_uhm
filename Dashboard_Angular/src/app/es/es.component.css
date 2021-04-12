@@ -1,3 +1,17 @@
+body {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: whitesmoke;
+  height: fit-content;
+}
+
+.dashboard-content {
+  margin-left: 15vw;
+  padding: 5vh 5vw 5vh 5vw;
+}
 
 h1 {
   margin-top:20px;

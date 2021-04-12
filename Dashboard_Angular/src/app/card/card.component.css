@@ -16,8 +16,8 @@
     border-collapse: collapse;
     border-radius: 1em;
 
-    -webkit-box-shadow: -10px 0px 13px -7px #e0e0e0c5, 10px 0px 13px -7px #d3d3d391, 4px 10px 30px 22px rgba(196, 194, 194, 0.103);
-    box-shadow: -10px 0px 13px -7px #ebebeb86, 10px 0px 13px -7px #ffffff3d, 4px 10px 30px 22px rgba(196, 194, 194, 0);
+    -webkit-box-shadow: -10px 0px 13px -7px #a3a3a327, 10px 0px 13px -7px #5252523f, 4px 10px 30px 22px rgba(241, 241, 241, 0.192);
+    box-shadow: -10px 0px 13px -7px #a3a3a327, 10px 0px 13px -7px #5252523f, 4px 10px 30px 22px rgba(241, 241, 241, 0.192);
  }
  
  .dashboard-card-content {

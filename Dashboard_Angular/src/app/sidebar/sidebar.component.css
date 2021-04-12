@@ -1,0 +1,94 @@
+
+.sidebar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    box-shadow: 3px 0 6px rgba(138, 138, 138, 0.24);
+}
+
+.sidenav-container {
+    width: 15vw;
+    padding: 5vh 1vw 5vh 1vw;
+}
+
+.mat-list-item-content {
+    padding: 0 0 0 0;
+}
+
+.p-2 {
+    padding: 0 .5rem 0 .5rem !important;
+}
+
+h1 {
+    font-size: 35px;
+    font-weight: bold;
+    font-family: 'mulish';
+  }
+  
+  h2 {
+    font-size: 25px;
+    font-weight: bold;
+    font-family: 'mulish';
+    color: rgb(121, 121, 121);
+  }
+  
+  .header {
+    font-size: 15px;
+    font-family: 'mulish';
+    padding-left: 10px;
+  }
+  
+  a{
+    text-decoration: none;
+    font-size: 78%;
+    white-space: normal;
+    font-weight: bold;
+    font-family: 'mulish';
+  }
+  
+  a:hover {
+    background-color: rgb(224, 255, 252);
+    
+  }
+  
+  button{
+    font-size: 110%;
+    min-width: min-content;
+  }
+  
+  .example-icon {
+    padding: 0 14px;
+  }
+  
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+  
+  img {
+    width: 50px;
+  }
+  
+  #sidenav-logo {
+    width: 100px;
+  }
+  
+  .home-button {
+    text-decoration: none;
+    justify-content: center;
+  }
+  
+  .form-button {
+    background-color: rgb(37,150,255);
+    color: #FAFAFA;
+  }
+  
+  #description {
+      margin-left: 15%;
+      color:lightgray;
+  }
+  
+  /*navigation tab*/
+  .divider {
+    width: inherit;
+  }

@@ -11,6 +11,8 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { EsComponent } from './es/es.component';
+import { LandingComponent } from './landing/landing.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 import { TiComponent } from './ti/ti.component';
 
 import { MatCardModule } from '@angular/material/card';
@@ -47,6 +49,7 @@ import { InterceptorService } from 'src/app/loader/interceptor.service';
 import { AnimateOnScrollModule } from 'ng2-animate-on-scroll';
 import { SnackBarComponent } from './snack-bar/snack-bar.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,7 +59,9 @@ import { SnackBarComponent } from './snack-bar/snack-bar.component';
     EsComponent,
     TiComponent,
     CardComponent,
-    SnackBarComponent
+    SnackBarComponent,
+    LandingComponent,
+    SidebarComponent,
   ],
   imports: [
     BrowserModule,
@@ -94,12 +99,12 @@ import { SnackBarComponent } from './snack-bar/snack-bar.component';
     BadgeModule,
     NgxMaterialTimepickerModule,
     MatProgressBarModule,
-    
+
     AnimateOnScrollModule.forRoot()
 
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi:true}
+    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }
   ],
   bootstrap: [AppComponent]
 })

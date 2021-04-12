@@ -7,14 +7,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class ApiService {
   private BASEURL = "http://localhost:8000";
-  private urlKey = ["ES", "VS", "TI"];
+  private urlKey = ["ES", "VS", "TI", "VSS"];
   nullValues = [
     { "id": 0, "status": 0 },
     { "site_id": 0, "site_address": "N/A", "barangay": "N/A" },
     { 'id': 0, 'birthdate': '0000-00-00', 'sex': 'N/A', 'occupation': 'N/A', 'barangay': 'N/A', "municipality": "N/A" },
     { 'num': 0, 'question': 'N/A', 'answer': 'N/A' },
     { 'dose': 0, 'user': 0, 'status': 'N/A', 'batch_number': 'N/A', 'session': 'N/A', 'time': 'N/A', 'site': 'N/A', 'manufacturer': 'N/A', 'license_number': 'N/A', 'serial': 'N/A' },
-    { 'first_name': 'N/A', 'middle_name': 'N/A', 'last_name': 'N/A', 'birthdate': 'N/A', 'sex': 'N/A', 'occupation': 'N/A', 'email': 'N/A', 'mobile_number': 'N/A', 'municipality': 'N/A', 'barangay': 'N/A' }
+    { 'first_name': 'N/A', 'middle_name': 'N/A', 'last_name': 'N/A', 'birthdate': 'N/A', 'sex': 'N/A', 'occupation': 'N/A', 'email': 'N/A', 'mobile_number': 'N/A', 'municipality': 'N/A', 'barangay': 'N/A' },
+    { 'date': 'N/A', 'time': 'N/A' },
   ];
   formKeys = [
     ["id", "status"],
@@ -25,6 +26,7 @@ export class ApiService {
     ['dose', 'user', 'status', 'batch_number', 'session', 'time', 'site', 'manufacturer', 'license_number', 'serial'],
     ['first_name', 'middle_name', 'last_name', 'birthdate', 'sex', 'occupation', 'email', 'mobile_number', 'municipality', 'barangay'],
     ["license_number", "first_name", "middle_name", "last_name", "birthdate", "sex", "occupation", "email", "mobile_number", "organization", "organization_email", "organization_telecom", "organization_region", "organization_province", "organization_municipality", "organization_barangay", "organization_address"],
+    ['date', 'time']
   ];
   questions = {
     "1": "Nagpositibo ka na ba sa COVID-19?",
@@ -80,8 +82,23 @@ export class ApiService {
     }).toPromise();
   }
 
-  async getSites() {
+  async getSites(id?: number) {
+    if (id) {
+      return await this._http.get<Array<any>>(`${this.BASEURL}/site/table?name=VS&id=${id}`, {
+        headers: new HttpHeaders({
+          "Authorization": this.token,
+        })
+      }).toPromise();
+    }
     return await this._http.get<Array<any>>(`${this.BASEURL}/site/table?name=VS`, {
+      headers: new HttpHeaders({
+        "Authorization": this.token,
+      })
+    }).toPromise();
+  }
+
+  async getSession(id: number) {
+    return await this._http.get<Array<any>>(`${this.BASEURL}/site/table?name=VSS&id=${id}`, {
       headers: new HttpHeaders({
         "Authorization": this.token,
       })
@@ -105,7 +122,7 @@ export class ApiService {
   }
 
   async getResponse(id: number) {
-    return await this._http.get<Array<any>>(`${this.BASEURL}/site/datastore?name=R&id=${id}`, {
+    return await this._http.get<Array<any>>(`${this.BASEURL}/site/datastore?name=MHR&id=${id}`, {
       headers: new HttpHeaders({
         "Authorization": this.token,
       })

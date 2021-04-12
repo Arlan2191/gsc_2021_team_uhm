@@ -1,0 +1,57 @@
+<section class="sidebar">
+    <mat-sidenav-container autosize>
+        <mat-sidenav #drawer class="sidenav-container" fixedInViewport="true"
+            [attr.role]="isHandset ? 'dialog' : 'navigation'" [mode]="(isHandset | async)!.matches ? 'over' : 'side'"
+            [opened]="!(isHandset | async)!.matches">
+            <mat-nav-list>
+                <div class="d-flex align-items-start flex-column" style="height: 85vh;">
+                    <div class="p-2">
+                        <button mat-flat-button class="home-button" routerLink="/home" [disableRipple]="true">
+                            <span>
+                                <img src="assets/images/Rise_Logo.png" alt="logo" id="sidenav-logo">
+                            </span>
+                        </button>
+                        <p id="description">DASHBOARD</p>
+                    </div>
+                    <div class="p-2">
+                        <a mat-list-item>
+                            <mat-icon class="active-icon">account_circle</mat-icon>
+                            {{username}}
+                        </a>
+                    </div>
+                    <div class="p-2">
+                        <a mat-list-item routerLink="/home" class="admin-toolbar">
+                            <mat-icon class="non-active-icon">home</mat-icon>Home
+                        </a>
+                    </div>
+                    <div class="p-2">
+                        <a mat-list-item routerLink="/review" class="admin-toolbar">
+                            <mat-icon class="active-icon">assignment</mat-icon>
+                            Review
+                        </a>
+                    </div>
+                    <div class="p-2">
+                        <a mat-list-item routerLink="/track" class="admin-toolbar active">
+                            <mat-icon class="non-active-icon"> person_pin_circle</mat-icon>
+                            Track
+                        </a>
+                    </div>
+                    <div class="p-2">
+                        <a mat-list-item routerLink="/" class="admin-toolbar">
+                            <mat-icon class="non-active-icon">event</mat-icon>Vaccination
+                        </a>
+                    </div>
+                    <div class="mt-auto p-2">
+                        <a mat-list-item routerLink="/" class="admin-toolbar">
+                            <span class="material-icons non-active-icon">help</span>Help</a>
+                    </div>
+                    <div class="p-2">
+                        <a mat-list-item routerLink="/" class="admin-toolbar">
+                            <mat-icon class="non-active-icon">exit_to_app</mat-icon>Log Out
+                        </a>
+                    </div>
+                </div>
+            </mat-nav-list>
+        </mat-sidenav>
+    </mat-sidenav-container>
+</section>

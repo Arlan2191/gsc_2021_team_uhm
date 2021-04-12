@@ -1,8 +1,36 @@
+body {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: whitesmoke;
+    height: 100vh;
+  }
+  
+.dashboard-content {
+    margin-left: 15vw;
+    padding: 0 5vw 0 5vw;
+}
 
+.dashboard-content .container {
+    padding: 0 0 0 0 !important;
+}
+
+.dashboard-content .container .row{
+    width: 100%;
+}
+
+.es-table .row {
+    margin: 5px 0 5px 0;
+}
+
+.es-table .row .col-lg-6 {
+    padding: 0 0 0 0 !important;
+}
+  
 h1 {
     font-family: 'mulish';
-    margin-top:20px;
-    margin-left: 1.5%;
     font-weight: bold;
 }
 
@@ -10,12 +38,9 @@ h2 {
     font-family: 'mulish';
     font-weight: bold;
     color: rgb(121, 121, 121);
+    margin: 0 0 0 0;
 }
 
-h3 {
-    margin-top: -10px;
-    color: rgb(121, 121, 121);
-}
 a{
     text-decoration: none;
     font-size: 78%;
@@ -26,11 +51,6 @@ a{
 
 a:hover {
     background-color: rgb(224, 255, 252);
-}
-
-button{
-    font-size: 110%;
-    min-width: min-content;
 }
 
 .example-icon {
@@ -107,10 +127,7 @@ mat-sidenav-content {
     margin-left: 20px;
 }
 .search-bar {
-    position: absolute;
     font-size: 10px;
-    margin-top: -60px;
-    margin-left: 75%;
 }
 
 .id {
@@ -121,12 +138,6 @@ mat-sidenav-content {
 
 form {
     margin-top: 20px;
-    margin-left: -13px;
-}
-
-.container {
-    display: flex;
-    margin-top: 10px;
 }
 
 mat-form-field {
@@ -206,16 +217,15 @@ ul li h1 a{text-decoration:none;}
 h3 {
     font-family: 'mulish';
     font-weight: bold;
+    color: rgb(121, 121, 121);
+    margin: 0 0 0 0;
 }
 h4 {
     font-family: 'mulish';
     text-transform: uppercase;
     font-weight: bold;
-    font-size: 12px;
+    font-size: 14px;
     color: rgb(192, 192, 192);
-    margin-top: -18px;
-    margin-bottom: 1px;
-    margin-right: 10px;
 }
 
 .instructions {
@@ -224,13 +234,30 @@ h4 {
 }
 
 .vaccination-address {
-    margin-bottom: 20px;
     color:  rgb(37,150,255);
+    font-size: 14px;
+}
+
+.vaccination-address .row{
+    width: inherit;
+    display: flex;
+    margin: 0 0 0 0;
+}
+
+.vaccination-address .row .col-lg-6, .col-lg-3, .col-lg-1{
+    padding: 0 0 0 0;
+}
+
+.vaccination-address h4{
+    margin: 0 0 0 0;
+}
+
+.vaccination-address p{
+    margin: 0 0 0 0;
+    bottom: 0;
 }
 
 .date-time {
-    margin-top: -16px;
-    margin-right: 50px;
     color:  rgb(37,150,255);
 }
 
@@ -238,23 +265,39 @@ h4 {
     display: flex;
 }
 
-.tags {
+.tag-1 {
+    border-radius: 5px;
     font-family: 'mulish';
-    padding: 5px;
-    margin-bottom: 10px;
-    width: 80px;
-    height: 20px;
+    text-transform: uppercase;
+    white-space: inherit;
+    font-size: 12px;
+    padding: 2px 5px 2px 5px;
+    cursor: default;
+    color: white !important;
+}
+
+.tag-2 {
+    border-radius: 5px;
+    font-family: 'mulish';
+    text-transform: uppercase;
+    white-space: inherit;
+    font-size: 12px;
+    padding: 2px 5px 2px 5px;
+    background-color: rgb(37,150,255) !important;
+    color: white !important;
 }
 
 .reason {
+    height: 100%;
+    white-space: inherit;
+    width: inherit;
     text-transform: uppercase;
     font-family: 'mulish';
-    padding: 10px;
-    position: absolute;
-    top: 50%;
-    left: 53%;
-    width: 280px;
-    height: 60px;
+    font-size: 12px;
+    padding: 2px;
+    line-height: normal;
+    background-color: rgb(37,150,255) !important;
+    color: white !important;
 }
 
 table {

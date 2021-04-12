@@ -1,116 +1,34 @@
+<mat-sidenav-container class="sidenav-container" autosize>
+    <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="isHandset ? 'dialog' : 'navigation'"
+        [mode]="(isHandset | async)!.matches ? 'over' : 'side'" [opened]="!(isHandset | async)!.matches">
+        <mat-nav-list>
+            <button mat-flat-button class="home-button" routerLink="/home" [disableRipple]="true">
+                <span>
+                    <img src="assets/images/Rise_Logo.png" alt="logo" id="sidenav-logo">
+                </span>
+            </button>
+            <p id="description">DASHBOARD</p>
 
-<div *ngFor="loaderService.isLoading | async" class="loader-container">
-  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-</div>
+            <a mat-list-item routerLink="/home" class="admin-toolbar">
+                <mat-icon class="non-active-icon">home</mat-icon>Home
+            </a>
 
-<div> 
-    <mat-toolbar color="primary" class="toolbar">
-      <a mat-flat-button [disableRipple]="true" class="companyName" routerLink="/">
-        <span><img src="assets/images/Rise_Logo.png" alt="logo" class="logo"></span>
-      </a>
-      <a class="dashboard">Dashboard</a>
-      <span class="example-spacer"></span>
-      <div>
-        <a mat-button routerLink="/home" class="active">Home</a>
-        <a mat-button routerLink="/about-us" class="toolbar-buttons">About Us</a>
-        <a mat-button routerLink="/login" class="toolbar-buttons">Log In</a>
-      </div>
-  
-    </mat-toolbar>
+            <a mat-list-item routerLink="/review" class="admin-toolbar">
+                <mat-icon class="active-icon">assignment_ind</mat-icon>ES
+            </a>
 
-        <body  fxLayout="column">
-            <div class="container"  fxLayout="column" >
-              <div class="row">
-                  <div class="column">
-                    <h1 class="floating">We get you vaccinated against COVID-19</h1>
-                    <p class="floating">Organized dissemination and smart vaccine appointment systems. RiSE provides an easy way to vaccinate the entire country.</p>
-                      <button mat-raised-button class="floating" routerLink="/register" class="start-register">Create Account</button>
-                      <button mat-flat-button class="floating" routerLink="/login" class="start-dashboard">Go to Dashboard</button>
-                  </div>
-              </div>
-              <div>
-                <img src="assets/images/health-doctor-vaccine.png" alt="Rise image" class="side-image floating">
-              </div>
-            </div>  
+            <a mat-list-item routerLink="/track" class="admin-toolbar active">
+                <mat-icon class="non-active-icon"> person_pin_circle</mat-icon>TI
+            </a>
 
-            <div class="demo-video-container">
-                <span class="d-flex justify-content-center mt-5 font-white-bold-mulish small-text">Easy, well-planned, and safe</span>
+            <a mat-list-item routerLink="/" class="admin-toolbar">
+                <mat-icon class="non-active-icon">exit_to_app</mat-icon>Log Out
+            </a>
 
-                <div class="title-container" animateOnScroll animationName="floating" offset="120">
-                  <span class="title">Our appointment system has got you covered!</span>
-                </div>
+            <hr class="divider">
 
-                <span class="description">Organized dissemination and smart vaccine appointment systems. RiSE provides an easy way to vaccinate the entire country.</span>
-
-                <div class="d-flex justify-content-center" animateOnScroll animationName="floating" offset="500">
-                  <mat-card class="d-flex justify-content-center demo-video-card">Demo Video</mat-card>
-                </div>
-
-
-            <div class="d-flex justify-content-center additional-info-container">
-                <div class="mr-5" animateOnScroll animationName="floating" offset="500">
-                  <mat-card class="third-row-left-card">
-                    <span class="privacy-matters">Your privacy matters.</span>
-                    <img src="assets/images/user_table_cut.png" alt="logo" class="user-table-img">
-                  </mat-card>
-                </div>
-                <div class="mr-5" animateOnScroll animationName="floating" offset="500">
-                  <mat-card class="d-flex justify-content-left third-row-right-card">
-                    <span class="details">We give you all the details.</span>
-                    <span class="details-description">Organized dissemination and smart vaccine appointment systems. RiSE provides an easy way to vaccinate the entire country.</span>
-                  </mat-card>
-                </div>
-              </div>
-            </div>
-
-            <div class="d-flex justify-content register-container">
-              <span class="justify-content-left before-footer">Create an account to access the dashboard for a COVID-free future</span>
-              <button mat-raised-button routerLink="/register" class="create-account">Create Account</button>
-              <img src="assets/images/health-doctor-vaccine_w.png" alt="logo" class="doctor-img">
-            </div>
-
-            <footer>
-                <div class="d-flex justify-content-left column">
-                    <div class="footer-description-container">
-                        <img src="assets/images/Rise_Logo.png" alt="logo" class="logo-2">
-                        <span class="footer-description">Organized dissemination and smart vaccine appointment systems. RiSE provides an easy way to vaccinate the entire country.</span>
-                        <span class="footer-all-rights-reserved">&copy; 2021. All Rights Reserved. </span>
-                    </div>
-
-                    <div class="footer-description-container-2">
-                      <span class="footer-label">Company</span>
-                      <ul>
-                          <li>About</li>
-                          <li>Facebook Page</li>
-                          <li>SMS Service</li>
-                          <li>Apps</li>
-                      </ul>
-                    </div>
-
-                    <div class="footer-description-container-2">
-                      <span class="footer-label">Cities</span>
-                      <ul>
-                          <li>Lapu-lapu</li>
-                          <li>Cebu</li>
-                          <li>Talisay</li>
-                          <li>Mandaue</li>
-                      </ul>
-                    </div>
-
-                    <div class="footer-description-container-2">
-                      <span class="footer-label">Help</span>
-                      <ul>
-                          <li>Help Center</li>
-                          <li>Contact Support</li>
-                          <li>Instructions</li>
-                          <li>Tutorials</li>
-                      </ul>
-                    </div>
-
-                </div>
-            </footer>
-        </body>
-</div>
-
-
-
+            <a mat-list-item routerLink="/" class="admin-toolbar">
+                <span class="material-icons  non-active-icon">help</span>Help</a>
+        </mat-nav-list>
+    </mat-sidenav>
+</mat-sidenav-container>

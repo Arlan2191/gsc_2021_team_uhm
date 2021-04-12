@@ -1,42 +1,7 @@
-<mat-sidenav-container class="sidenav-container" autosize>
-    <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="isHandset ? 'dialog' : 'navigation'"
-        [mode]="(isHandset | async)!.matches ? 'over' : 'side'" [opened]="!(isHandset | async)!.matches">
-        <mat-nav-list>
-            <button mat-flat-button class="home-button" routerLink="/home" [disableRipple]="true">
-                <span>
-                    <img src="assets/images/Rise_Logo.png" alt="logo" id="sidenav-logo">
-                </span>
-            </button>
-            <p id="description">DASHBOARD</p>
-
-            <a mat-list-item routerLink="/" class="admin-toolbar">
-                <mat-icon class="non-active-icon">home</mat-icon>Home
-            </a>
-
-            <a mat-list-item routerLink="/review" class="admin-toolbar">
-                <mat-icon class="active-icon">assignment_ind</mat-icon>ES
-            </a>
-
-            <a mat-list-item routerLink="/track" class="admin-toolbar active">
-                <mat-icon class="non-active-icon"> person_pin_circle</mat-icon>TI
-            </a>
-
-            <a mat-list-item routerLink="/" class="admin-toolbar">
-                <mat-icon class="non-active-icon">exit_to_app</mat-icon>Log Out
-            </a>
-
-            <hr class="divider">
-
-            <a mat-list-item routerLink="/" class="admin-toolbar">
-                <span class="material-icons  non-active-icon">help</span>Help</a>
-        </mat-nav-list>
-    </mat-sidenav>
-
-    <mat-sidenav-content class="floating">
-
+<body>
+    <app-sidebar></app-sidebar>
+    <section class="dashboard-content">
         <h1 id="title">Eligibility Status</h1>
-
-
         <mat-grid-list cols="{{ ( cardLayout | async )?.columns }}" rowHeight="80px">
             <!--Pending Application Card-->
             <mat-grid-tile [colspan]="( cardLayout | async )?.pending_application__card.cols"
@@ -213,5 +178,5 @@
                 </app-card>
             </mat-grid-tile>
         </mat-grid-list>
-    </mat-sidenav-content>
-</mat-sidenav-container>
+    </section>
+</body>

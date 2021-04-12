@@ -1,3 +1,4 @@
+import { LandingComponent } from './landing/landing.component';
 import { AuthGuard } from './auth/auth.guard';
 import { TiComponent } from './ti/ti.component';
 import { EsComponent } from './es/es.component';
@@ -14,11 +15,16 @@ const routes: Routes = [
   // },
   {
     path: '',
-    component: HomeComponent
+    component: LandingComponent
+  },
+  {
+    path: 'landing',
+    component: LandingComponent
   },
   {
     path: 'home',
-    component: HomeComponent
+    component: HomeComponent,
+    // canActivate: [AuthGuard]
   },
   {
     path: 'login',
@@ -31,12 +37,12 @@ const routes: Routes = [
   {
     path: 'review',
     component: EsComponent,
-    canActivate: [AuthGuard]
+    // canActivate: [AuthGuard]
   },
   {
     path: 'track',
     component: TiComponent,
-    canActivate: [AuthGuard]
+    // canActivate: [AuthGuard]
   }
 ];
 

@@ -4,15 +4,18 @@ import { Observable } from 'rxjs';
 import { LoaderService } from 'src/app/loader/loader.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-sidebar',
+  templateUrl: './sidebar.component.html',
+  styleUrls: ['./sidebar.component.css']
 })
-export class HomeComponent implements OnInit {
+export class SidebarComponent implements OnInit {
 
   constructor(private breakpointObserver: BreakpointObserver,
     public loaderService: LoaderService) { }
   isHandset: Observable<BreakpointState> = this.breakpointObserver.observe(Breakpoints.Handset)
+
+  username = "Arlan";
+
   ngOnInit(): void {
   }
 
