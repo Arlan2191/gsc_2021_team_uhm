@@ -55,7 +55,7 @@ npm install
 ng serve --port 4201 # in backend, the base url is at localhost:4201
 ```
 
-For the Backend part of RiSE, it requires [Django]() v10+ to run.
+For the Backend part of RiSE, it requires [Django]() v10+ and Python v3.9+ to run. We advise you to use a virtual environment when installing the python modules with pip.
 
 Install the dependencies using pip. Before running server, first install google cloud sql proxy and run the following in main directory (using terminal):
 
