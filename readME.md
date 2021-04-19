@@ -95,3 +95,93 @@ If the database raises an error, run the following at Backend_Django/ (using ter
 py manage.py makemigrations
 py manage.py migrate
 ```
+
+## How to Use
+- **Step 1**: Register an LGU Admin (We have already provided this for you with the default account below). If you want to register your own LGU to RiSE, you must fill-up the LGU registration form first, make sure it is one of the locations listed in the geo_philippines.json.
+
+Use this default account, if you want to skip steps 1-3, and go straight to the fun stuff:
+```sh
+{
+    "user": {
+        "username": "CEBU CITY GOVERNMENT",
+        "PIN": "t4ZGx7kN"
+    }
+}
+```
+- **Step 2**: Register your LGU's medical staff (We have also provided this for you). After registering your LGU, you must register your staff first before the public can apply a vaccine for your LGU, since RiSE automatically assigns a staff member for each application.
+
+The default staff for the default LGU admin are the following:
+```sh
+{
+    "user": {
+        "username": "101",
+        "PIN": "FLrkgxwC"
+    }
+}
+{
+    "user": {
+        "username": "102",
+        "PIN": "EpnFar6l"
+    }
+}
+{
+    "user": {
+        "username": "103",
+        "PIN": "CpSPI08f"
+    }
+}
+{
+    "user": {
+        "username": "104",
+        "PIN": "Zaib4qFh"
+    }
+}
+```
+- **Step 3**: Register your users (We have also provided this for you). After completing steps 1 and 2, your LGU is now ready to receive vaccine applications. Users must fill-up the application form first, which requires them to verify their mobile number. Since the verification process requires a Philippines phone number, please use one of the three numbers below.
+
+The three mobile numbers are: (Please note that we limited the applications to 10 per mobile number to prevent abuse)
+```sh
+{
+    "mobile_numbers": [
+        "+639995529000",
+        "+639995529001",
+        "+639995529002"
+    ]
+}
+```
+For the default user applications:
+```sh
+{
+    "user": {
+        "rID": "00-0000-20",
+        "PIN": "pQX07zs9"
+    }
+}
+{
+    "user": {
+        "rID": "00-0000-21",
+        "PIN": "wDfRSPDo"
+    }
+}
+{
+    "user": {
+        "rID": "00-0000-22",
+        "PIN": "1xxsDQmG"
+    }
+}
+{
+    "user": {
+        "rID": "00-0000-23",
+        "PIN": "QT6S2qI6"
+    }
+}
+{
+    "user": {
+        "rID": "00-0000-24",
+        "PIN": "JZhnVG6W"
+    }
+}
+```
+- **Step 4**: Login to the LGU Dashboard, and check out Project RiSE. Since this is yet a prototype, after login you will redirected to an empty homepage but don't worry the other tabs in the sidebar works. There you can vaccination sites and sessions, review vaccine applications, and update user tracking information during a vaccination session (We removed admin only constraints to not limit the demo).
+
+
