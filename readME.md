@@ -71,7 +71,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'project_bakuna',
         'USER': 'root',
-        'PASSWORD': 'HgkKqfmiDEeuorHO',
+        'PASSWORD': '................',
         'HOST': '<HOST>',
         'PORT': '<PORT>',
         'OPTIONS': {
